@@ -1,0 +1,37 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AppComponent } from './app.component';
+import { GduMenuComponent } from './gdu-menu/gdu-menu.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { GduEvrpComponent } from './gdu-evrp/gdu-evrp.component';
+import { GduDuerComponent } from './gdu-duer/gdu-duer.component';
+import { GduPasComponent } from './gdu-pas/gdu-pas.component';
+import { GduConnexionComponent } from './gdu-connexion/gdu-connexion.component';
+
+const ROUTES: Routes = [
+{path: 'gdu', component: GduConnexionComponent},
+  {path: 'gdu/evrp', component: GduEvrpComponent},
+  {path: 'gdu/duer', component: GduDuerComponent},
+  {path: 'gdu/pas', component: GduPasComponent}
+];
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    GduMenuComponent,
+    GduEvrpComponent,
+    GduDuerComponent,
+    GduPasComponent,
+    GduConnexionComponent
+  ],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(ROUTES),
+    MDBBootstrapModule.forRoot()
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+
+})
+export class AppModule { }

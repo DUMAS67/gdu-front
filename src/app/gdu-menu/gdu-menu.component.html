@@ -1,0 +1,57 @@
+<!--Navbar-->
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark #f9a825 yellow darken-3">
+
+  <!-- Navbar brand -->
+
+ <!-- Logo -->
+ <div class="media">
+ <img src ="assets\images\72711843_3022209834462611_3053189880180899840_o.jpg" width="160px" height="40px" alt="" class="mr-3">
+ </div>
+  <!-- Collapsible content -->
+  <links>
+
+      <!-- Links -->
+      <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+              <a routerLinkActive="active" routerLink="/gdu/evrp" class="nav-link waves-light" mdbWavesEffect><b>EVRP</b><span class="sr-only">(current)</span></a>
+            </li>
+          <li class="nav-item">
+              <a routerLinkActive="active" routerLink="/gdu/duer" class="nav-link waves-light" mdbWavesEffect><b>DUER</b></a>
+          </li>
+          <li class="nav-item">
+              <a routerLinkActive="active" routerLink="/gdu/pas"class="nav-link waves-light" mdbWavesEffect><b>Plan d'Action</b></a>
+          </li>
+
+
+          <!-- Dropdown -->
+          <li class="nav-item dropdown" dropdown>
+              <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+              <b>Documentation</b><span class="caret"></span></a>
+              <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+                  <a class="dropdown-item waves-light" mdbWavesEffect href="#">Grille de Cotation</a>
+                  <a class="dropdown-item waves-light" mdbWavesEffect href="#">Définitions</a>
+              </div>
+          </li>
+          <!-- Dropdown -->
+          <li class="nav-item dropdown" dropdown>
+            <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+           <b>Réglementation</b><span class="caret"></span></a>
+            <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+                <a class="dropdown-item waves-light" mdbWavesEffect href="#">Prévention</a>
+                <a class="dropdown-item waves-light" mdbWavesEffect href="#">DUER</a>
+                <a class="dropdown-item waves-light" mdbWavesEffect href="#">Port de Charge</a>
+            </div>
+        </li>
+        <li class="nav-item"></li>
+        <li class="nav-item"></li>
+        <li class="nav-item">
+          <a routerLinkActive="active" routerLink="/gdu"class="nav-link waves-light" mdbWavesEffect><b>Connexion</b></a>
+
+      </li>
+      </ul>
+      <!-- Links -->
+  </links>
+  <!-- Collapsible content -->
+
+</mdb-navbar>
+<!--/.Navbar-->
