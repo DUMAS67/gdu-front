@@ -1,1 +1,95 @@
-<p>gdu-duer works!</p>
+<div class="container">
+  <p></p>
+
+
+  <!-- Default form contact -->
+  <form class="">
+
+    <!-- Name -->
+
+    <!-- Sélection-->
+    <div class="row">
+      <div class="col-1"><b>DUER</b></div>
+      <div class="col-2"><label></label>
+        <select class="browser-default custom-select mb-4">
+          <option value="" selected>Unité de travail</option>
+          <option value="1">UT1</option>
+          <option value="2">UT2</option>
+          <option value="3">UT3</option>
+          <option value="4">UT4</option>
+        </select></div>
+
+        <div class="col-2"><label></label>
+          <select class="browser-default custom-select mb-4">
+            <option value="" selected>Lieu</option>
+            <option value="1">Lieu1</option>
+            <option value="1">Lieu2</option>
+            <option value="1">Lieu3</option>
+            <option value="1">Lieu4</option>
+          </select></div>
+
+          <div class="col-2"><label></label>
+            <select class="browser-default custom-select mb-4">
+              <option value="" selected>Criticité</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="4">5</option>
+              <option value="1">6</option>
+              <option value="2">9</option>
+              <option value="3">10</option>
+              <option value="4">12</option>
+              <option value="4">15</option>
+              <option value="4">20</option>
+              <option value="4">30</option>
+              <option value="4">45</option>
+              <option value="4">60</option>
+            </select></div>
+
+      <div class="col-3">
+        <button mdbBtn type="button" color="default" outline="true" size="sm"  mdbWavesEffect>Pareto</button>
+      </div>
+      <div class="col-2">
+        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Impression</button>
+      </div>
+    </div>
+    <!-- Fin Sélection -->
+
+    <div class="container">
+      <table mdbTable #tableEl="mdbTable" class="z-depth-1">
+        <thead>
+        <tr>
+          <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr mdbTableCol *ngFor="let el of elements">
+            <th scope="row">{{el.id}}</th>
+            <td>{{el.heading1}}</td>
+            <td>{{el.heading2}}</td>
+            <td>{{el.heading3}}</td>
+            <td>{{el.heading4}}</td>
+            <td>{{el.heading5}}</td>
+            <td>{{el.heading6}}</td>
+            <td>{{el.heading7}}</td>
+            <td>{{el.heading8}}</td>
+            <td>{{el.heading9}}</td>
+            <td>{{el.heading10}}</td>
+            <td>{{el.heading11}}</td>
+            <td>{{el.heading12}}</td>
+            <td>{{el.heading13}}</td>
+            <td>{{el.heading14}}</td>
+            <td>{{el.heading15}}</td>
+          </tr>
+        </tbody>
+        <tfoot class="grey lighten-5 w-100">
+        <tr>
+          <td colspan='16'>
+            <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
+          </td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
