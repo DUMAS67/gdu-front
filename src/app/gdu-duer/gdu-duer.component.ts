@@ -1,6 +1,7 @@
 
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstrap-md';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     {
       id: 1,
       heading1: 'Revalorisation',
-      heading2: 'Menuiserie',
+      heading2: 'AT Menuiserie',
       heading3: 'Ponçage',
       heading4: 'Utiliser une Ponçeuse',
       heading5: 'Inhalation Sciure',
@@ -29,11 +30,29 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
       heading13: 'Port du Masque FFP2 Obligatoire',
       heading14: '',
       heading15: ''
-    }]
+    },
+    {
+      id: 2,
+      heading1: 'Revalorisation',
+      heading2: 'Extérieur',
+      heading3: 'Réception meubles',
+      heading4: 'Chute de hauteur',
+      heading5: 'Blessure Corporel',
+      heading6: 15,
+      heading7: 2,
+      heading8: 30,
+      heading9: '-',
+      heading10: 15,
+      heading11: 1,
+      heading12: 15,
+      heading13: 'Camion avec haillon',
+      heading14: '',
+      heading15: ''
+    }, ]
   previous: any = [];
-  headElements = ['ID', 'UT', 'Lieu', 'Activité', 'Danger', 'Risque', 'G', 'F', 'C', 'Prévention','G1','F','C','Prévention','Pas','Action'];
+  headElements = ['ID', 'UT', 'Lieu', 'Activité', 'Danger', 'Risque', 'G', 'F', 'C', 'Prévention','G','F','C','Prévention','Pas','Action'];
 
-  constructor(private cdRef: ChangeDetectorRef) { }
+  constructor(private _router: Router, private cdRef: ChangeDetectorRef) { }
 
   ngOnInit() {
 
@@ -50,6 +69,9 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
   }
+  choixSortir() {
 
+    this._router.navigate(['/gdu/deconnexion']);
+  }
 }
 
