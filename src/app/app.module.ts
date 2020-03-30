@@ -10,6 +10,7 @@ import { GduPasComponent } from './gdu-pas/gdu-pas.component';
 import { GduConnexionComponent } from './gdu-connexion/gdu-connexion.component';
 import { GduPanneauComponent } from './gdu-panneau/gdu-panneau.component';
 import { GduPrevComponent } from './gdu-prev/gdu-prev.component';
+import { ReactiveFormsModule, FormsModule} from '@angular/forms';
 
 const ROUTES: Routes = [
   {path: 'gdu', component: GduPanneauComponent},
@@ -30,13 +31,16 @@ const ROUTES: Routes = [
     GduPasComponent,
     GduConnexionComponent,
     GduPanneauComponent,
-    GduPrevComponent
+    GduPrevComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(ROUTES),
-    MDBBootstrapModule.forRoot()
-  ],
+    MDBBootstrapModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule,
+
+     ],
   providers: [],
   bootstrap: [AppComponent],
 
