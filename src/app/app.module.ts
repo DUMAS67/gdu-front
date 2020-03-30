@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { GduMenuComponent } from './gdu-menu/gdu-menu.component';
@@ -11,14 +12,17 @@ import { GduConnexionComponent } from './gdu-connexion/gdu-connexion.component';
 import { GduPanneauComponent } from './gdu-panneau/gdu-panneau.component';
 import { GduPrevComponent } from './gdu-prev/gdu-prev.component';
 import { ReactiveFormsModule, FormsModule} from '@angular/forms';
+import { GduDeconnexionComponent } from './gdu-deconnexion/gdu-deconnexion.component';
 
 const ROUTES: Routes = [
-  {path: 'gdu', component: GduPanneauComponent},
-{path: 'gdu/connexion', component: GduConnexionComponent},
-  {path: 'gdu/evrp', component: GduEvrpComponent},
-  {path: 'gdu/duer', component: GduDuerComponent},
+  { path: 'gdu', component: GduPanneauComponent },
+  { path: 'gdu/connexion', component: GduConnexionComponent },
+  { path: 'gdu/deconnexion', component: GduDeconnexionComponent },
+  { path: 'gdu/evrp', component: GduEvrpComponent },
+  { path: 'gdu/duer', component: GduDuerComponent },
   {path: 'gdu/prev', component: GduPrevComponent},
-  {path: 'gdu/pas', component: GduPasComponent},
+  { path: 'gdu/pas', component: GduPasComponent },
+
   { path: '', redirectTo: '/gdu', pathMatch: 'full' }
 ];
 
@@ -32,6 +36,7 @@ const ROUTES: Routes = [
     GduConnexionComponent,
     GduPanneauComponent,
     GduPrevComponent,
+    GduDeconnexionComponent
   ],
   imports: [
     BrowserModule,
@@ -39,8 +44,9 @@ const ROUTES: Routes = [
     MDBBootstrapModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
+    NgbModule
+  ],
 
-     ],
   providers: [],
   bootstrap: [AppComponent],
 

@@ -1,1 +1,208 @@
-<p>gdu-panneau works!</p>
+<p></p>
+<div class="container">
+  <div class="row"></div>
+  <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+    <ngb-panel title="Renseignements DUER">
+      <ng-template ngbPanelContent>
+        <p>Date de Création du DUER :</p>
+        <p>Date de l'avant-dernière modification du DUER :</p>
+        <p>Date de dernière modification du DUER :</p>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel>
+      <ng-template ngbPanelTitle>
+        Renseignement "Le Parchemin"
+      </ng-template>
+      <ng-template ngbPanelContent>
+        L’association "Le Parchemin" créée fin 1990 est une structure d’insertion par l’activité économique
+        (SIAE).<br />
+        Cette structure œuvre pour l’insertion professionnelle et développe des activités de protection de
+        l’environnement : <br />
+        <ul>
+          <li>L’équipe d’entretien des espaces naturels se compose de 9 salariés</li>
+          <li>la ressourcerie de Limoux se décompose en trois équipes</li>
+          <li>la collecte avec 12 salariés</li>
+          <li>la revalorisation avec 12 salariés</li>
+          <li>la vente avec 9 salariés</li>
+          <li>la ressourcerie de Carcassonne se compose de 7 salariés</li>
+        </ul>
+        Chaque équipe est sous la responsabilité d'un Encadrant technique. Trois Accompagnatrices socio-professionnelles
+        assurent l’accompagnement individuel des 49 salariés en contrat à durée déterminée d’insertion (CDDI) tout au
+        long de leur présence au Parchemin.<br />
+        L’administration se compose d’une secrétaire, d’une comptable, de deux co-Directeur qui portent la
+        responsabilité économique et de fonctionnement global de la structure et entretient le lien avec les membres du
+        Conseil d’administration.<br />
+        Le Conseil d’administration du Parchemin est composé de 12 membres.<br />
+        49 salariés en CDDI, 13 salariés permanents.
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel title="Accessibilité et Méthodologie">
+      <ng-template ngbPanelContent>
+        Ce document a pour objectif de recenser et d'évaluer l'ensemble des risques professionnels, dans tous les
+        aspects liés au travail. <br />
+        C’est un préalable à la définition d’actions de prévention appropriées.<br />
+        <p></p>
+        A) Accessibilité :<br />
+        Article R4121-4 du Code du Travail modifié par Décret n°2008-1347 du 17 décembre 2008 - art. 1<br />
+        Le document unique d'évaluation des risques est tenu à la disposition :
+        <ol>
+          <li>Des travailleurs </li>
+          <li>Des membres du comité d'hygiène, de sécurité et des conditions de travail ou des instances qui en tiennent
+            lieu</li>
+          <li>Des délégués du personnel</li>
+          <li>Du médecin du travail</li>
+          <li>Des agents de l'inspection du travail</li>
+          <li>Des agents des services de prévention des organismes de sécurité sociale</li>
+          <li>Des agents des organismes professionnels de santé, de sécurité et des conditions de travail mentionnés à
+            l'article L. 4643-1</li>
+          <li>Des inspecteurs de la radioprotection mentionnés à l'article L. 1333-17 du code de la santé publique et
+            des agents mentionnés à l'article L. 1333-18 du même code, en ce qui concerne les résultats des évaluations
+            liées à l'exposition des travailleurs aux rayonnements ionisants, pour les installations et activités dont
+            ils ont respectivement la charge.</li>
+        </ol>
+        Un avis indiquant les modalités d'accès des travailleurs au document unique est affiché à une place convenable
+        et aisément accessible dans les lieux de travail. Dans les entreprises ou établissements dotés d'un règlement
+        intérieur, cet avis est affiché au même emplacement que celui réservé au règlement intérieur.
+        <p></p>
+        <br /> B) Méthodologie :<br />
+        <ol>
+          <li> Découper l'entreprise en unité de travail.</li>
+          <li>Analyse des risques par unité de travail</li>
+          <ol>
+            <li>Analyse des opérations</li>
+            <li>Analyse des postes de travail: équipement, substances et méthode de travail</li>
+            <li>Analyse des accidents passés dans l'unité</li>
+          </ol>
+          <li>Cotation et hiérarchisation des risques:</li>
+          <ol>
+            <li>Analyse de la fréquence d'apparition du danger</li>
+            <li>Analyse de la gravité du danger</li>
+            <li>Analyse de la probabilité d'apparition du danger</li>
+            <li>La criticité se fait en multipliant La fréquence, la gravité et la probabilité</li>
+            <li>Hiérarchisation des risques</li>
+            <li>Recherche des moyens de prévention existants</li>
+          </ol>
+          <li>Déterminer les mesures de prévention les plus adaptées de façon à réduire ou supprimer, si cela est
+            possible, le risque</li>
+          <ol>
+            <li>Déterminer les actions de préventions</li>
+            <li>Déterminer les pilotes et les délais</li>
+          </ol>
+        </ol>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel title="Grille de Cotation">
+      <ng-template ngbPanelContent>
+
+        <table border="2">
+          <tr>
+            <td align="center" width="30%" colspan="2">Gravité - Niveau de gravité de l'accident ou <br />niveau du danger</td>
+            <td align="center" bgcolor="yellow">Commentaires</td>
+            <td align="center" bgcolor="yellow">Conséquences</td>
+          </tr>
+          <tr>
+            <td align="center">1</td>
+            <td align="center">Mineure</td>
+            <td>Lésions sans AT</td>
+            <td>Pas ou peu de dommages</td>
+          </tr>
+          <tr>
+            <td align="center">3</td>
+            <td align="center">Significative</td>
+            <td>Lésions avec AT sans séquelles</td>
+            <td>Dommages sans arrêt de travail</td>
+          </tr>
+          <tr>
+            <td align="center">5</td>
+            <td align="center">Critique</td>
+            <td>Lésions avec AT avec séquelles</td>
+            <td>Dommages réversibles, entraînant des arrêts de travail</td>
+          </tr>
+          <tr>
+            <td align="center">10</td>
+            <td align="center">Vitale</td>
+            <td>Lésions pouvant entrainer la mort</td>
+            <td>Dommages irréversibles (incapacité totale ou partielle voire décès)</td>
+          </tr>
+        </table>
+        <p></p>
+        <table border="2">
+          <tr>
+            <td align="center">Fréquence</td>
+            <td align="center" bgcolor="yellow">Exposition</td>
+            <td align="center" bgcolor="yellow">Durée</td>
+          </tr>
+          <tr>
+            <td align="center">1</td>
+            <td align="center">Occasionnelle</td>
+            <td>Quelques heures par an</td>
+          </tr>
+          <tr>
+            <td align="center">2</td>
+            <td align="center">Intermittente</td>
+            <td>Quelques heures par mois</td>
+          </tr>
+          <tr>
+            <td align="center">3</td>
+            <td align="center">Fréquente</td>
+            <td>Quelques heures par semaine</td>
+          </tr>
+          <tr>
+            <td align="center">4</td>
+            <td align="center">Continue</td>
+            <td>Quelques heures par jour</td>
+          </tr>
+        </table>
+        <p></p>
+        <table border="2">
+          <tr>
+            <td align="center" bgcolor="yellow">Continue 4</td>
+            <td align="center" width="20%">4</td>
+            <td align="center" bgcolor="red">12</td>
+            <td align="center" bgcolor="red">20</td>
+            <td align="center" bgcolor="red">60</td>
+          </tr>
+          <tr>
+            <td align="center" bgcolor="yellow">Fréquente 3</td>
+            <td align="center" width="20%">3</td>
+            <td align="center" bgcolor="orange" width="20%">9</td>
+            <td align="center" bgcolor="red" width="20%">15</td>
+            <td align="center" bgcolor="red" width="20%">45</td>
+          </tr>
+          <tr>
+            <td align="center" bgcolor="yellow">Intermittente 2</td>
+            <td align="center" width="20%">2</td>
+            <td align="center" bgcolor="orange" width="20%">6</td>
+            <td align="center" bgcolor="orange" width="20%">10</td>
+            <td align="center" bgcolor="red" width="20%">30</td>
+          </tr>
+          <tr>
+          <td align="center" bgcolor="yellow">Occasionnelle 1</td>
+          <td align="center" width="20%">1</td>
+          <td align="center" width="20%">3</td>
+          <td align="center" bgcolor="orange" width="20%">5</td>
+          <td align="center" bgcolor="red" width="20%">15</td>
+          </tr>
+          <tr>
+            <td align="center" bgcolor="yellow">F x G</td>
+            <td align="center" bgcolor="yellow">Mineure 1</td>
+            <td align="center" bgcolor="yellow">Significative 3</td>
+            <td align="center" bgcolor="yellow">Critique 5</td>
+            <td align="center" bgcolor="yellow">Vitale 10</td>
+            </tr>
+        </table>
+        <p></p>
+        <p>
+          L'évaluation des risques est le résultat du produit des coefficients affectés à la fréquence et à la gravité.<br />
+La Gravité (G) X La Fréquence (F) = Criticité (C)<br />
+En fonction de la cotation obtenue de 1 à 60, nous obtenons un ordre de priorité à donner afin de faire face aux situations dangereuses et pouvons construire un plan d'actions qui définit les priorités.
+        </p>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+  <p></p>
+  <div class="row">
+    <div class="col-md-10"></div>
+    <button mdbBtn type="button" color="dark-green" mdbWavesEffect (click)="choixSortir()">Sortir</button>
+  </div>
+</div>
