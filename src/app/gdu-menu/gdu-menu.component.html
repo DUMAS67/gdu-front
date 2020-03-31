@@ -10,26 +10,91 @@
   <!-- Collapsible content -->
   <links>
 
-      <!-- Links -->
-      <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-              <a routerLinkActive="active" routerLink="/gdu/evrp" class="nav-link waves-light" mdbWavesEffect><b>EVRP</b><span class="sr-only">(current)</span></a>
-            </li>
-          <li class="nav-item">
-              <a routerLinkActive="active" routerLink="/gdu/duer" class="nav-link waves-light" mdbWavesEffect><b>DUER</b></a>
-          </li>
-          <li class="nav-item">
-              <a routerLinkActive="active" routerLink="/gdu/pas"class="nav-link waves-light" mdbWavesEffect><b>Plan d'Action</b></a>
-          </li>
+
+    <!-- Links -->
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a routerLinkActive="active" routerLink="/gdu/evrp" class="nav-link waves-light" mdbWavesEffect><b>EVRP</b><span
+            class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a routerLinkActive="active" routerLink="/gdu/duer" class="nav-link waves-light" mdbWavesEffect><b>DUER</b></a>
+      </li>
+      <li class="nav-item">
+        <a routerLinkActive="active" routerLink="/gdu/prev" class="nav-link waves-light" mdbWavesEffect><b>Plan de
+            Prévention</b></a>
+      </li>
+      <li class="nav-item">
+        <a routerLinkActive="active" routerLink="/gdu/pas" class="nav-link waves-light" mdbWavesEffect><b>Plan
+            d'Action</b></a>
+      </li>
 
 
-          <!-- Dropdown -->
-          <li class="nav-item dropdown" dropdown>
-              <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-              <b>Documentation</b><span class="caret"></span></a>
-              <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-                  <a class="dropdown-item waves-light" mdbWavesEffect href="#">Grille de Cotation</a>
-                  <a class="dropdown-item waves-light" mdbWavesEffect href="#">Définitions</a>
+      <!-- Dropdown -->
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+          <b>Documentation</b><span class="caret"></span></a>
+        <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Grille de Cotation</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Définitions</a>
+        </div>
+      </li>
+      <!-- Dropdown -->
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+          <b>Réglementation</b><span class="caret"></span></a>
+        <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Prévention</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">DUER</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Port de Charge</a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
+          mdbWavesEffect (click)="frame.show()">Connexion</button>
+      </li>
+      <!-- Modal depour l'identification -->
+      <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header text-center">
+              <h4 class="modal-title w-100 font-weight-bold">Connexion</h4>
+              <button type="button" class="close" data-dismiss="modal" background-color="green" aria-label="Close"
+                (click)="frame.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body mx-3">
+              <div class="md-form mb-5">
+
+                <mdb-icon fas icon="envelope" class="prefix grey-text"></mdb-icon>
+                <input type="email" id="defaultForm-email" [formControl]="loginFormModalEmail" class="form-control"
+                  mdbInput mdbValidate>
+                <label for="defaultForm-email">Votre email</label>
+                <mdb-error
+                  *ngIf="loginFormModalEmail.invalid && (loginFormModalEmail.dirty || loginFormModalEmail.touched)">
+                  Données invalides
+                </mdb-error>
+                <mdb-success
+                  *ngIf="loginFormModalEmail.valid && (loginFormModalEmail.dirty || loginFormModalEmail.touched)">
+                  Données invalides
+                </mdb-success>
+              </div>
+
+              <div class="md-form mb-4">
+                <mdb-icon fas icon="lock" class="prefix grey-text"></mdb-icon>
+                <input type="password" id="defaultForm-pass" class="form-control" mdbInput mdbValidate>
+                <label for="defaultForm-pass">Votre Mot de passe</label>
+                <mdb-error
+                  *ngIf="loginFormModalPassword.invalid && (loginFormModalPassword.dirty || loginFormModalPassword.touched)">
+                  Input invalid
+                </mdb-error>
+                <mdb-success
+                  *ngIf="loginFormModalPassword.valid && (loginFormModalPassword.dirty || loginFormModalPassword.touched)">
+                  Input valid
+                </mdb-success>
               </div>
           </li>
           <!-- Dropdown -->
