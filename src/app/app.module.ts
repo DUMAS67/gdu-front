@@ -37,8 +37,8 @@ const ROUTES: Routes = [
     BrowserModule,
     RouterModule.forRoot(ROUTES),
     MDBBootstrapModule.forRoot(),
-    NgbModule
-  ],
+    NgbModule,
+     ],
   providers: [],
   bootstrap: [AppComponent],
 

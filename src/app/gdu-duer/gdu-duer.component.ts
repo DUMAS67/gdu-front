@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class GduDuerComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
+
   elements: any = [
     {
       id: 1,
@@ -53,6 +54,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
   headElements = ['ID', 'UT', 'Lieu', 'Activité', 'Danger', 'Risque', 'G', 'F', 'C', 'Prévention','G','F','C','Prévention','Pas','Action'];
 
   constructor(private _router: Router, private cdRef: ChangeDetectorRef) { }
+
 
   ngOnInit() {
 

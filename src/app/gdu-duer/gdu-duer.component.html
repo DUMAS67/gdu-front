@@ -81,14 +81,19 @@
             <td>{{el.heading12}}</td>
             <td>{{el.heading13}}</td>
             <td>
-              <!-- Default unchecked -->
-              <mdb-checkbox [default]="true"></mdb-checkbox>
+              <!-- Default unchecked-->
+
+              <mdb-checkbox [default]="true" (click)="basicModal.show()">
+
+              </mdb-checkbox>
+              <!--input type="checkbox" id="pas" name="pas" value="true" (click)="basicModal.show()">-->
+
             </td>
 
 
             <td><button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
                 class="m-0 relative waves-light" (click)="basicModal1.show()">Modifier</button>
-              </td>
+            </td>
 
             <!-- Partie modale-->
 
@@ -197,7 +202,7 @@
                   </div>
 
                   <div class="modal-footer">
-                    <!-- Pagination -->
+
                     <button type="button" mdbBtn color="orange" class="waves-light" aria-label="Close"
                       (click)="basicModal1.hide()" mdbWavesEffect>Modifier</button>
                     <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
@@ -206,6 +211,105 @@
                 </div>
               </div>
             </div>
+            <!--Fin Modal-->
+            <!-- Partie modale PAS -->
+
+            <div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+              aria-labelledby="myBasicModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title w-100" id="myModalLabel">Plan d'Action Spécifique</h4>
+                  </div>
+
+
+                  <div class="modal-body ">
+
+                    <div class="row">
+                      <div class="col-2">id DUER</div>
+                      <div class="col-2">14X</div>
+                      <div class="col-1"></div>
+                      <div class="col-1">Danger </div>
+                      <div class="col-1"></div>
+                      <div class="col-3">DDDDDDDDDDDDDD</div>
+                      <div class="col-1"></div>
+                    </div>
+                    <div class="row">
+                      <p></p>
+                    </div>
+                    <div class="row">
+                      <div class="col-2">Risque</div>
+                      <div class="col-6">RRRRRRRRRRRRRRRRRRRRRRRRRRRRRR</div>
+                      <div class="row">
+                        <p></p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <p></p>
+                    </div>
+                    <div class="row">
+                      <div class="col">Prévention à mettre en oeuvre</div>
+                    </div>
+                    <div class="row">
+                      <p></p>
+                    </div>
+                    <div class="row"></div>
+                    <div class="col">
+                      <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
+                        class="form-control mb-4" placeholder="">
+                    </div>
+                    <div class="row">
+                      <div class="col-2">
+                        Budget
+                      </div>
+                      <div class="col-4">
+                        <input type="number" formControlName="contactFormName" id="defaultContactFormName" mdbInput
+                          class="form-control mb-4" placeholder="">
+                      </div>
+
+                      <div class="col-1">Qui ?
+                      </div>
+                      <div class="col-4">
+                        <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
+                          class="form-control mb-4" placeholder="">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2">
+                        Délai
+                      </div>
+                      <div class="col-4">
+                        <input type="date" formControlName="contactFormName" id="defaultContactFormName" mdbInput
+                          class="form-control mb-4" placeholder="">
+                      </div>
+
+                      <div class="col-2">Fait ?
+                      </div>
+                      <div class="col-1">
+                        <mdb-checkbox [default]="true">
+                        </mdb-checkbox>
+                      </div>
+                      <div class="col-3"></div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <!-- Pagination -->
+                    <button type="button" mdbBtn color="green" class="waves-light" aria-label="Close"
+                      (click)="basicModal.hide()" mdbWavesEffect>Effacer</button>
+                    <button type="button" mdbBtn color="orange" class="waves-light" aria-label="Close"
+                      (click)="basicModal.hide()" mdbWavesEffect>Modifier</button>
+                    <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                      (click)="basicModal.hide()" mdbWavesEffect>Fermer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!------------------------------------------------------------->
+
+            <!-- Fin Modal Pas-->
           </tr>
         </tbody>
         <tfoot class="grey lighten-5 w-100">
@@ -215,7 +319,9 @@
             </td>
           </tr>
         </tfoot>
-        <!-- Fin Modal-->
+
+
+
       </table>
       <div class="row">
         <div class="col-md-10"></div>
