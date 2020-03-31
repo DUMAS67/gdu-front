@@ -52,7 +52,7 @@
 
       <li class="nav-item">
         <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-          mdbWavesEffect (click)="frame.show()" >Connexion</button>
+          mdbWavesEffect (click)="frame.show()">Connexion</button>
       </li>
       <!-- Modal depour l'identification -->
       <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
@@ -61,7 +61,8 @@
           <div class="modal-content">
             <div class="modal-header text-center">
               <h4 class="modal-title w-100 font-weight-bold">Connexion</h4>
-              <button type="button" class="close" data-dismiss="modal" background-color="green" aria-label="Close" (click)="frame.hide()">
+              <button type="button" class="close" data-dismiss="modal" background-color="green" aria-label="Close"
+                (click)="frame.hide()">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -70,21 +71,21 @@
 
                 <mdb-icon fas icon="envelope" class="prefix grey-text"></mdb-icon>
                 <input type="email" id="defaultForm-email" [formControl]="loginFormModalEmail" class="form-control"
-                mdbInput mdbValidate>
-         <label for="defaultForm-email">Votre email</label>
+                  mdbInput mdbValidate>
+                <label for="defaultForm-email">Votre email</label>
                 <mdb-error
                   *ngIf="loginFormModalEmail.invalid && (loginFormModalEmail.dirty || loginFormModalEmail.touched)">
                   Données invalides
                 </mdb-error>
                 <mdb-success
-                  *ngIf="loginFormModalEmail.valid && (loginFormModalEmail.dirty || loginFormModalEmail.touched)">Données invalides
-                                 </mdb-success>
+                  *ngIf="loginFormModalEmail.valid && (loginFormModalEmail.dirty || loginFormModalEmail.touched)">
+                  Données invalides
+                </mdb-success>
               </div>
 
               <div class="md-form mb-4">
                 <mdb-icon fas icon="lock" class="prefix grey-text"></mdb-icon>
-                <input type="password" id="defaultForm-pass" class="form-control"
-                  mdbInput mdbValidate>
+                <input type="password" id="defaultForm-pass" class="form-control" mdbInput mdbValidate>
                 <label for="defaultForm-pass">Votre Mot de passe</label>
                 <mdb-error
                   *ngIf="loginFormModalPassword.invalid && (loginFormModalPassword.dirty || loginFormModalPassword.touched)">
