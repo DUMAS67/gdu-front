@@ -5,7 +5,7 @@ before_script:
   - npm install
 script: npm run build
 deploy:
-  local-dir: dist/collegues-front
+  local-dir: dist/gdu-front
   provider: pages
   skip-cleanup: true
   github-token: $GITHUB_TOKEN
