@@ -10,6 +10,8 @@ import { GduDuerComponent } from './gdu-duer/gdu-duer.component';
 import { GduPasComponent } from './gdu-pas/gdu-pas.component';
 import { GduConnexionComponent } from './gdu-connexion/gdu-connexion.component';
 import { GduPanneauComponent } from './gdu-panneau/gdu-panneau.component';
+import { GduPrevComponent } from './gdu-prev/gdu-prev.component';
+import { ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { GduDeconnexionComponent } from './gdu-deconnexion/gdu-deconnexion.component';
 
 const ROUTES: Routes = [
@@ -18,7 +20,9 @@ const ROUTES: Routes = [
   { path: 'gdu/deconnexion', component: GduDeconnexionComponent },
   { path: 'gdu/evrp', component: GduEvrpComponent },
   { path: 'gdu/duer', component: GduDuerComponent },
+  {path: 'gdu/prev', component: GduPrevComponent},
   { path: 'gdu/pas', component: GduPasComponent },
+
   { path: '', redirectTo: '/gdu', pathMatch: 'full' }
 ];
 
@@ -31,14 +35,18 @@ const ROUTES: Routes = [
     GduPasComponent,
     GduConnexionComponent,
     GduPanneauComponent,
+    GduPrevComponent,
     GduDeconnexionComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(ROUTES),
     MDBBootstrapModule.forRoot(),
-    NgbModule,
-     ],
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule
+  ],
+
   providers: [],
   bootstrap: [AppComponent],
 
