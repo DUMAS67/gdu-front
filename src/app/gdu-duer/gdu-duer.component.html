@@ -3,321 +3,323 @@
 
 
   <!-- Default form contact -->
-  <form class="">
 
-    <!-- Name -->
 
-    <!-- Sélection-->
+  <!-- Name -->
+
+  <!-- Sélection-->
+  <div class="row">
+    <div class="col-1"><b>DUER</b></div>
+    <div class="col-2"><label></label>
+      <select class="browser-default custom-select mb-4">
+        <option value="" selected>Unité de travail</option>
+        <option value="1">UT1</option>
+        <option value="2">UT2</option>
+        <option value="3">UT3</option>
+        <option value="4">UT4</option>
+      </select></div>
+
+    <div class="col-2"><label></label>
+      <select class="browser-default custom-select mb-4">
+        <option value="" selected>Lieu</option>
+        <option value="1">Lieu1</option>
+        <option value="1">Lieu2</option>
+        <option value="1">Lieu3</option>
+        <option value="1">Lieu4</option>
+      </select></div>
+
+    <div class="col-2"><label></label>
+      <select class="browser-default custom-select mb-4">
+        <option value="" selected>Criticité</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="4">5</option>
+        <option value="1">6</option>
+        <option value="2">9</option>
+        <option value="3">10</option>
+        <option value="4">12</option>
+        <option value="4">15</option>
+        <option value="4">20</option>
+        <option value="4">30</option>
+        <option value="4">45</option>
+        <option value="4">60</option>
+      </select></div>
+
+    <div class="col-3">
+      <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Pareto</button>
+    </div>
+    <div class="col-2">
+      <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Impression</button>
+    </div>
+  </div>
+  <!-- Fin Sélection -->
+
+  <div class="container">
+    <table mdbTable #tableEl="mdbTable" class="z-depth-1">
+      <thead>
+        <tr>
+          <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr mdbTableCol *ngFor="let el of elements">
+          <th scope="row">{{el.id}}</th>
+          <td>{{el.heading1}}</td>
+          <td>{{el.heading2}}</td>
+          <td>{{el.heading3}}</td>
+          <td>{{el.heading4}}</td>
+          <td>{{el.heading5}}</td>
+          <td>{{el.heading6}}</td>
+          <td>{{el.heading7}}</td>
+          <td>{{el.heading8}}</td>
+          <td>{{el.heading9}}</td>
+          <td>{{el.heading10}}</td>
+          <td>{{el.heading11}}</td>
+          <td>{{el.heading12}}</td>
+          <td>{{el.heading13}}</td>
+
+          <td><button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
+              class="m-0 relative waves-light" (click)="basicModal.show()">Définir</button>
+          </td>
+          <td><button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
+              class="m-0 relative waves-light" (click)="basicModal1.show()">Modifier</button>
+          </td>
+
+          <!-- Partie modale-->
+<form>
+          <div mdbModal #basicModal1="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+            aria-labelledby="myBasicModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal1.hide()">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                  <h4 class="modal-title w-100" id="myModalLabel">Modification Risques</h4>
+                </div>
+
+
+                <div class="modal-body ">
+
+                  <div class="row">
+                    <div class="col-2">id DUER</div>
+                    <div class="col-2">XXXX</div>
+                    <div class="col-3">Unité de Travail</div>
+                    <div class="col-4">XXXXXXXXXXXXXXXXXXXX</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-2">Lieu</div>
+                    <div class="col-2">LLLLLLLLLLLLLL</div>
+                    <div class="col-3">Danger</div>
+                    <div class="col-4">XXXXXXXXXXXXXXXXXXXX</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-1">Risque</div>
+                    <div class="col-2">LLLLLLLLLLLLLL</div>
+                    <div class="col-1">G</div>
+                    <div class="col-2">
+                      <select class="browser-default custom-select mb-4">
+                        <option value="" selected>G</option>
+                        <option value="1">G1</option>
+                        <option value="2">G2</option>
+                        <option value="3">G3</option>
+                        <option value="4">G4</option>
+                      </select>
+                    </div>
+                    <div class="col-1">F</div>
+                    <div class="col-2">
+                      <select class="browser-default custom-select mb-4">
+                        <option value="" selected>F</option>
+                        <option value="1">F1</option>
+                        <option value="2">F2</option>
+                        <option value="3">F3</option>
+                        <option value="4">F4</option>
+                      </select>
+                    </div>
+                    <div class="col-1">C</div>
+                    <div class="col-2">
+                      <input type="text" id="defaultContactFormName1" mdbInput
+                      class="form-control mb-4"  placeholder="C">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-4">Prévention existante</div>
+                  </div>
+                  <div class="col">
+                    <input type="text" id="defaultContactFormName" mdbInput
+                    class="form-control mb-4"  placeholder="Données Prévention Existante">
+                  </div>
+                  <div class="row">
+
+                    <div class="col-4">Prévention à mettre en oeuvre</div>
+                  </div>
+                  <div class="row">
+                    <p></p>
+                  </div>
+                  <div class="row">
+                    <div class="col-1">Risque</div>
+                    <div class="col-2">LLLLLLLLLLLLLL</div>
+                    <div class="col-1">G</div>
+                    <div class="col-2">
+                      <select class="browser-default custom-select mb-4">
+                        <option value="" selected>G</option>
+                        <option value="1">G1</option>
+                        <option value="2">G2</option>
+                        <option value="3">G3</option>
+                        <option value="4">G4</option>
+                      </select>
+                    </div>
+                    <div class="col-1">F</div>
+                    <div class="col-2">
+                      <select class="browser-default custom-select mb-4">
+                        <option value="" selected>F</option>
+                        <option value="1">F1</option>
+                        <option value="2">F2</option>
+                        <option value="3">F3</option>
+                        <option value="4">F4</option>
+                      </select>
+                    </div>
+                    <div class="col-1">C</div>
+                    <div class="col-2">
+                      <input type="text"  id="defaultContactFormName1" mdbInput
+                      class="form-control mb-4" placeholder="C">
+                    </div>
+                  </div>
+                  <div class="col">
+                    <input type="text"  id="defaultContactFormName" mdbInput
+                    class="form-control mb-4"  placeholder="Données à mettre en oeuvre">
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+
+                  <button type="submit" mdbBtn color="orange" class="waves-light" aria-label="Close"
+                    (click)="basicModal1.hide()" mdbWavesEffect>Modifier</button>
+                  <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                    (click)="basicModal1.hide()" mdbWavesEffect>Fermer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+          <!--Fin Modal-->
+          <!-- Partie modale PAS -->
+<form>
+          <div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+            aria-labelledby="myBasicModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                  <h4 class="modal-title w-100" id="myModalLabel">Plan d'Action Spécifique</h4>
+                </div>
+
+
+                <div class="modal-body ">
+
+                  <div class="row">
+                    <div class="col-2">id DUER</div>
+                    <div class="col-2">14X</div>
+                    <div class="col-1"></div>
+                    <div class="col-1">Danger </div>
+                    <div class="col-1"></div>
+                    <div class="col-3">DDDDDDDDDDDDDD</div>
+                    <div class="col-1"></div>
+                  </div>
+                  <div class="row">
+                    <p></p>
+                  </div>
+                  <div class="row">
+                    <div class="col-2">Risque</div>
+                    <div class="col-6">RRRRRRRRRRRRRRRRRRRRRRRRRRRRRR</div>
+                    <div class="row">
+                      <p></p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <p></p>
+                  </div>
+                  <div class="row">
+                    <div class="col">Prévention à mettre en oeuvre</div>
+                  </div>
+                  <div class="row">
+                    <p></p>
+                  </div>
+                  <div class="row"></div>
+                  <div class="col">
+                    <input type="number"  id="defaultContactFormName" mdbInput
+                      class="form-control mb-4" placeholder="">
+                  </div>
+                  <div class="row">
+                    <div class="col-2">
+                      Budget
+                    </div>
+                    <div class="col-4">
+                      <input type="number" id="defaultContactFormName" mdbInput
+                      class="form-control mb-4"  placeholder="nombre">
+                    </div>
+
+                    <div class="col-1">Qui ?
+                    </div>
+                    <div class="col-4">
+                      <input type="text" id="defaultContactFormName" mdbInput
+                      class="form-control mb-4" placeholder="">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-2">
+                      Délai
+                    </div>
+                    <div class="col-4">
+                      <input type="date" id="defaultContactFormName" mdbInput
+                      class="form-control mb-4" placeholder="">
+                    </div>
+
+                    <div class="col-2">Fait ?
+                    </div>
+                    <div class="col-1">
+                      <mdb-checkbox [default]="true">
+                      </mdb-checkbox>
+                    </div>
+                    <div class="col-3"></div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <!-- Pagination -->
+                  <button type="submit" mdbBtn color="green" class="waves-light" aria-label="Close"
+                     mdbWavesEffect>Effacer</button>
+                  <button type="submit" mdbBtn color="orange" class="waves-light" aria-label="Close"
+                     mdbWavesEffect>Modifier</button>
+                  <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                    (click)="basicModal.hide()" mdbWavesEffect>Fermer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+          <!------------------------------------------------------------->
+
+          <!-- Fin Modal Pas-->
+        </tr>
+      </tbody>
+      <tfoot class="grey lighten-5 w-100">
+        <tr>
+          <td colspan='16'>
+            <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
+          </td>
+        </tr>
+      </tfoot>
+
+
+
+    </table>
     <div class="row">
-      <div class="col-1"><b>DUER</b></div>
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Unité de travail</option>
-          <option value="1">UT1</option>
-          <option value="2">UT2</option>
-          <option value="3">UT3</option>
-          <option value="4">UT4</option>
-        </select></div>
-
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Lieu</option>
-          <option value="1">Lieu1</option>
-          <option value="1">Lieu2</option>
-          <option value="1">Lieu3</option>
-          <option value="1">Lieu4</option>
-        </select></div>
-
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Criticité</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="4">5</option>
-          <option value="1">6</option>
-          <option value="2">9</option>
-          <option value="3">10</option>
-          <option value="4">12</option>
-          <option value="4">15</option>
-          <option value="4">20</option>
-          <option value="4">30</option>
-          <option value="4">45</option>
-          <option value="4">60</option>
-        </select></div>
-
-      <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Pareto</button>
-      </div>
-      <div class="col-2">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Impression</button>
-      </div>
+      <div class="col-md-10"></div>
+      <button mdbBtn type="button" color="dark-green" mdbWavesEffect (click)="choixSortir()">Sortir</button>
     </div>
-    <!-- Fin Sélection -->
-
-    <div class="container">
-      <table mdbTable #tableEl="mdbTable" class="z-depth-1">
-        <thead>
-          <tr>
-            <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr mdbTableCol *ngFor="let el of elements">
-            <th scope="row">{{el.id}}</th>
-            <td>{{el.heading1}}</td>
-            <td>{{el.heading2}}</td>
-            <td>{{el.heading3}}</td>
-            <td>{{el.heading4}}</td>
-            <td>{{el.heading5}}</td>
-            <td>{{el.heading6}}</td>
-            <td>{{el.heading7}}</td>
-            <td>{{el.heading8}}</td>
-            <td>{{el.heading9}}</td>
-            <td>{{el.heading10}}</td>
-            <td>{{el.heading11}}</td>
-            <td>{{el.heading12}}</td>
-            <td>{{el.heading13}}</td>
-
-            <td><button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
-                class="m-0 relative waves-light" (click)="basicModal.show()">Définir</button>
-            </td>
-            <td><button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
-                class="m-0 relative waves-light" (click)="basicModal1.show()">Modifier</button>
-            </td>
-
-            <!-- Partie modale-->
-
-            <div mdbModal #basicModal1="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-              aria-labelledby="myBasicModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal1.hide()">
-                      <span aria-hidden="true">×</span>
-                    </button>
-                    <h4 class="modal-title w-100" id="myModalLabel">Modification Risques</h4>
-                  </div>
-
-
-                  <div class="modal-body ">
-
-                    <div class="row">
-                      <div class="col-2">id DUER</div>
-                      <div class="col-2">XXXX</div>
-                      <div class="col-3">Unité de Travail</div>
-                      <div class="col-4">XXXXXXXXXXXXXXXXXXXX</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-2">Lieu</div>
-                      <div class="col-2">LLLLLLLLLLLLLL</div>
-                      <div class="col-3">Danger</div>
-                      <div class="col-4">XXXXXXXXXXXXXXXXXXXX</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-1">Risque</div>
-                      <div class="col-2">LLLLLLLLLLLLLL</div>
-                      <div class="col-1">G</div>
-                      <div class="col-2">
-                        <select class="browser-default custom-select mb-4">
-                          <option value="" selected>G</option>
-                          <option value="1">G1</option>
-                          <option value="2">G2</option>
-                          <option value="3">G3</option>
-                          <option value="4">G4</option>
-                        </select>
-                      </div>
-                      <div class="col-1">F</div>
-                      <div class="col-2">
-                        <select class="browser-default custom-select mb-4">
-                          <option value="" selected>F</option>
-                          <option value="1">F1</option>
-                          <option value="2">F2</option>
-                          <option value="3">F3</option>
-                          <option value="4">F4</option>
-                        </select>
-                      </div>
-                      <div class="col-1">C</div>
-                      <div class="col-2">
-                        <input type="text" formControlName="contactFormName1" id="defaultContactFormName1" mdbInput
-                          class="form-control mb-4" placeholder="C">
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-4">Prévention existante</div>
-                    </div>
-                    <div class="col">
-                      <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
-                        class="form-control mb-4" placeholder="Données Prévention Existante">
-                    </div>
-                    <div class="row">
-
-                      <div class="col-4">Prévention à mettre en oeuvre</div>
-                    </div>
-                    <div class="row">
-                      <p></p>
-                    </div>
-                    <div class="row">
-                      <div class="col-1">Risque</div>
-                      <div class="col-2">LLLLLLLLLLLLLL</div>
-                      <div class="col-1">G</div>
-                      <div class="col-2">
-                        <select class="browser-default custom-select mb-4">
-                          <option value="" selected>G</option>
-                          <option value="1">G1</option>
-                          <option value="2">G2</option>
-                          <option value="3">G3</option>
-                          <option value="4">G4</option>
-                        </select>
-                      </div>
-                      <div class="col-1">F</div>
-                      <div class="col-2">
-                        <select class="browser-default custom-select mb-4">
-                          <option value="" selected>F</option>
-                          <option value="1">F1</option>
-                          <option value="2">F2</option>
-                          <option value="3">F3</option>
-                          <option value="4">F4</option>
-                        </select>
-                      </div>
-                      <div class="col-1">C</div>
-                      <div class="col-2">
-                        <input type="text" formControlName="contactFormName1" id="defaultContactFormName1" mdbInput
-                          class="form-control mb-4" placeholder="C">
-                      </div>
-                    </div>
-                    <div class="col">
-                      <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
-                        class="form-control mb-4" placeholder="Données à mettre en oeuvre">
-                    </div>
-                  </div>
-
-                  <div class="modal-footer">
-
-                    <button type="button" mdbBtn color="orange" class="waves-light" aria-label="Close"
-                      (click)="basicModal1.hide()" mdbWavesEffect>Modifier</button>
-                    <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-                      (click)="basicModal1.hide()" mdbWavesEffect>Fermer</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!--Fin Modal-->
-            <!-- Partie modale PAS -->
-
-            <div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-              aria-labelledby="myBasicModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
-                      <span aria-hidden="true">×</span>
-                    </button>
-                    <h4 class="modal-title w-100" id="myModalLabel">Plan d'Action Spécifique</h4>
-                  </div>
-
-
-                  <div class="modal-body ">
-
-                    <div class="row">
-                      <div class="col-2">id DUER</div>
-                      <div class="col-2">14X</div>
-                      <div class="col-1"></div>
-                      <div class="col-1">Danger </div>
-                      <div class="col-1"></div>
-                      <div class="col-3">DDDDDDDDDDDDDD</div>
-                      <div class="col-1"></div>
-                    </div>
-                    <div class="row">
-                      <p></p>
-                    </div>
-                    <div class="row">
-                      <div class="col-2">Risque</div>
-                      <div class="col-6">RRRRRRRRRRRRRRRRRRRRRRRRRRRRRR</div>
-                      <div class="row">
-                        <p></p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <p></p>
-                    </div>
-                    <div class="row">
-                      <div class="col">Prévention à mettre en oeuvre</div>
-                    </div>
-                    <div class="row">
-                      <p></p>
-                    </div>
-                    <div class="row"></div>
-                    <div class="col">
-                      <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
-                        class="form-control mb-4" placeholder="">
-                    </div>
-                    <div class="row">
-                      <div class="col-2">
-                        Budget
-                      </div>
-                      <div class="col-4">
-                        <input type="number" formControlName="contactFormName" id="defaultContactFormName" mdbInput
-                          class="form-control mb-4" placeholder="">
-                      </div>
-
-                      <div class="col-1">Qui ?
-                      </div>
-                      <div class="col-4">
-                        <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
-                          class="form-control mb-4" placeholder="">
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-2">
-                        Délai
-                      </div>
-                      <div class="col-4">
-                        <input type="date" formControlName="contactFormName" id="defaultContactFormName" mdbInput
-                          class="form-control mb-4" placeholder="">
-                      </div>
-
-                      <div class="col-2">Fait ?
-                      </div>
-                      <div class="col-1">
-                        <mdb-checkbox [default]="true">
-                        </mdb-checkbox>
-                      </div>
-                      <div class="col-3"></div>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <!-- Pagination -->
-                    <button type="button" mdbBtn color="green" class="waves-light" aria-label="Close"
-                      (click)="basicModal.hide()" mdbWavesEffect>Effacer</button>
-                    <button type="button" mdbBtn color="orange" class="waves-light" aria-label="Close"
-                      (click)="basicModal.hide()" mdbWavesEffect>Modifier</button>
-                    <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-                      (click)="basicModal.hide()" mdbWavesEffect>Fermer</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!------------------------------------------------------------->
-
-            <!-- Fin Modal Pas-->
-          </tr>
-        </tbody>
-        <tfoot class="grey lighten-5 w-100">
-          <tr>
-            <td colspan='16'>
-              <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
-            </td>
-          </tr>
-        </tfoot>
-
-
-
-      </table>
-      <div class="row">
-        <div class="col-md-10"></div>
-        <button mdbBtn type="button" color="dark-green" mdbWavesEffect (click)="choixSortir()">Sortir</button>
-      </div>
-    </div>
+  </div>

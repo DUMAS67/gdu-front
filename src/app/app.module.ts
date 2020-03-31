@@ -38,10 +38,11 @@ const ROUTES: Routes = [
     BrowserModule,
     RouterModule.forRoot(ROUTES),
     MDBBootstrapModule.forRoot(),
+    NgbModule,
     FormsModule,
-    ReactiveFormsModule,
-    NgbModule
-     ],
+    ReactiveFormsModule
+      ],
+
   providers: [],
   bootstrap: [AppComponent],
 
