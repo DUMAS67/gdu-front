@@ -51,7 +51,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
       heading15: ''
     }, ]
   previous: any = [];
-  headElements = ['ID', 'UT', 'Lieu', 'Activité', 'Danger', 'Risque', 'G', 'F', 'C', 'Prévention','G','F','C','Prévention','Pas','Action'];
+  headElements = ['ID', 'UT', 'Lieu', 'Activité', 'Danger', 'Risque', 'G', 'F', 'C', 'Prévention','G','F','C','Prévention','Plan Actions','Action'];
 
   constructor(private _router: Router, private cdRef: ChangeDetectorRef) { }
 

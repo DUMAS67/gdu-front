@@ -80,17 +80,10 @@
             <td>{{el.heading11}}</td>
             <td>{{el.heading12}}</td>
             <td>{{el.heading13}}</td>
-            <td>
-              <!-- Default unchecked-->
 
-              <mdb-checkbox [default]="true" (click)="basicModal.show()">
-
-              </mdb-checkbox>
-              <!--input type="checkbox" id="pas" name="pas" value="true" (click)="basicModal.show()">-->
-
+            <td><button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
+                class="m-0 relative waves-light" (click)="basicModal.show()">Définir</button>
             </td>
-
-
             <td><button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
                 class="m-0 relative waves-light" (click)="basicModal1.show()">Modifier</button>
             </td>
