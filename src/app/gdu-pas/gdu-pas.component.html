@@ -1,1 +1,175 @@
-<p>gdu-pas works!</p>
+<div class="container">
+  <p></p>
+
+    <!-- Sélection-->
+  <div class="row">
+    <div class="col-3"><b>Plan d'Actions Spécifiques</b></div>
+    <div class="col-2"><label></label>
+      <select class="browser-default custom-select mb-4">
+        <option value="" selected>Danger</option>
+        <option value="1">UT1</option>
+        <option value="2">UT2</option>
+        <option value="3">UT3</option>
+        <option value="4">UT4</option>
+      </select></div>
+
+    <div class="col-2"><label></label>
+      <select class="browser-default custom-select mb-4">
+        <option value="" selected>Risque</option>
+        <option value="1">Lieu1</option>
+        <option value="1">Lieu2</option>
+        <option value="1">Lieu3</option>
+        <option value="1">Lieu4</option>
+      </select></div>
+
+    <div class="col-2"><label></label>
+      <select class="browser-default custom-select mb-4">
+        <option value="" selected>Qui ?</option>
+        <option value="1">Bruno</option>
+        <option value="2">Pascal</option>
+        <option value="3">Florence</option>
+        <option value="4">4</option>
+        <option value="4">5</option>
+      </select></div>
+
+
+    <div class="col-2">
+      <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Impression</button>
+    </div>
+  </div>
+  <!-- Fin Sélection -->
+
+  <div class="container">
+    <table mdbTable #tableEl="mdbTable" class="z-depth-1">
+      <thead>
+        <tr>
+          <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr mdbTableCol *ngFor="let el of elements">
+          <th scope="row">{{el.id}}</th>
+          <td>{{el.heading1}}</td>
+          <td>{{el.heading2}}</td>
+          <td>{{el.heading3}}</td>
+          <td>{{el.heading4}}</td>
+          <td>{{el.heading5}}</td>
+          <td>{{el.heading6}}</td>
+
+          <td>
+            <!-- Default unchecked -->
+            <mdb-checkbox [default]="true"></mdb-checkbox>
+            <!-- Default unchecked-->
+          </td>
+          <!-- Material unchecked -->
+          <td><button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
+              class="m-0 relative waves-light" (click)="basicModal1.show()">Modifier</button>
+          </td>
+          <!-- Partie modale PAS -->
+          <form>
+            <div mdbModal #basicModal1="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+              aria-labelledby="myBasicModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal1.hide()">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title w-100" id="myModalLabel">Plan d'Action Spécifique</h4>
+                  </div>
+                  <div class="modal-body ">
+                    <div class="row">
+                      <div class="col-2">id DUER</div>
+                      <div class="col-2">{{el.id}}</div>
+                      <div class="col-1"></div>
+                      <div class="col-1">Danger </div>
+                      <div class="col-1"></div>
+                      <div class="col-3">{{el.heading1}}</div>
+                      <div class="col-1"></div>
+                    </div>
+                    <div class="row">
+                      <p></p>
+                    </div>
+                    <div class="row">
+                      <div class="col-2">Risque</div>
+                      <div class="col-6">{{el.heading2}}</div>
+                      <div class="row">
+                        <p></p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <p></p>
+                    </div>
+                    <div class="row">
+                      <div class="col">Prévention à mettre en oeuvre</div>
+                    </div>
+                    <div class="row">
+                      <p></p>
+                    </div>
+                    <div class="row"></div>
+                    <div class="col">
+                      <input type="number" id="defaultContactFormName" mdbInput class="form-control mb-4"
+                        placeholder="{{el.heading3}}">
+                    </div>
+                    <div class="row">
+                      <div class="col-2">
+                        Budget
+                      </div>
+                      <div class="col-4">
+                        <input type="number" id="defaultContactFormName" mdbInput class="form-control mb-4"
+                          placeholder="{{el.heading4}}">
+                      </div>
+                      <div class="col-1">Qui ?
+                      </div>
+                      <div class="col-4">
+                        <input type="text" id="defaultContactFormName" mdbInput class="form-control mb-4"
+                          placeholder="{{el.heading5}}">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-2">
+                        Délai
+                      </div>
+                      <div class="col-4">
+                        <input type="date" id="defaultContactFormName" mdbInput class="form-control mb-4"
+                          placeholder="{{el.heading6}}">
+                      </div>
+                      <div class="col-2">Fait ?
+                      </div>
+                      <div class="col-1">
+                        <!-- Default checked -->
+                        <mdb-checkbox [checked]="false" [default]="true"></mdb-checkbox>
+                      </div>
+                      <div class="col-3"></div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <!-- Pagination -->
+                    <button type="submit" mdbBtn color="green" class="waves-light" aria-label="Close"
+                      mdbWavesEffect>Effacer</button>
+                    <button type="submit" mdbBtn color="orange" class="waves-light" aria-label="Close"
+                      mdbWavesEffect>Modifier</button>
+                    <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                      (click)="basicModal1.hide()" mdbWavesEffect>Fermer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <!------------------------------------------------------------->
+        </tr>
+      </tbody>
+      <tfoot class="grey lighten-5 w-100">
+        <tr>
+          <td colspan='16'>
+            <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    <div class="row">
+      <div class="col-md-10"></div>
+      <button mdbBtn type="button" color="dark-green" mdbWavesEffect (click)="choixSortir()">Sortir</button>
+    </div>
+  </div>
