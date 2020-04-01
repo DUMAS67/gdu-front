@@ -43,7 +43,7 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
       heading11: ''
     },]
   previous: any = [];
-  headElements = ['ID', 'UT', 'Lieu', 'Activité', 'Danger', 'Risque',
+  headElements1 = ['ID', 'UT', 'Lieu', 'Activité', 'Danger', 'Risque',
     'G', 'F', 'C', 'Prévention à mettre en place', 'Plan Actions', 'Modification'];
 
   constructor(private _router: Router, private cdRef: ChangeDetectorRef) { }
