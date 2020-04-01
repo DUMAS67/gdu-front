@@ -12,6 +12,7 @@ import { GduConnexionComponent } from './gdu-connexion/gdu-connexion.component';
 import { GduPanneauComponent } from './gdu-panneau/gdu-panneau.component';
 import { GduDeconnexionComponent } from './gdu-deconnexion/gdu-deconnexion.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GduPrevComponent } from './gdu-prev/gdu-prev.component';
 
 const ROUTES: Routes = [
   { path: 'gdu', component: GduPanneauComponent },
@@ -20,6 +21,7 @@ const ROUTES: Routes = [
   { path: 'gdu/evrp', component: GduEvrpComponent },
   { path: 'gdu/duer', component: GduDuerComponent },
   { path: 'gdu/pas', component: GduPasComponent },
+  { path: 'gdu/prev', component: GduPrevComponent },
   { path: '', redirectTo: '/gdu', pathMatch: 'full' }
 ];
 
@@ -32,7 +34,8 @@ const ROUTES: Routes = [
     GduPasComponent,
     GduConnexionComponent,
     GduPanneauComponent,
-    GduDeconnexionComponent
+    GduDeconnexionComponent,
+    GduPrevComponent
   ],
   imports: [
     BrowserModule,

@@ -21,13 +21,10 @@ export class GduMenuComponent implements OnInit {
   }
   get loginFormModalEmail() {
     return this.validatingForm.get('loginFormModalEmail');
-  }
 
+  }
   get loginFormModalPassword() {
     return this.validatingForm.get('loginFormModalPassword');
   }
 }
-
-
-
 
