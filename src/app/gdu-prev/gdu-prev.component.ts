@@ -13,14 +13,14 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
 
-  elements: any = [
+  elements1: any = [
     {
       id: 1,
       heading1: 'Revalorisation',
       heading2: 'AT Menuiserie',
       heading3: 'Ponçage',
       heading4: 'Utiliser une Ponçeuse',
-      heading5: 'Inhalation Sciure',
+      heading5: 'Toxicité',
       heading6: 2,
       heading7: 2,
       heading8: 4,
@@ -33,8 +33,8 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
       heading1: 'Revalorisation',
       heading2: 'Extérieur',
       heading3: 'Réception meubles',
-      heading4: 'Chute de hauteur',
-      heading5: 'Blessure Corporel',
+      heading4: 'Transfert meubles',
+      heading5: 'Chutes de plain-pied & chutes en hauteur',
       heading6: 15,
       heading7: 1,
       heading8: 15,
@@ -52,8 +52,8 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
   ngOnInit() {
 
 
-    this.mdbTable.setDataSource(this.elements);
-    this.elements = this.mdbTable.getDataSource();
+    this.mdbTable.setDataSource(this.elements1);
+    this.elements1 = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
   }
 
