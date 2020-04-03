@@ -22,7 +22,7 @@
         </select></div>
       <div class="col-1"></div>
       <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm"  mdbWavesEffect>Créer une Unité de
+        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Créer une Unité de
           Travail</button>
       </div>
       <div class="col-3">
@@ -45,7 +45,7 @@
         </select></div>
       <div class="col-1"></div>
       <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Créer un Lieu    </button>
+        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Créer un Lieu </button>
       </div>
       <div class="col-3">
         <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Modifier un Lieu</button>
@@ -129,8 +129,88 @@
         </select></div>
 
       <div class="col-1">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>?</button>
+        <button mdbBtn type="button" color="default" outline="true" (click)="basicModal.show()" size="sm"
+          mdbWavesEffect>?</button>
       </div>
+      <h6>
+      <div mdbModal #basicModal="mdbModal" class="modal fade right" tabindex="-1" role="dialog"
+        aria-labelledby="myBasicModalLabel" aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
+          <div class="modal-dialog modal-side modal-top-right" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">Cotation</h4>
+              </div>
+              <div class="modal-body">
+                <table border="2">
+                  <tr>
+                    <td align="center" width="30%" colspan="2">Gravité - Niveau de gravité de l'accident ou <br />niveau du danger</td>
+                    <td align="center" bgcolor="yellow">Commentaires</td>
+                    <td align="center" bgcolor="yellow">Conséquences</td>
+                  </tr>
+                  <tr>
+                    <td align="center">1</td>
+                    <td align="center">Mineure</td>
+                    <td>Lésions sans AT</td>
+                    <td>Pas ou peu de dommages</td>
+                  </tr>
+                  <tr>
+                    <td align="center">3</td>
+                    <td align="center">Significative</td>
+                    <td>Lésions avec AT sans séquelles</td>
+                    <td>Dommages sans arrêt de travail</td>
+                  </tr>
+                  <tr>
+                    <td align="center">5</td>
+                    <td align="center">Critique</td>
+                    <td>Lésions avec AT avec séquelles</td>
+                    <td>Dommages réversibles, entraînant des arrêts de travail</td>
+                  </tr>
+                  <tr>
+                    <td align="center">10</td>
+                    <td align="center">Vitale</td>
+                    <td>Lésions pouvant entrainer la mort</td>
+                    <td>Dommages irréversibles (incapacité totale ou partielle voire décès)</td>
+                  </tr>
+                </table>
+                <p></p>
+                <table border="2">
+                  <tr>
+                    <td align="center">Fréquence</td>
+                    <td align="center" bgcolor="yellow">Exposition</td>
+                    <td align="center" bgcolor="yellow">Durée</td>
+                  </tr>
+                  <tr>
+                    <td align="center">1</td>
+                    <td align="center">Occasionnelle</td>
+                    <td>Quelques heures par an</td>
+                  </tr>
+                  <tr>
+                    <td align="center">2</td>
+                    <td align="center">Intermittente</td>
+                    <td>Quelques heures par mois</td>
+                  </tr>
+                  <tr>
+                    <td align="center">3</td>
+                    <td align="center">Fréquente</td>
+                    <td>Quelques heures par semaine</td>
+                  </tr>
+                  <tr>
+                    <td align="center">4</td>
+                    <td align="center">Continue</td>
+                    <td>Quelques heures par jour</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="basicModal.hide()" mdbWavesEffect>Close</button>
+              </div>
+            </div>
+          </div>
+      </div>
+    </h6>
       <div class="col-1">Criticité</div>
       <div class="col-1"><input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="">
       </div>
