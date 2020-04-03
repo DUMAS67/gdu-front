@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 
@@ -11,7 +12,7 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
 export class GduMenuComponent implements OnInit {
   validatingForm: FormGroup;
 
-  constructor() { }
+  constructor(private _router : Router) { }
 
   ngOnInit() {
     this.validatingForm = new FormGroup({
@@ -25,6 +26,11 @@ export class GduMenuComponent implements OnInit {
   }
   get loginFormModalPassword() {
     return this.validatingForm.get('loginFormModalPassword');
+  }
+
+  afficherCotation() {
+
+    this._router.navigate(['/gdu/cot']);
   }
 }
 

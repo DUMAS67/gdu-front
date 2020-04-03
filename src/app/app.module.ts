@@ -13,6 +13,11 @@ import { GduPanneauComponent } from './gdu-panneau/gdu-panneau.component';
 import { GduDeconnexionComponent } from './gdu-deconnexion/gdu-deconnexion.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GduPrevComponent } from './gdu-prev/gdu-prev.component';
+import { GduCotComponent } from './gdu-cot/gdu-cot.component';
+import { GduDuerRegComponent } from './gdu-duer-reg/gdu-duer-reg.component';
+import { GduDefComponent } from './gdu-def/gdu-def.component';
+import { GduPrevRegComponent } from './gdu-prev-reg/gdu-prev-reg.component';
+import { GduPchRegComponent } from './gdu-pch-reg/gdu-pch-reg.component';
 
 const ROUTES: Routes = [
   { path: 'gdu', component: GduPanneauComponent },
@@ -22,6 +27,11 @@ const ROUTES: Routes = [
   { path: 'gdu/duer', component: GduDuerComponent },
   { path: 'gdu/pas', component: GduPasComponent },
   { path: 'gdu/prev', component: GduPrevComponent },
+  { path: 'gdu/cot', component: GduCotComponent },
+  { path: 'gdu/duer-reg', component: GduDuerRegComponent },
+  { path: 'gdu/prev-reg', component: GduPrevRegComponent},
+  { path: 'gdu/pch-reg', component: GduPchRegComponent},
+  { path: 'gdu/def', component: GduDefComponent },
   { path: '', redirectTo: '/gdu', pathMatch: 'full' }
 ];
 
@@ -35,7 +45,12 @@ const ROUTES: Routes = [
     GduConnexionComponent,
     GduPanneauComponent,
     GduDeconnexionComponent,
-    GduPrevComponent
+    GduPrevComponent,
+    GduCotComponent,
+    GduDuerRegComponent,
+    GduDefComponent,
+    GduPrevRegComponent,
+    GduPchRegComponent
   ],
   imports: [
     BrowserModule,
