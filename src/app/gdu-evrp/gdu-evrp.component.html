@@ -22,16 +22,90 @@
         </select></div>
       <div class="col-1"></div>
       <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Créer une Unité de
+        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
+          (click)="basicModal1.show()">Créer une Unité de
           Travail</button>
       </div>
       <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Modifier une Unité de
+        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
+          (click)="basicModal2.show()">Modifier une Unité de
           Travail</button>
       </div>
     </div>
     <!-- Fin Unité de Travail -->
+    <!-- Création Unité de travail -->
+    <div mdbModal #basicModal1="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+      aria-labelledby="myBasicModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal1.hide()">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title w-100" id="myModalLabel">Créer une Unité de travail</h4>
+          </div>
+          <div class="modal-body">
+            Nouvelle Unité de travail
+            <p></p>
+            <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
+              class="form-control mb-4" placeholder="Nouvelle Unité de Travail">
+          </div>
+          <div class="modal-footer">
+            <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+              (click)="basicModal1.hide()" mdbWavesEffect>Fermer</button>
+            <button type="submit" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Créer</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <!-- Fin Création Unité de travail -->
+
+    <!-- Modifier une Unité de travail-->
+    <div mdbModal #basicModal2="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+      aria-labelledby="myBasicModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal2.hide()">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title w-100" id="myModalLabel">Modifier une Unité de travail</h4>
+          </div>
+          <div class="modal-body">
+            Modidier une Unité de travail
+            <p></p>
+            <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
+              class="form-control mb-4" value="{{recup}}">
+          </div>
+          <div class="col">
+            <table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true">
+              <thead>
+                <th *ngFor="let head of headElements3" scope="col">{{head}} </th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let el of elements3; let i = index">
+                  <th scope="row">{{el.id}}</th>
+                  <td>{{el.first}}</td>
+                  <td> <button mdbBtn type="button" color="default" outline="true" size="sm"
+                      mdbWavesEffect (click)="recupUt(el.first)">Modif</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+              (click)="basicModal2.hide()" mdbWavesEffect>Fermer</button>
+            <button type="submit" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Modifier</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Fin Modifier une Unité de travail-->
     <!-- Lieu -->
     <div class="row">
       <div class="col-2">Lieu</div>
@@ -133,8 +207,9 @@
           mdbWavesEffect>?</button>
       </div>
       <h6>
-      <div mdbModal #basicModal="mdbModal" class="modal fade right" tabindex="-1" role="dialog"
-        aria-labelledby="myBasicModalLabel" aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
+        <div mdbModal #basicModal="mdbModal" class="modal fade right" tabindex="-1" role="dialog"
+          aria-labelledby="myBasicModalLabel" aria-hidden="true"
+          [config]="{backdrop: false, ignoreBackdropClick: true}">
           <div class="modal-dialog modal-side modal-top-right" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -146,7 +221,8 @@
               <div class="modal-body">
                 <table border="2">
                   <tr>
-                    <td align="center" width="30%" colspan="2">Gravité - Niveau de gravité de l'accident ou <br />niveau du danger</td>
+                    <td align="center" width="30%" colspan="2">Gravité - Niveau de gravité de l'accident ou <br />niveau
+                      du danger</td>
                     <td align="center" bgcolor="yellow">Commentaires</td>
                     <td align="center" bgcolor="yellow">Conséquences</td>
                   </tr>
@@ -205,12 +281,13 @@
                 </table>
               </div>
               <div class="modal-footer">
-                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="basicModal.hide()" mdbWavesEffect>Close</button>
+                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                  (click)="basicModal.hide()" mdbWavesEffect>Close</button>
               </div>
             </div>
           </div>
-      </div>
-    </h6>
+        </div>
+      </h6>
       <div class="col-1">Criticité</div>
       <div class="col-1"><input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="">
       </div>
