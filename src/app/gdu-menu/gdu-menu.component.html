@@ -35,18 +35,18 @@
         <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
           <b>Documentation</b><span class="caret"></span></a>
         <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Grille de Cotation</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Définitions</a>
-        </div>
+          <a class="dropdown-item waves-light" routerLinkActive="active" routerLink="/gdu/def"  mdbWavesEffect href="#">Définitions</a>
+          <a class="dropdown-item waves-light" routerLinkActive="active" routerLink="/gdu/cot" mdbWavesEffect href="#">Grille de Cotation</a>
+           </div>
       </li>
       <!-- Dropdown -->
       <li class="nav-item dropdown" dropdown>
         <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
           <b>Réglementation</b><span class="caret"></span></a>
         <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Prévention</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect href="#">DUER</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Port de Charge</a>
+          <a class="dropdown-item waves-light" class="dropdown-item waves-light" routerLinkActive="active" routerLink="/gdu/prev-reg" mdbWavesEffect href="#">Prévention</a>
+          <a class="dropdown-item waves-light" routerLinkActive="active" routerLink="/gdu/duer-reg" mdbWavesEffect href="#">DUER</a>
+          <a class="dropdown-item waves-light" routerLinkActive="active" routerLink="/gdu/pch-reg"mdbWavesEffect href="#">Port de Charge</a>
         </div>
       </li>
 
