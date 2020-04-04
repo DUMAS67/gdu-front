@@ -23,7 +23,10 @@ export class AppComponent implements OnInit {
     }
   }
 
+  choixSortir() {
 
+    this._router.navigate(['/gdu/deconnexion']);
+  }
 }
 
 

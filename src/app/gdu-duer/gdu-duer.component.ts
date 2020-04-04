@@ -72,9 +72,6 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
   }
-  choixSortir() {
 
-    this._router.navigate(['/gdu/deconnexion']);
-  }
 }
 
