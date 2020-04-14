@@ -23,6 +23,7 @@ export class GduMenuComponent implements OnInit {
   get loginFormModalEmail() {
     return this.validatingForm.get('loginFormModalEmail');
 
+
   }
   get loginFormModalPassword() {
     return this.validatingForm.get('loginFormModalPassword');
@@ -31,6 +32,13 @@ export class GduMenuComponent implements OnInit {
   afficherCotation() {
 
     this._router.navigate(['/gdu/cot']);
+  }
+
+  seConnecter() {
+    console.log(this.loginFormModalEmail.value);
+    console.log(this.loginFormModalPassword.value);
+
+
   }
 }
 

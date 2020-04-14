@@ -19,9 +19,10 @@ import { GduDefComponent } from './gdu-def/gdu-def.component';
 import { GduPrevRegComponent } from './gdu-prev-reg/gdu-prev-reg.component';
 import { GduPchRegComponent } from './gdu-pch-reg/gdu-pch-reg.component';
 
+
 const ROUTES: Routes = [
   { path: 'gdu', component: GduPanneauComponent },
-  { path: 'gdu/connexion', component: GduConnexionComponent },
+
   { path: 'gdu/deconnexion', component: GduDeconnexionComponent },
   { path: 'gdu/evrp', component: GduEvrpComponent },
   { path: 'gdu/duer', component: GduDuerComponent },
@@ -51,6 +52,7 @@ const ROUTES: Routes = [
     GduDefComponent,
     GduPrevRegComponent,
     GduPchRegComponent
+
   ],
   imports: [
     BrowserModule,
