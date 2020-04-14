@@ -13,9 +13,5 @@ export class GduPanneauComponent implements OnInit {
   ngOnInit() {
   }
 
-  choixSortir() {
-
-    this._router.navigate(['/gdu/deconnexion']);
-  }
 
 }
