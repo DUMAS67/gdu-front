@@ -1,7 +1,7 @@
 <div class="container">
   <p></p>
 
-    <!-- Sélection-->
+  <!-- Sélection-->
   <div class="row">
     <div class="col-3"><b>Plan d'Actions Spécifiques</b></div>
     <div class="col-2"><label></label>
@@ -45,7 +45,10 @@
         <tr>
           <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
           </th>
-        </tr>
+          <th *ngFor="let head1 of headElements1; let i = index" scope="col">
+            <div *ngIf="afficherModif()"> {{head1}} </div>
+          </th>
+         </tr>
       </thead>
       <tbody>
         <tr mdbTableCol *ngFor="let el of elements">
@@ -63,7 +66,7 @@
             <!-- Default unchecked-->
           </td>
           <!-- Material unchecked -->
-          <td><button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
+          <td *ngIf="afficherModif()"><button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
               class="m-0 relative waves-light" (click)="basicModal1.show()">Modifier</button>
           </td>
           <!-- Partie modale PAS -->
@@ -168,4 +171,4 @@
         </tr>
       </tfoot>
     </table>
-      </div>
+  </div>

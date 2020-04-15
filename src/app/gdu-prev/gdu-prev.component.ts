@@ -2,6 +2,8 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstrap-md';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { Collaborateur } from '../auth.domains';
 
 
 @Component({
@@ -44,9 +46,10 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
     },]
   previous: any = [];
   headElements1 = ['ID', 'UT', 'Lieu', 'Activité', 'Danger', 'Risque',
-    'G', 'F', 'C', 'Prévention à mettre en place', 'Plan Actions', 'Modification'];
-
-  constructor(private _router: Router, private cdRef: ChangeDetectorRef) { }
+    'G', 'F', 'C', 'Prévention à mettre en place'];
+  headElements2 = ['Plan Actions', 'Modification'];
+  collaborateurConnecte: Collaborateur;
+  constructor(private _router: Router, private _cookieService: CookieService, private cdRef: ChangeDetectorRef) { }
 
 
   ngOnInit() {
@@ -64,9 +67,11 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
   }
-  choixSortir() {
 
-    this._router.navigate(['/gdu/deconnexion']);
+  afficherModif(): boolean {
+
+    this.collaborateurConnecte = JSON.parse(this._cookieService.get('col'));
+    return (this.collaborateurConnecte.roles[0] === this.collaborateurConnecte.ADMIN);
   }
 }
 

@@ -18,6 +18,10 @@ import { GduDuerRegComponent } from './gdu-duer-reg/gdu-duer-reg.component';
 import { GduDefComponent } from './gdu-def/gdu-def.component';
 import { GduPrevRegComponent } from './gdu-prev-reg/gdu-prev-reg.component';
 import { GduPchRegComponent } from './gdu-pch-reg/gdu-pch-reg.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptorService } from './auth-interceptor.service';
+import { CookieService } from 'ngx-cookie-service';
+
 
 
 const ROUTES: Routes = [
@@ -30,8 +34,8 @@ const ROUTES: Routes = [
   { path: 'gdu/prev', component: GduPrevComponent },
   { path: 'gdu/cot', component: GduCotComponent },
   { path: 'gdu/duer-reg', component: GduDuerRegComponent },
-  { path: 'gdu/prev-reg', component: GduPrevRegComponent},
-  { path: 'gdu/pch-reg', component: GduPchRegComponent},
+  { path: 'gdu/prev-reg', component: GduPrevRegComponent },
+  { path: 'gdu/pch-reg', component: GduPchRegComponent },
   { path: 'gdu/def', component: GduDefComponent },
   { path: '', redirectTo: '/gdu', pathMatch: 'full' }
 ];
@@ -58,12 +62,18 @@ const ROUTES: Routes = [
     BrowserModule,
     RouterModule.forRoot(ROUTES),
     MDBBootstrapModule.forRoot(),
+    HttpClientModule,
     NgbModule,
     FormsModule,
     ReactiveFormsModule
-      ],
+  ],
 
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true
+  },
+    CookieService],
   bootstrap: [AppComponent],
 
 })

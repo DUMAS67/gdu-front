@@ -2,6 +2,11 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstrap-md';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { Collaborateur } from '../auth.domains';
+import { RisquesVm } from '../domains/risquesVm';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -37,9 +42,15 @@ export class GduPasComponent implements OnInit, AfterViewInit {
     }, ]
   previous: any = [];
   headElements = ['ID Duer', 'Danger', 'Risque',
-  'Prévention','Budget', 'Qui ?', 'Délai', 'Fait', 'Modification'];
+  'Prévention','Budget', 'Qui ?', 'Délai', 'Fait'];
+  headElements1 = ['Modification'];
+  collaborateurConnecte: Collaborateur;
 
-  constructor(private _router: Router, private cdRef: ChangeDetectorRef) { }
+
+  constructor(private http: HttpClient, private _router: Router, private cdRef: ChangeDetectorRef, private _cookieService: CookieService) { }
+
+
+  url_an = 'http://localhost:8080/risques';
 
   ngOnInit() {
     this.mdbTable.setDataSource(this.elements);
@@ -53,11 +64,18 @@ export class GduPasComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
   }
-  choixSortir() {
 
-    this._router.navigate(['/gdu/deconnexion']);
+  afficherModif(): boolean {
+
+    this.collaborateurConnecte = JSON.parse(this._cookieService.get('col'));
+    return (this.collaborateurConnecte.roles[0] === this.collaborateurConnecte.ADMIN);
   }
+afficherListeRisque(): Observable<RisquesVm> {
 
+
+    return this.http.get<any[]>(this.url_an);
+
+}
   }
 
 
