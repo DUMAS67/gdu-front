@@ -64,8 +64,8 @@ export class GduMenuComponent implements OnInit {
     this.collaborateurConnexion = JSON.parse(this._cookieService.get('col'));
     //console.log(this._cookieService.get('col'));
     console.log('profil : '+ this.profil);
-    console.log('collaborateurConnexion : '+this.collaborateurConnexion);
-    console.log('collaborateurConnexion.roles : '+this.collaborateurConnexion.roles);
+    console.log('collaborateurConnexion : '+ this.collaborateurConnexion);
+    console.log('collaborateurConnexion.roles : '+ this.collaborateurConnexion.roles);
     this.statutConnexion = false;
     this.connexionBaseAdmin = this.collaborateur.estAdministrateur(this.collaborateurConnexion.roles);
     this.connexionBaseUser = this.collaborateur.estCollaborateur(this.collaborateurConnexion.roles);
@@ -82,12 +82,13 @@ export class GduMenuComponent implements OnInit {
   }
 
   seDeconnecter() {
-
+    console.log('1' + this.collaborateurConnexion.nom);
     this._authSrv.seDeconnecter();
+    console.log('2' + this.collaborateurConnexion.nom);
     this.statutConnexion = true;
     console.log('*Deconnexion&');
     this.collaborateurConnexion = null;
-    console.log(this.collaborateurConnexion);
+    console.log('3' + this.collaborateurConnexion.nom);
   }
 }
 

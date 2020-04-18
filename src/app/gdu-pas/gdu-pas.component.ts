@@ -5,8 +5,10 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Collaborateur } from '../auth.domains';
 import { RisquesVm } from '../domains/risquesVm';
-import { Observable } from 'rxjs';
+import { Observable, observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { DataService } from '../data.service';
+import { stringify } from 'querystring';
 
 
 @Component({
@@ -39,23 +41,31 @@ export class GduPasComponent implements OnInit, AfterViewInit {
       heading5: 'Pascal',
       heading6: '04/08/2020',
       heading7: 'true'
-    }, ]
+    }, ];
   previous: any = [];
-  headElements = ['ID Duer', 'Danger', 'Risque',
-  'Prévention','Budget', 'Qui ?', 'Délai', 'Fait'];
+  headElements = ['ID Duer', 'Danger', 'Risque', 'Prévention', 'Budget', 'Qui ?', 'Délai', 'Fait'];
   headElements1 = ['Modification'];
   collaborateurConnecte: Collaborateur;
+  collaborateurConnexion1: any;
+  test: RisquesVm[] = [{id: 1, nom: 'AAAAA'}, {id: 2, nom: 'ZZZZZZ'}];
 
 
-  constructor(private http: HttpClient, private _router: Router, private cdRef: ChangeDetectorRef, private _cookieService: CookieService) { }
+  constructor(private dataService: DataService, private _router: Router,
+              private cdRef: ChangeDetectorRef, private _cookieService: CookieService) { }
+
+  listeRisques$ = this.dataService.afficherListeRisque();
+  listeRisques: RisquesVm[];
 
 
-  url_an = 'http://localhost:8080/risques';
 
   ngOnInit() {
     this.mdbTable.setDataSource(this.elements);
     this.elements = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
+    this.listeRisques$.subscribe((param: RisquesVm[]) => {
+      this.listeRisques = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
+      );
+
   }
 
   ngAfterViewInit() {
@@ -63,20 +73,17 @@ export class GduPasComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
-  }
+    // tslint:disable-next-line: whitespace
+    console.log('AAAAAA4' + this.listeRisques$);
+      }
 
   afficherModif(): boolean {
 
     this.collaborateurConnecte = JSON.parse(this._cookieService.get('col'));
     return (this.collaborateurConnecte.roles[0] === this.collaborateurConnecte.ADMIN);
   }
-afficherListeRisque(): Observable<RisquesVm> {
-
-
-    return this.http.get<any[]>(this.url_an);
 
 }
-  }
 
 
 

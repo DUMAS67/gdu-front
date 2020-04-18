@@ -117,7 +117,7 @@ export class AuthService {
         'Content-Type': 'application/x-www-form-urlencoded'
       })
     };
-    console.log('####seDeconnecté');
+    console.log('####seDeconnecter');
     console.log(`${environment.baseUrl}${environment.apiLogout}`);
     return this._http.post<Collaborateur>(`${environment.baseUrl}${environment.apiLogout}`, null , config)
       .pipe(
