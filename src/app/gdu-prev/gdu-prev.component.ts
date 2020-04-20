@@ -2,72 +2,61 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstrap-md';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Collaborateur } from '../auth.domains';
 
 
 @Component({
-  selector: 'app-gdu-duer',
-  templateUrl: './gdu-duer.component.html',
-  styleUrls: []
+  selector: 'app-gdu-prev',
+  templateUrl: './gdu-prev.component.html',
+  styleUrls: ['./gdu-prev.component.css']
 })
-export class GduDuerComponent implements OnInit, AfterViewInit {
+export class GduPrevComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
 
-  elements: any = [
+  elements1: any = [
     {
       id: 1,
       heading1: 'Revalorisation',
       heading2: 'AT Menuiserie',
       heading3: 'Ponçage',
       heading4: 'Utiliser une Ponçeuse',
-      heading5: 'Inhalation Sciure',
-      heading6: 5,
-      heading7: 3,
-      heading8: 15,
-      heading9: '-',
-      heading10: 2,
-      heading11: 2,
-      heading12: 4,
-      heading13: 'Port du Masque FFP2 Obligatoire',
-      heading14: '',
-      heading15: ''
+      heading5: 'Toxicité',
+      heading6: 2,
+      heading7: 2,
+      heading8: 4,
+      heading9: 'Port du Masque FFP2 Obligatoire',
+      heading10: '',
+      heading11: ''
     },
     {
       id: 2,
       heading1: 'Revalorisation',
       heading2: 'Extérieur',
       heading3: 'Réception meubles',
-      heading4: 'Chute de hauteur',
-      heading5: 'Blessure Corporel',
+      heading4: 'Transfert meubles',
+      heading5: 'Chutes de plain-pied & chutes en hauteur',
       heading6: 15,
-      heading7: 2,
-      heading8: 30,
-      heading9: '-',
-      heading10: 15,
-      heading11: 1,
-      heading12: 15,
-      heading13: 'Camion avec haillon',
-      heading14: '',
-      heading15: ''
+      heading7: 1,
+      heading8: 15,
+      heading9: 'Camion avec haillon',
+      heading10: '',
+      heading11: ''
     },]
   previous: any = [];
-  headElements = ['ID', 'UT', 'Lieu', 'Activité', 'Danger', 'Risque',
-    'G', 'F', 'C', 'Prévention', 'G', 'F', 'C', 'Prévention'];
-  headElements1 = ['Plan Actions', 'Modification'];
-  collaborateurConnexion: any;
-
-
-  constructor(private _router: Router, private _cookieService: CookieService, private cdRef: ChangeDetectorRef, private _authSrv: AuthService) { }
-
+  headElements1 = ['ID', 'UT', 'Lieu', 'Activité', 'Danger', 'Risque',
+    'G', 'F', 'C', 'Prévention à mettre en place'];
+  headElements2 = ['Plan Actions', 'Modification'];
   collaborateurConnecte: Collaborateur;
+  constructor(private _router: Router, private _cookieService: CookieService, private cdRef: ChangeDetectorRef) { }
+
+
   ngOnInit() {
 
 
-    this.mdbTable.setDataSource(this.elements);
-    this.elements = this.mdbTable.getDataSource();
+    this.mdbTable.setDataSource(this.elements1);
+    this.elements1 = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
   }
 

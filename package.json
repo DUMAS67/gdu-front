@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod --base-href https://DUMAS67.github.io/gdu-front",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -20,7 +20,9 @@
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
     "angular-bootstrap-md": "^8.1.1",
+    "angular-fontawesome": "^1.0.0",
     "@ng-bootstrap/ng-bootstrap": "^5.3.0",
+    "ngx-cookie-service": "^2.3.0",
     "bootstrap": "^4.4.1",
     "font-awesome": "^4.7.0",
     "mdb": "^0.1.0",
