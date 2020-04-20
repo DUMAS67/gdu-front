@@ -5,6 +5,13 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Collaborateur } from '../auth.domains';
+import { DataService } from '../data.service';
+import { LieuVm } from '../domains/LieuVm';
+import { CriticiteVm } from '../domains/CriticiteVm';
+import { Observable } from 'rxjs';
+import { UtVm } from '../domains/UtVm';
+import { GraviteVm } from '../domains/Gravite';
+import { FrequenceVm } from '../domains/FrequenceVm';
 
 
 @Component({
@@ -60,15 +67,45 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
   collaborateurConnexion: any;
 
 
-  constructor(private _router: Router, private _cookieService: CookieService, private cdRef: ChangeDetectorRef, private _authSrv: AuthService) { }
+  constructor(private dataService: DataService, private _router: Router, private _cookieService: CookieService, private cdRef: ChangeDetectorRef, private _authSrv: AuthService) { }
 
   collaborateurConnecte: Collaborateur;
+  listeLieu$ = this.dataService.afficherListeLieu();
+  listeLieu: LieuVm[];
+  listeCriticite$ = this.dataService.afficherListeCriticite();
+  listeCriticite: CriticiteVm[];
+  listeUt$ = this.dataService.afficherListeUt();
+  listeUt: UtVm[];
+  listeGravite$ = this.dataService.afficherListeGravite();
+  listeGravite: GraviteVm[];
+  listeFrequence$ = this.dataService.afficherListeFrequence();
+  listeFrequence: FrequenceVm[];
+
   ngOnInit() {
 
 
     this.mdbTable.setDataSource(this.elements);
     this.elements = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
+    this.listeLieu$.subscribe((param: LieuVm[]) => {
+      this.listeLieu = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+    }
+    );
+    this.listeUt$.subscribe((param: UtVm[]) => {
+      this.listeUt = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
+      );
+
+    this.listeCriticite$.subscribe((param: CriticiteVm[]) => {
+        this.listeCriticite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur)); }
+        );
+
+    this.listeGravite$.subscribe((param: GraviteVm[]) => {
+          this.listeGravite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur)); }
+          );
+    this.listeFrequence$.subscribe((param: FrequenceVm[]) => {
+            this.listeFrequence= param.filter(a => a).sort((a, b) => (a.valeur - b.valeur)); }
+            );
+
   }
 
   ngAfterViewInit() {
