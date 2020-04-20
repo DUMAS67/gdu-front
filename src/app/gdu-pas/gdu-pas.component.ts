@@ -4,12 +4,12 @@ import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstra
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Collaborateur } from '../auth.domains';
-import { RisquesVm } from '../domains/risquesVm';
+import { RisquesVm } from '../domains/RisquesVm';
 import { Observable, observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '../data.service';
 import { stringify } from 'querystring';
-import { DangersVm } from '../domains/dangersVM';
+import { DangersVm } from '../domains/DangersVm';
 import { UtVm } from '../domains/UtVm';
 
 
@@ -68,7 +68,7 @@ export class GduPasComponent implements OnInit, AfterViewInit {
     this.listeRisques$.subscribe((param: RisquesVm[]) => {
       this.listeRisques = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
       );
-    this.listeUt$.subscribe((param: RisquesVm[]) => {
+    this.listeUt$.subscribe((param: UtVm[]) => {
         this.listeUt = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
         );
   }
