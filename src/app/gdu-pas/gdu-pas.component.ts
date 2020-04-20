@@ -9,6 +9,8 @@ import { Observable, observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '../data.service';
 import { stringify } from 'querystring';
+import { DangersVm } from '../domains/dangersVM';
+import { UtVm } from '../domains/UtVm';
 
 
 @Component({
@@ -50,13 +52,14 @@ export class GduPasComponent implements OnInit, AfterViewInit {
   test: RisquesVm[] = [{id: 1, nom: 'AAAAA'}, {id: 2, nom: 'ZZZZZZ'}];
 
 
+
   constructor(private dataService: DataService, private _router: Router,
               private cdRef: ChangeDetectorRef, private _cookieService: CookieService) { }
 
   listeRisques$ = this.dataService.afficherListeRisque();
   listeRisques: RisquesVm[];
-
-
+  listeUt$ = this.dataService.afficherListeUt();
+  listeUt: UtVm[];
 
   ngOnInit() {
     this.mdbTable.setDataSource(this.elements);
@@ -65,7 +68,9 @@ export class GduPasComponent implements OnInit, AfterViewInit {
     this.listeRisques$.subscribe((param: RisquesVm[]) => {
       this.listeRisques = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
       );
-
+    this.listeUt$.subscribe((param: RisquesVm[]) => {
+        this.listeUt = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
+        );
   }
 
   ngAfterViewInit() {
