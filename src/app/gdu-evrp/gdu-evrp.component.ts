@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Collaborateur } from '../auth.domains';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Component({
@@ -8,8 +10,9 @@ import { Router } from '@angular/router';
   styleUrls: []
 })
 export class GduEvrpComponent implements OnInit {
+  collaborateurConnecte: Collaborateur;
 
-  constructor(private _router: Router) { }
+  constructor(private _router: Router, private _cookieService: CookieService) { }
 recup: any;
   elements3: any = [{
     id: '1',
@@ -29,14 +32,17 @@ recup: any;
   ngOnInit() {
 
   }
-  choixSortir() {
 
-    this._router.navigate(['/gdu/deconnexion']);
-  }
 
   recupUt(utValeur: any[]) {
 
 this.recup = utValeur;
 console.log(this.recup);
+  }
+
+  afficherModif(): boolean {
+
+    this.collaborateurConnecte = JSON.parse(this._cookieService.get('col'));
+    return (this.collaborateurConnecte.roles[0] === this.collaborateurConnecte.ADMIN);
   }
 }

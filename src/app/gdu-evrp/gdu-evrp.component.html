@@ -1,449 +1,462 @@
-<div class="container">
-  <p></p>
-  <div class="row"> <b>Evaluation des Risques Professionnels</b></div>
-  <div class="row">
+<div *ngIf="afficherModif()">
+  <div class="container">
     <p></p>
-  </div>
-  <!-- Default form contact -->
-  <form class="">
-
-    <!-- Name -->
-
-    <!-- Unité de Travail -->
+    <div class="row"> <b>Evaluation des Risques Professionnels</b></div>
     <div class="row">
-      <div class="col-2">Unité de Travail</div>
-      <div class="col-3"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Choisir une Unité de travail</option>
-          <option value="1">UT1</option>
-          <option value="2">UT2</option>
-          <option value="3">UT3</option>
-          <option value="4">UT4</option>
-        </select></div>
-      <div class="col-1"></div>
-      <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-          (click)="basicModal1.show()">Créer une Unité de
-          Travail</button>
-      </div>
-      <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-          (click)="basicModal2.show()">Modifier une Unité de
-          Travail</button>
-      </div>
+      <p></p>
     </div>
-    <!-- Fin Unité de Travail -->
-    <!-- Création Unité de travail -->
-    <div mdbModal #basicModal1="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-      aria-labelledby="myBasicModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal1.hide()">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title w-100" id="myModalLabel">Créer une Unité de travail</h4>
-          </div>
-          <div class="modal-body">
-            Nouvelle Unité de travail
-            <p></p>
-            <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
-              class="form-control mb-4" placeholder="Nouvelle Unité de Travail">
-          </div>
-          <div class="modal-footer">
-            <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-              (click)="basicModal1.hide()" mdbWavesEffect>Fermer</button>
-            <button type="submit" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Créer</button>
-          </div>
+    <!-- Default form contact -->
+    <form class="">
+
+      <!-- Name -->
+
+      <!-- Unité de Travail -->
+      <div class="row">
+        <div class="col-2">Unité de Travail</div>
+        <div class="col-3"><label></label>
+          <select class="browser-default custom-select mb-4">
+            <option value="" selected>Choisir une Unité de travail</option>
+            <option value="1">UT1</option>
+            <option value="2">UT2</option>
+            <option value="3">UT3</option>
+            <option value="4">UT4</option>
+          </select></div>
+        <div class="col-1"></div>
+        <div class="col-3">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
+            (click)="basicModal1.show()">Créer une Unité de
+            Travail</button>
+        </div>
+        <div class="col-3">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
+            (click)="basicModal2.show()">Modifier une Unité de
+            Travail</button>
         </div>
       </div>
-    </div>
-
-    <!-- Fin Création Unité de travail -->
-
-    <!-- Modifier une Unité de travail-->
-    <div mdbModal #basicModal2="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-      aria-labelledby="myBasicModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal2.hide()">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title w-100" id="myModalLabel">Modifier une Unité de travail</h4>
-          </div>
-          <div class="modal-body">
-            Modidier une Unité de travail
-            <p></p>
-            <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
-              class="form-control mb-4" value="{{recup}}">
-          </div>
-          <div class="col">
-            <table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true">
-              <thead>
-                <th *ngFor="let head of headElements3" scope="col">{{head}} </th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let el of elements3; let i = index">
-                  <th scope="row">{{el.id}}</th>
-                  <td>{{el.first}}</td>
-                  <td> <button mdbBtn type="button" color="default" outline="true" size="sm"
-                      mdbWavesEffect (click)="recupUt(el.first)">Modif</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-              (click)="basicModal2.hide()" mdbWavesEffect>Fermer</button>
-            <button type="submit" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Modifier</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-    <!-- Fin Modifier une Unité de travail-->
-    <!-- Lieu -->
-    <div class="row">
-      <div class="col-2">Lieu</div>
-      <div class="col-3"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Choisir un Lieu</option>
-          <option value="1">Lieu1</option>
-          <option value="2">Lieu2</option>
-          <option value="3">Lieu3</option>
-          <option value="4">Lieu4</option>
-        </select></div>
-      <div class="col-1"></div>
-      <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Créer un Lieu </button>
-      </div>
-      <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Modifier un Lieu</button>
-      </div>
-    </div>
-    <!-- Fin Lieu -->
-
-    <!-- Activité -->
-    <div class="row">
-      <div class="col-2">Activité</div>
-      <div class="col-3"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Choisir une Activité</option>
-          <option value="1">Act1</option>
-          <option value="2">Act2</option>
-          <option value="3">Act3</option>
-          <option value="4">Act4</option>
-        </select></div>
-      <div class="col-1"></div>
-      <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Créer une
-          Activité</button>
-      </div>
-      <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Modifier une
-          activité</button>
-      </div>
-    </div>
-    <!-- Fin Activité -->
-
-    <!-- Danger -->
-    <div class="row">
-      <div class="col-2">Danger</div>
-      <div class="col-3"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Choisir un Danger</option>
-          <option value="1">Dg1</option>
-          <option value="2">Dg2</option>
-          <option value="3">Dg3</option>
-          <option value="4">Dg4</option>
-        </select></div>
-      <div class="col-1"></div>
-      <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Créer un Danger</button>
-      </div>
-      <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Modifier un
-          Danger</button>
-      </div>
-    </div>
-    <!-- Fin Danger -->
-
-    <!-- Risque1 -->
-    <div class="row">
-      <div class="col-1">Risque 1</div>
-      <div class="col-3"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Choix du Risque</option>
-          <option value="1">Dg1</option>
-          <option value="2">Dg2</option>
-          <option value="3">Dg3</option>
-          <option value="4">Dg4</option>
-        </select></div>
-      <div class="col-1">Cotation</div>
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Fréquence</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select></div>
-
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Gravité</option>
-          <option value="1">1</option>
-          <option value="2">3</option>
-          <option value="3">5</option>
-          <option value="4">10</option>
-        </select></div>
-
-      <div class="col-1">
-        <button mdbBtn type="button" color="default" outline="true" (click)="basicModal.show()" size="sm"
-          mdbWavesEffect>?</button>
-      </div>
-      <h6>
-        <div mdbModal #basicModal="mdbModal" class="modal fade right" tabindex="-1" role="dialog"
-          aria-labelledby="myBasicModalLabel" aria-hidden="true"
-          [config]="{backdrop: false, ignoreBackdropClick: true}">
-          <div class="modal-dialog modal-side modal-top-right" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
-                  <span aria-hidden="true">×</span>
-                </button>
-                <h4 class="modal-title w-100" id="myModalLabel">Cotation</h4>
-              </div>
-              <div class="modal-body">
-                <table border="2">
-                  <tr>
-                    <td align="center" width="30%" colspan="2">Gravité - Niveau de gravité de l'accident ou <br />niveau
-                      du danger</td>
-                    <td align="center" bgcolor="yellow">Commentaires</td>
-                    <td align="center" bgcolor="yellow">Conséquences</td>
-                  </tr>
-                  <tr>
-                    <td align="center">1</td>
-                    <td align="center">Mineure</td>
-                    <td>Lésions sans AT</td>
-                    <td>Pas ou peu de dommages</td>
-                  </tr>
-                  <tr>
-                    <td align="center">3</td>
-                    <td align="center">Significative</td>
-                    <td>Lésions avec AT sans séquelles</td>
-                    <td>Dommages sans arrêt de travail</td>
-                  </tr>
-                  <tr>
-                    <td align="center">5</td>
-                    <td align="center">Critique</td>
-                    <td>Lésions avec AT avec séquelles</td>
-                    <td>Dommages réversibles, entraînant des arrêts de travail</td>
-                  </tr>
-                  <tr>
-                    <td align="center">10</td>
-                    <td align="center">Vitale</td>
-                    <td>Lésions pouvant entrainer la mort</td>
-                    <td>Dommages irréversibles (incapacité totale ou partielle voire décès)</td>
-                  </tr>
-                </table>
-                <p></p>
-                <table border="2">
-                  <tr>
-                    <td align="center">Fréquence</td>
-                    <td align="center" bgcolor="yellow">Exposition</td>
-                    <td align="center" bgcolor="yellow">Durée</td>
-                  </tr>
-                  <tr>
-                    <td align="center">1</td>
-                    <td align="center">Occasionnelle</td>
-                    <td>Quelques heures par an</td>
-                  </tr>
-                  <tr>
-                    <td align="center">2</td>
-                    <td align="center">Intermittente</td>
-                    <td>Quelques heures par mois</td>
-                  </tr>
-                  <tr>
-                    <td align="center">3</td>
-                    <td align="center">Fréquente</td>
-                    <td>Quelques heures par semaine</td>
-                  </tr>
-                  <tr>
-                    <td align="center">4</td>
-                    <td align="center">Continue</td>
-                    <td>Quelques heures par jour</td>
-                  </tr>
-                </table>
-              </div>
-              <div class="modal-footer">
-                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-                  (click)="basicModal.hide()" mdbWavesEffect>Close</button>
-              </div>
+      <!-- Fin Unité de Travail -->
+      <!-- Création Unité de travail -->
+      <div mdbModal #basicModal1="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="myBasicModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal1.hide()">
+                <span aria-hidden="true">×</span>
+              </button>
+              <h4 class="modal-title w-100" id="myModalLabel">Créer une Unité de travail</h4>
+            </div>
+            <div class="modal-body">
+              Nouvelle Unité de travail
+              <p></p>
+              <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
+                class="form-control mb-4" placeholder="Nouvelle Unité de Travail">
+            </div>
+            <div class="modal-footer">
+              <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                (click)="basicModal1.hide()" mdbWavesEffect>Fermer</button>
+              <button type="submit" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Créer</button>
             </div>
           </div>
         </div>
-      </h6>
-      <div class="col-1">Criticité</div>
-      <div class="col-1"><input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="">
       </div>
-    </div>
-    <!-- Fin Risque1 -->
-    <!-- Prevention 1 -->
-    <div class="row">
-      <div class="col-2">Prévention existante</div>
-      <div class="col-10">
-        <div class="form-group">
-          <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="1"
-            placeholder="Prévention Existante"></textarea>
+
+      <!-- Fin Création Unité de travail -->
+
+      <!-- Modifier une Unité de travail-->
+      <div mdbModal #basicModal2="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="myBasicModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal2.hide()">
+                <span aria-hidden="true">×</span>
+              </button>
+              <h4 class="modal-title w-100" id="myModalLabel">Modifier une Unité de travail</h4>
+            </div>
+            <div class="modal-body">
+              Modidier une Unité de travail
+              <p></p>
+              <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
+                class="form-control mb-4" value="{{recup}}">
+            </div>
+            <div class="col">
+              <table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true">
+                <thead>
+                  <th *ngFor="let head of headElements3" scope="col">{{head}} </th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let el of elements3; let i = index">
+                    <th scope="row">{{el.id}}</th>
+                    <td>{{el.first}}</td>
+                    <td> <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
+                        (click)="recupUt(el.first)">Modif</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                (click)="basicModal2.hide()" mdbWavesEffect>Fermer</button>
+              <button type="submit" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Modifier</button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-3">Prévention Mise en oeuvre</div>
-      <div class="col-1"></div>
-      <div class="col-1">Cotation</div>
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Fréquence</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select></div>
 
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Gravité</option>
-          <option value="1">1</option>
-          <option value="2">3</option>
-          <option value="3">5</option>
-          <option value="4">10</option>
-        </select></div>
 
-      <div class="col-1">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>?</button>
-      </div>
-      <div class="col-1">Criticité</div>
-      <div class="col-1"><input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="">
-      </div>
 
-    </div>
-    <div class="row">
-      <div class="col-2">Détails</div>
-      <div class="col-10">
-        <div class="form-group">
-          <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="1"
-            placeholder="Détails"></textarea>
+      <!-- Fin Modifier une Unité de travail-->
+      <!-- Lieu -->
+      <div class="row">
+        <div class="col-2">Lieu</div>
+        <div class="col-3"><label></label>
+          <select class="browser-default custom-select mb-4">
+            <option value="" selected>Choisir un Lieu</option>
+            <option value="1">Lieu1</option>
+            <option value="2">Lieu2</option>
+            <option value="3">Lieu3</option>
+            <option value="4">Lieu4</option>
+          </select></div>
+        <div class="col-1"></div>
+        <div class="col-3">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Créer un Lieu </button>
+        </div>
+        <div class="col-3">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Modifier un Lieu</button>
         </div>
       </div>
-    </div>
+      <!-- Fin Lieu -->
 
-    <!-- Fin Prevention1 -->
-    <!-- Risque2 -->
-    <div class="row">
-      <div class="col-1">Risque 2</div>
-      <div class="col-3"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Choix du Risque</option>
-          <option value="1">Dg1</option>
-          <option value="2">Dg2</option>
-          <option value="3">Dg3</option>
-          <option value="4">Dg4</option>
-        </select></div>
-      <div class="col-1">Cotation</div>
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Fréquence</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select></div>
-
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Gravité</option>
-          <option value="1">1</option>
-          <option value="2">3</option>
-          <option value="3">5</option>
-          <option value="4">10</option>
-        </select></div>
-
-      <div class="col-1">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>?</button>
-      </div>
-      <div class="col-1">Criticité</div>
-      <div class="col-1"><input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="">
-      </div>
-    </div>
-    <!-- Fin Risque2 -->
-
-    <!-- Prevention 2 -->
-    <div class="row">
-      <div class="col-2">Prévention existante</div>
-      <div class="col-10">
-        <div class="form-group">
-          <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="1"
-            placeholder="Prévention Existante"></textarea>
+      <!-- Activité -->
+      <div class="row">
+        <div class="col-2">Activité</div>
+        <div class="col-3"><label></label>
+          <select class="browser-default custom-select mb-4">
+            <option value="" selected>Choisir une Activité</option>
+            <option value="1">Act1</option>
+            <option value="2">Act2</option>
+            <option value="3">Act3</option>
+            <option value="4">Act4</option>
+          </select></div>
+        <div class="col-1"></div>
+        <div class="col-3">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Créer une
+            Activité</button>
+        </div>
+        <div class="col-3">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Modifier une
+            activité</button>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-3">Prévention Mise en oeuvre</div>
-      <div class="col-1"></div>
-      <div class="col-1">Cotation</div>
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Fréquence</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select></div>
+      <!-- Fin Activité -->
 
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Gravité</option>
-          <option value="1">1</option>
-          <option value="2">3</option>
-          <option value="3">5</option>
-          <option value="4">10</option>
-        </select></div>
-
-      <div class="col-1">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>?</button>
-      </div>
-      <div class="col-1">Criticité</div>
-      <div class="col-1"><input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="">
-      </div>
-
-    </div>
-    <div class="row">
-      <div class="col-2">Détails</div>
-      <div class="col-10">
-        <div class="form-group">
-          <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="1"
-            placeholder="Détails"></textarea>
+      <!-- Danger -->
+      <div class="row">
+        <div class="col-2">Danger</div>
+        <div class="col-3"><label></label>
+          <select class="browser-default custom-select mb-4">
+            <option value="" selected>Choisir un Danger</option>
+            <option value="1">Dg1</option>
+            <option value="2">Dg2</option>
+            <option value="3">Dg3</option>
+            <option value="4">Dg4</option>
+          </select></div>
+        <div class="col-1"></div>
+        <div class="col-3">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Créer un Danger</button>
+        </div>
+        <div class="col-3">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Modifier un
+            Danger</button>
         </div>
       </div>
-    </div>
+      <!-- Fin Danger -->
 
-    <!-- Fin Prevention2 -->
-    <!-- Send button -->
-    <div class="row">
-      <div class="col-md-4"></div>
-      <div class="col-md-4"><button mdbBtn color="info" class="align-center" type="submit">Valider</button></div>
-      <div class="col-md-4"></div>
-    </div>
+      <!-- Risque1 -->
+      <div class="row">
+        <div class="col-1">Risque 1</div>
+        <div class="col-3"><label></label>
+          <select class="browser-default custom-select mb-4">
+            <option value="" selected>Choix du Risque</option>
+            <option value="1">Dg1</option>
+            <option value="2">Dg2</option>
+            <option value="3">Dg3</option>
+            <option value="4">Dg4</option>
+          </select></div>
+        <div class="col-1">Cotation</div>
+        <div class="col-2"><label></label>
+          <select class="browser-default custom-select mb-4">
+            <option value="" selected>Fréquence</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select></div>
+
+        <div class="col-2"><label></label>
+          <select class="browser-default custom-select mb-4">
+            <option value="" selected>Gravité</option>
+            <option value="1">1</option>
+            <option value="2">3</option>
+            <option value="3">5</option>
+            <option value="4">10</option>
+          </select></div>
+
+        <div class="col-1">
+          <button mdbBtn type="button" color="default" outline="true" (click)="basicModal.show()" size="sm"
+            mdbWavesEffect>?</button>
+        </div>
+        <h6>
+          <div mdbModal #basicModal="mdbModal" class="modal fade right" tabindex="-1" role="dialog"
+            aria-labelledby="myBasicModalLabel" aria-hidden="true"
+            [config]="{backdrop: false, ignoreBackdropClick: true}">
+            <div class="modal-dialog modal-side modal-top-right" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                  <h4 class="modal-title w-100" id="myModalLabel">Cotation</h4>
+                </div>
+                <div class="modal-body">
+                  <table border="2">
+                    <tr>
+                      <td align="center" width="30%" colspan="2">Gravité - Niveau de gravité de l'accident ou
+                        <br />niveau
+                        du danger</td>
+                      <td align="center" bgcolor="yellow">Commentaires</td>
+                      <td align="center" bgcolor="yellow">Conséquences</td>
+                    </tr>
+                    <tr>
+                      <td align="center">1</td>
+                      <td align="center">Mineure</td>
+                      <td>Lésions sans AT</td>
+                      <td>Pas ou peu de dommages</td>
+                    </tr>
+                    <tr>
+                      <td align="center">3</td>
+                      <td align="center">Significative</td>
+                      <td>Lésions avec AT sans séquelles</td>
+                      <td>Dommages sans arrêt de travail</td>
+                    </tr>
+                    <tr>
+                      <td align="center">5</td>
+                      <td align="center">Critique</td>
+                      <td>Lésions avec AT avec séquelles</td>
+                      <td>Dommages réversibles, entraînant des arrêts de travail</td>
+                    </tr>
+                    <tr>
+                      <td align="center">10</td>
+                      <td align="center">Vitale</td>
+                      <td>Lésions pouvant entrainer la mort</td>
+                      <td>Dommages irréversibles (incapacité totale ou partielle voire décès)</td>
+                    </tr>
+                  </table>
+                  <p></p>
+                  <table border="2">
+                    <tr>
+                      <td align="center">Fréquence</td>
+                      <td align="center" bgcolor="yellow">Exposition</td>
+                      <td align="center" bgcolor="yellow">Durée</td>
+                    </tr>
+                    <tr>
+                      <td align="center">1</td>
+                      <td align="center">Occasionnelle</td>
+                      <td>Quelques heures par an</td>
+                    </tr>
+                    <tr>
+                      <td align="center">2</td>
+                      <td align="center">Intermittente</td>
+                      <td>Quelques heures par mois</td>
+                    </tr>
+                    <tr>
+                      <td align="center">3</td>
+                      <td align="center">Fréquente</td>
+                      <td>Quelques heures par semaine</td>
+                    </tr>
+                    <tr>
+                      <td align="center">4</td>
+                      <td align="center">Continue</td>
+                      <td>Quelques heures par jour</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                    (click)="basicModal.hide()" mdbWavesEffect>Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </h6>
+        <div class="col-1">Criticité</div>
+        <div class="col-1"><input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="">
+        </div>
+      </div>
+      <!-- Fin Risque1 -->
+      <!-- Prevention 1 -->
+      <div class="row">
+        <div class="col-2">Prévention existante</div>
+        <div class="col-10">
+          <div class="form-group">
+            <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="1"
+              placeholder="Prévention Existante"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">Prévention Mise en oeuvre</div>
+        <div class="col-1"></div>
+        <div class="col-1">Cotation</div>
+        <div class="col-2"><label></label>
+          <select class="browser-default custom-select mb-4">
+            <option value="" selected>Fréquence</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select></div>
+
+        <div class="col-2"><label></label>
+          <select class="browser-default custom-select mb-4">
+            <option value="" selected>Gravité</option>
+            <option value="1">1</option>
+            <option value="2">3</option>
+            <option value="3">5</option>
+            <option value="4">10</option>
+          </select></div>
+
+        <div class="col-1">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>?</button>
+        </div>
+        <div class="col-1">Criticité</div>
+        <div class="col-1"><input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="">
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-2">Détails</div>
+        <div class="col-10">
+          <div class="form-group">
+            <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="1"
+              placeholder="Détails"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fin Prevention1 -->
+      <!-- Risque2 -->
+      <div class="row">
+        <div class="col-1">Risque 2</div>
+        <div class="col-3"><label></label>
+          <select class="browser-default custom-select mb-4">
+            <option value="" selected>Choix du Risque</option>
+            <option value="1">Dg1</option>
+            <option value="2">Dg2</option>
+            <option value="3">Dg3</option>
+            <option value="4">Dg4</option>
+          </select></div>
+        <div class="col-1">Cotation</div>
+        <div class="col-2"><label></label>
+          <select class="browser-default custom-select mb-4">
+            <option value="" selected>Fréquence</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select></div>
+
+        <div class="col-2"><label></label>
+          <select class="browser-default custom-select mb-4">
+            <option value="" selected>Gravité</option>
+            <option value="1">1</option>
+            <option value="2">3</option>
+            <option value="3">5</option>
+            <option value="4">10</option>
+          </select></div>
+
+        <div class="col-1">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>?</button>
+        </div>
+        <div class="col-1">Criticité</div>
+        <div class="col-1"><input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="">
+        </div>
+      </div>
+      <!-- Fin Risque2 -->
+
+      <!-- Prevention 2 -->
+      <div class="row">
+        <div class="col-2">Prévention existante</div>
+        <div class="col-10">
+          <div class="form-group">
+            <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="1"
+              placeholder="Prévention Existante"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">Prévention Mise en oeuvre</div>
+        <div class="col-1"></div>
+        <div class="col-1">Cotation</div>
+        <div class="col-2"><label></label>
+          <select class="browser-default custom-select mb-4">
+            <option value="" selected>Fréquence</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select></div>
+
+        <div class="col-2"><label></label>
+          <select class="browser-default custom-select mb-4">
+            <option value="" selected>Gravité</option>
+            <option value="1">1</option>
+            <option value="2">3</option>
+            <option value="3">5</option>
+            <option value="4">10</option>
+          </select></div>
+
+        <div class="col-1">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>?</button>
+        </div>
+        <div class="col-1">Criticité</div>
+        <div class="col-1"><input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="">
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-2">Détails</div>
+        <div class="col-10">
+          <div class="form-group">
+            <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="1"
+              placeholder="Détails"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fin Prevention2 -->
+      <!-- Send button -->
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"><button mdbBtn color="info" class="align-center" type="submit">Valider</button></div>
+        <div class="col-md-4"></div>
+      </div>
 
 
-  </form>
+    </form>
 
 
-  <!-- Default form contact -->
+    <!-- Mode User message pour se connecter en Administrateur -->
+  </div>
 </div>
+<div *ngIf="!afficherModif()">
+  <div class="container">
+    <div class =row><p></p></div>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h2 class="display-4">Attention ! </h2>
+        <p class="lead">Vous devez être en mode Administrateur pour faire des modifications</p>
+      </div>
+    </div>
+  </div>

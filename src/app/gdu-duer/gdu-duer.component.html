@@ -62,6 +62,9 @@
         <tr>
           <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
           </th>
+          <th *ngFor="let head2 of headElements1; let i = index" scope="col">
+            <div *ngIf = "afficherModif()"> {{head2}} </div>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -78,13 +81,13 @@
           <td>{{el.heading9}}</td>
           <td>{{el.heading10}}</td>
           <td>{{el.heading11}}</td>
-          <td>{{el.heading12}}</td>
-          <td>{{el.heading13}}</td>
+          <td >{{el.heading12}}</td>
+          <td >{{el.heading13}}</td>
 
-          <td><button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
+          <td *ngIf = "afficherModif()"><button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
               class="m-0 relative waves-light" (click)="basicModal.show()">Définir</button>
           </td>
-          <td><button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
+          <td *ngIf = "afficherModif()"><button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
               class="m-0 relative waves-light" (click)="basicModal1.show()">Modifier</button>
           </td>
 

@@ -1,4 +1,10 @@
 <!--Navbar-->
+
+<style>
+  .texteenblanc {
+    color: white;
+  }
+  </style>
 <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark #f9a825 yellow darken-3">
 
   <!-- Navbar brand -->
@@ -6,8 +12,8 @@
   <!-- Logo -->
   <div class="media">
     <a routerLinkActive="active" routerLink="/gdu" class="nav-link waves-light" mdbWavesEffect>
-    <img src="assets\images\72711843_3022209834462611_3053189880180899840_o.jpg" width="160px" height="40px" alt=""
-      class="mr-3"></a>
+      <img src="assets\images\72711843_3022209834462611_3053189880180899840_o.jpg" width="160px" height="40px" alt=""
+        class="mr-3"></a>
   </div>
   <!-- Collapsible content -->
   <links>
@@ -36,24 +42,31 @@
         <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
           <b>Documentation</b><span class="caret"></span></a>
         <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-          <a class="dropdown-item waves-light" routerLinkActive="active" routerLink="/gdu/def"  mdbWavesEffect href="#">Définitions</a>
-          <a class="dropdown-item waves-light" routerLinkActive="active" routerLink="/gdu/cot" mdbWavesEffect href="#">Grille de Cotation</a>
-           </div>
+          <a class="dropdown-item waves-light" routerLinkActive="active" routerLink="/gdu/def" mdbWavesEffect
+            href="#">Définitions</a>
+          <a class="dropdown-item waves-light" routerLinkActive="active" routerLink="/gdu/cot" mdbWavesEffect
+            href="#">Grille de Cotation</a>
+        </div>
       </li>
       <!-- Dropdown -->
       <li class="nav-item dropdown" dropdown>
         <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
           <b>Réglementation</b><span class="caret"></span></a>
         <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-          <a class="dropdown-item waves-light" class="dropdown-item waves-light" routerLinkActive="active" routerLink="/gdu/prev-reg" mdbWavesEffect href="#">Prévention</a>
-          <a class="dropdown-item waves-light" routerLinkActive="active" routerLink="/gdu/duer-reg" mdbWavesEffect href="#">DUER</a>
-          <a class="dropdown-item waves-light" routerLinkActive="active" routerLink="/gdu/pch-reg"mdbWavesEffect href="#">Port de Charge</a>
+          <a class="dropdown-item waves-light" class="dropdown-item waves-light" routerLinkActive="active"
+            routerLink="/gdu/prev-reg" mdbWavesEffect href="#">Prévention</a>
+          <a class="dropdown-item waves-light" routerLinkActive="active" routerLink="/gdu/duer-reg" mdbWavesEffect
+            href="#">DUER</a>
+          <a class="dropdown-item waves-light" routerLinkActive="active" routerLink="/gdu/pch-reg" mdbWavesEffect
+            href="#">Port de Charge</a>
         </div>
       </li>
 
-      <li class="nav-item">
+      <li *ngIf= "statutConnexion" >
+        <div class="nav-item">
         <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-          mdbWavesEffect (click)="frame.show()" size="sm" >Connexion</button>
+          mdbWavesEffect (click)="frame.show()" size="sm">Connexion</button>
+        </div>
       </li>
       <!-- Modal depour l'identification -->
       <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
@@ -62,50 +75,67 @@
           <div class="modal-content">
             <div class="modal-header text-center">
               <h4 class="modal-title w-100 font-weight-bold">Connexion</h4>
-              <button type="button" class="close" data-dismiss="modal" background-color="green" aria-label="Close"
-                (click)="frame.hide()">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body mx-3">
               <div class="md-form mb-5">
-
                 <mdb-icon fas icon="envelope" class="prefix grey-text"></mdb-icon>
                 <input type="email" id="defaultForm-email" [formControl]="loginFormModalEmail" class="form-control"
                   mdbInput mdbValidate>
-                <label for="defaultForm-email">Votre email</label>
+                <label for="defaultForm-email">Email</label>
                 <mdb-error
                   *ngIf="loginFormModalEmail.invalid && (loginFormModalEmail.dirty || loginFormModalEmail.touched)">
-                  Données invalides
+                  Input invalid
                 </mdb-error>
                 <mdb-success
-                  *ngIf="loginFormModalEmail.valid && (loginFormModalEmail.dirty || loginFormModalEmail.touched)">
-                  Données invalides
+                  *ngIf="loginFormModalEmail.valid && (loginFormModalEmail.dirty || loginFormModalEmail.touched)">Input
+                  valid
                 </mdb-success>
               </div>
 
               <div class="md-form mb-4">
                 <mdb-icon fas icon="lock" class="prefix grey-text"></mdb-icon>
-                <input type="password" id="defaultForm-pass" class="form-control" mdbInput mdbValidate>
-                <label for="defaultForm-pass">Votre Mot de passe</label>
+                <input type="password" id="defaultForm-pass" [formControl]="loginFormModalPassword" class="form-control"
+                  mdbInput mdbValidate>
+                <label for="defaultForm-pass">Mot de Passe</label>
                 <mdb-error
                   *ngIf="loginFormModalPassword.invalid && (loginFormModalPassword.dirty || loginFormModalPassword.touched)">
                   Input invalid
                 </mdb-error>
-                <mdb-success
-                  *ngIf="loginFormModalPassword.valid && (loginFormModalPassword.dirty || loginFormModalPassword.touched)">
+                <mdb-success *ngIf="loginFormModalPassword.valid && (loginFormModalPassword.dirty ||
+                  loginFormModalPassword.touched)">
                   Input valid
                 </mdb-success>
               </div>
 
             </div>
             <div class="modal-footer d-flex justify-content-center">
-              <button mdbBtn color="default" class="waves-light" mdbWavesEffect>Valider</button>
+              <button type="submit" mdbBtn color="default" class="waves-light" mdbWavesEffect
+                (click)="connecter()">Valider</button>
             </div>
           </div>
         </div>
       </div>
+      <li *ngIf="connexionBaseAdmin && !statutConnexion" >
+        <div class="alert danger-color" role="alert">
+          <div class ="texteenblanc">{{collaborateurConnexion.nom | uppercase}}</div>
+        </div>
+          </li>
+          <li *ngIf="connexionBaseUser && !statutConnexion" >
+            <div class="alert default-color" role="alert">
+              <div class ="texteenblanc">{{collaborateurConnexion.nom | uppercase}}</div>
+            </div>
+              </li>
+        <!--{{collaborateurConnexion.nom | uppercase}} {{collaborateurConnexion.prenom | titlecase}}-->
       <!--Navbar-->
+      <li *ngIf= "!statutConnexion" >
+        <div class="nav-item">
+        <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
+          mdbWavesEffect (click)="seDeconnecter()" size="sm">Deconnexion</button>
+        </div>
+      </li>
     </ul>
 
 

@@ -1,7 +1,7 @@
 <div class="container">
   <p></p>
 
-    <!-- Sélection-->
+  <!-- Sélection-->
   <div class="row">
     <div class="col-3"><b>Plan d'Actions Spécifiques</b></div>
     <div class="col-2"><label></label>
@@ -14,18 +14,18 @@
       </select></div>
 
     <div class="col-2"><label></label>
-      <select class="browser-default custom-select mb-4">
-        <option value="" selected>Risque</option>
-        <option value="1">Lieu1</option>
-        <option value="1">Lieu2</option>
-        <option value="1">Lieu3</option>
-        <option value="1">Lieu4</option>
-      </select></div>
+
+        <select class="browser-default custom-select mb-4">
+          <option value="" selected>Risque</option>
+          <option *ngFor="let risque of listeRisques" value={{risque.id}}>{{risque.nom}} </option>
+
+        </select>
+      </div>
 
     <div class="col-2"><label></label>
       <select class="browser-default custom-select mb-4">
         <option value="" selected>Qui ?</option>
-        <option value="1">Bruno</option>
+        <option value={{test[0].id}}>{{test[0].nom}}</option>
         <option value="2">Pascal</option>
         <option value="3">Florence</option>
         <option value="4">4</option>
@@ -45,6 +45,9 @@
         <tr>
           <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
           </th>
+          <th *ngFor="let head1 of headElements1; let i = index" scope="col">
+            <div *ngIf="afficherModif()"> {{head1}} </div>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -63,8 +66,8 @@
             <!-- Default unchecked-->
           </td>
           <!-- Material unchecked -->
-          <td><button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
-              class="m-0 relative waves-light" (click)="basicModal1.show()">Modifier</button>
+          <td *ngIf="afficherModif()"><button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect
+              type="button" class="m-0 relative waves-light" (click)="basicModal1.show()">Modifier</button>
           </td>
           <!-- Partie modale PAS -->
           <form>
@@ -168,4 +171,4 @@
         </tr>
       </tfoot>
     </table>
-      </div>
+  </div>

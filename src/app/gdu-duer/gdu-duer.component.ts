@@ -2,6 +2,9 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstrap-md';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { CookieService } from 'ngx-cookie-service';
+import { Collaborateur } from '../auth.domains';
 
 
 @Component({
@@ -49,14 +52,17 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
       heading13: 'Camion avec haillon',
       heading14: '',
       heading15: ''
-    }, ]
+    },]
   previous: any = [];
   headElements = ['ID', 'UT', 'Lieu', 'Activité', 'Danger', 'Risque',
-  'G', 'F', 'C', 'Prévention','G','F','C','Prévention','Plan Actions','Modification'];
+    'G', 'F', 'C', 'Prévention', 'G', 'F', 'C', 'Prévention'];
+  headElements1 = ['Plan Actions', 'Modification'];
+  collaborateurConnexion: any;
 
-  constructor(private _router: Router, private cdRef: ChangeDetectorRef) { }
 
+  constructor(private _router: Router, private _cookieService: CookieService, private cdRef: ChangeDetectorRef, private _authSrv: AuthService) { }
 
+  collaborateurConnecte: Collaborateur;
   ngOnInit() {
 
 
@@ -73,5 +79,11 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     this.cdRef.detectChanges();
   }
 
+  afficherModif(): boolean {
+
+    this.collaborateurConnecte = JSON.parse(this._cookieService.get('col'));
+    return (this.collaborateurConnecte.roles[0] === this.collaborateurConnecte.ADMIN);
+  }
 }
+
 
