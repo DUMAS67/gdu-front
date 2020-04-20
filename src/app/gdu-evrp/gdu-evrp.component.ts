@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Collaborateur } from '../auth.domains';
 import { CookieService } from 'ngx-cookie-service';
+import { RisquesVm } from '../domains/risquesVm';
+import { DataService } from '../data.service';
 
 
 @Component({
@@ -12,7 +14,8 @@ import { CookieService } from 'ngx-cookie-service';
 export class GduEvrpComponent implements OnInit {
   collaborateurConnecte: Collaborateur;
 
-  constructor(private _router: Router, private _cookieService: CookieService) { }
+  constructor(private dataService: DataService, private _router: Router,
+     private _cookieService: CookieService) { }
 recup: any;
   elements3: any = [{
     id: '1',
@@ -31,12 +34,21 @@ recup: any;
   headElementsLieu = ['ID', 'Lieu', 'Sélection'];
   headElementsDg = ['ID', 'Danger', 'Sélection'];
   headElementsAct = ['ID', 'Activité', 'Sélection'];
+
+  listeRisquesEvrp$ = this.dataService.afficherListeRisque();
+  listeRisquesEvrp: RisquesVm[];
+
   ngOnInit() {
 
+    this.listeRisquesEvrp$.subscribe((param: RisquesVm[]) => {
+      this.listeRisquesEvrp = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
+      );
+
+    console.log('AAAAAA4' + this.listeRisquesEvrp);
   }
 
 
-  recupUt(utValeur: any[]) {
+  recupItem(utValeur: any[]) {
 
 this.recup = utValeur;
 console.log(this.recup);
