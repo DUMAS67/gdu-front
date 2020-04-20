@@ -24,8 +24,10 @@ recup: any;
   }
 
   ];
-  headElements3 = ['ID', 'UT', 'Sélection'];
-
+  headElementsUt = ['ID', 'UT', 'Sélection'];
+  headElementsLieu = ['ID', 'Lieu', 'Sélection'];
+  headElementsDg = ['ID', 'Danger', 'Sélection'];
+  headElementsAct = ['ID', 'Activité', 'Sélection'];
   ngOnInit() {
 
   }
