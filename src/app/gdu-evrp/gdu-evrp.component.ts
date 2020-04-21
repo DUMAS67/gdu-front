@@ -4,6 +4,13 @@ import { Collaborateur } from '../auth.domains';
 import { CookieService } from 'ngx-cookie-service';
 import { RisquesVm } from '../domains/risquesVm';
 import { DataService } from '../data.service';
+import { FrequenceVm } from '../domains/FrequenceVm';
+import { GraviteVm } from '../domains/Gravite';
+import { CriticiteVm } from '../domains/CriticiteVm';
+import { UtVm } from '../domains/UtVm';
+import { LieuVm } from '../domains/LieuVm';
+import { ActivitesVm } from '../domains/ActivitesVm';
+import { DangersVm } from '../domains/DangersVm';
 
 
 @Component({
@@ -30,21 +37,58 @@ recup: any;
   }
 
   ];
-  headElementsUt = ['ID', 'UT', 'Sélection'];
-  headElementsLieu = ['ID', 'Lieu', 'Sélection'];
-  headElementsDg = ['ID', 'Danger', 'Sélection'];
-  headElementsAct = ['ID', 'Activité', 'Sélection'];
+  headElementsUt = ['UT', 'Sélection'];
+  headElementsLieu = ['Lieu', 'Sélection'];
+  headElementsDg = ['Danger', 'Sélection'];
+  headElementsAct = ['Activité', 'Sélection'];
 
-  listeRisquesEvrp$ = this.dataService.afficherListeRisque();
-  listeRisquesEvrp: RisquesVm[];
-
+  listeLieu$ = this.dataService.afficherListeLieu();
+  listeLieu: LieuVm[];
+  listeCriticite$ = this.dataService.afficherListeCriticite();
+  listeCriticite: CriticiteVm[];
+  listeUt$ = this.dataService.afficherListeUt();
+  listeUt: UtVm[];
+  listeGravite$ = this.dataService.afficherListeGravite();
+  listeGravite: GraviteVm[];
+  listeFrequence$ = this.dataService.afficherListeFrequence();
+  listeFrequence: FrequenceVm[];
+  listeActivite$ = this.dataService.afficherListeActivite();
+  listeActivite: ActivitesVm[];
+  listeDanger$ = this.dataService.afficherListeDanger();
+  listeDanger: DangersVm[];
+  listeRisque$ = this.dataService.afficherListeRisque();
+  listeRisque: RisquesVm[];
   ngOnInit() {
 
-    this.listeRisquesEvrp$.subscribe((param: RisquesVm[]) => {
-      this.listeRisquesEvrp = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
+    this.listeLieu$.subscribe((param: LieuVm[]) => {
+      this.listeLieu = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+    }
+    );
+    this.listeUt$.subscribe((param: UtVm[]) => {
+      this.listeUt = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
       );
 
-    console.log('AAAAAA4' + this.listeRisquesEvrp);
+    this.listeCriticite$.subscribe((param: CriticiteVm[]) => {
+        this.listeCriticite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur)); }
+        );
+
+    this.listeGravite$.subscribe((param: GraviteVm[]) => {
+          this.listeGravite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur)); }
+          );
+
+    this.listeActivite$.subscribe((param: ActivitesVm[]) => {
+            this.listeActivite = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
+            );
+
+    this.listeDanger$.subscribe((param: DangersVm[]) => {
+              this.listeDanger = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
+              );
+    this.listeRisque$.subscribe((param: RisquesVm[]) => {
+                this.listeRisque = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
+                );
+    this.listeFrequence$.subscribe((param: FrequenceVm[]) => {
+                  this.listeFrequence = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur)); }
+                  );
   }
 
 

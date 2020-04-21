@@ -8,6 +8,7 @@ import { LieuVm } from './domains/LieuVm';
 import { CriticiteVm } from './domains/CriticiteVm';
 import { GraviteVm } from './domains/Gravite';
 import { FrequenceVm } from './domains/FrequenceVm';
+import { ActivitesVm } from './domains/ActivitesVm';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,7 @@ export class DataService {
   listeCriticite: Observable<CriticiteVm[]>;
   listeGravite: Observable<GraviteVm[]>;
   listeFrequence: Observable<FrequenceVm[]>;
+  listeActivite: Observable<ActivitesVm[]>;
 
   constructor(private http: HttpClient) { }
 
@@ -39,7 +41,7 @@ export class DataService {
 
   }
 
-  afficherListeDangers(): Observable<DangersVm[]> {
+  afficherListeDanger(): Observable<DangersVm[]> {
     this.listeD = this.http.get<DangersVm[]>(this.url_an + 'dangers');
     /*this.listeR.forEach(element => {
       console.log(element[0].nom);
@@ -92,4 +94,14 @@ export class DataService {
     return this.listeFrequence;
 
   }
+
+  afficherListeActivite(): Observable<ActivitesVm[]> {
+    this.listeActivite = this.http.get<ActivitesVm[]>(this.url_an + 'activites');
+    /*this.listeR.forEach(element => {
+      console.log(element[0].nom);
+    });*/
+    return this.listeActivite;
+
+  }
+
 }
