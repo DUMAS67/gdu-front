@@ -4,6 +4,12 @@ import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstra
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Collaborateur } from '../auth.domains';
+import { GraviteVm } from '../domains/Gravite';
+import { FrequenceVm } from '../domains/FrequenceVm';
+import { CriticiteVm } from '../domains/CriticiteVm';
+import { UtVm } from '../domains/UtVm';
+import { LieuVm } from '../domains/LieuVm';
+import { DataService } from '../data.service';
 
 
 @Component({
@@ -49,7 +55,18 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
     'G', 'F', 'C', 'Prévention à mettre en place'];
   headElements2 = ['Plan Actions', 'Modification'];
   collaborateurConnecte: Collaborateur;
-  constructor(private _router: Router, private _cookieService: CookieService, private cdRef: ChangeDetectorRef) { }
+  listeLieu$ = this.dataService.afficherListeLieu();
+  listeLieu: LieuVm[];
+  listeCriticite$ = this.dataService.afficherListeCriticite();
+  listeCriticite: CriticiteVm[];
+  listeUt$ = this.dataService.afficherListeUt();
+  listeUt: UtVm[];
+  listeGravite$ = this.dataService.afficherListeGravite();
+  listeGravite: GraviteVm[];
+  listeFrequence$ = this.dataService.afficherListeFrequence();
+  listeFrequence: FrequenceVm[];
+  constructor(private dataService: DataService, private _router: Router,
+    private _cookieService: CookieService, private cdRef: ChangeDetectorRef) { }
 
 
   ngOnInit() {
@@ -66,6 +83,25 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
+
+    this.listeLieu$.subscribe((param: LieuVm[]) => {
+      this.listeLieu = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+    }
+    );
+    this.listeUt$.subscribe((param: UtVm[]) => {
+      this.listeUt = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
+      );
+
+    this.listeCriticite$.subscribe((param: CriticiteVm[]) => {
+        this.listeCriticite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur)); }
+        );
+
+    this.listeGravite$.subscribe((param: GraviteVm[]) => {
+          this.listeGravite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur)); }
+          );
+    this.listeFrequence$.subscribe((param: FrequenceVm[]) => {
+            this.listeFrequence = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur)); }
+            );
   }
 
   afficherModif(): boolean {
