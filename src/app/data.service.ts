@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { RisquesVm } from './domains/RisquesVm';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { DangersVm } from './domains/DangersVm';
 import { UtVm } from './domains/UtVm';
 import { LieuVm } from './domains/LieuVm';
@@ -9,6 +9,7 @@ import { CriticiteVm } from './domains/CriticiteVm';
 import { GraviteVm } from './domains/Gravite';
 import { FrequenceVm } from './domains/FrequenceVm';
 import { ActivitesVm } from './domains/ActivitesVm';
+import { Ut } from './environments/Ut';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,7 @@ import { ActivitesVm } from './domains/ActivitesVm';
 
 export class DataService {
 
-
-  url_an = 'http://localhost:8080/';
+  url_gdu = 'http://localhost:8080/';
   listeR: Observable<RisquesVm[]>;
   listeD: Observable<DangersVm[]>;
   listeUt: Observable<UtVm[]>;
@@ -28,80 +28,100 @@ export class DataService {
   listeGravite: Observable<GraviteVm[]>;
   listeFrequence: Observable<FrequenceVm[]>;
   listeActivite: Observable<ActivitesVm[]>;
-
+  ut: Observable<UtVm>;
   constructor(private http: HttpClient) { }
 
 
   afficherListeRisque(): Observable<RisquesVm[]> {
-    this.listeR = this.http.get<RisquesVm[]>(this.url_an + 'risques');
-    this.listeR.forEach(element => {
-      console.log(element[0].nom);
-    });
+    this.listeR = this.http.get<RisquesVm[]>(this.url_gdu + 'risques');
+
     return this.listeR;
 
   }
 
   afficherListeDanger(): Observable<DangersVm[]> {
-    this.listeD = this.http.get<DangersVm[]>(this.url_an + 'dangers');
-    /*this.listeR.forEach(element => {
-      console.log(element[0].nom);
-    });*/
+    this.listeD = this.http.get<DangersVm[]>(this.url_gdu + 'dangers');
+
     return this.listeD;
 
   }
 
   afficherListeUt(): Observable<UtVm[]> {
-    this.listeUt = this.http.get<UtVm[]>(this.url_an + 'ut');
-    /*this.listeR.forEach(element => {
-      console.log(element[0].nom);
-    });*/
+    this.listeUt = this.http.get<UtVm[]>(this.url_gdu + 'uts');
+
     return this.listeUt;
 
   }
 
   afficherListeLieu(): Observable<LieuVm[]> {
-    this.listeLieu = this.http.get<LieuVm[]>(this.url_an + 'lieu');
-    /*this.listeR.forEach(element => {
-      console.log(element[0].nom);
-    });*/
+    this.listeLieu = this.http.get<LieuVm[]>(this.url_gdu + 'lieus');
+
     return this.listeLieu;
 
   }
 
   afficherListeCriticite(): Observable<CriticiteVm[]> {
-    this.listeCriticite = this.http.get<CriticiteVm[]>(this.url_an + 'criticite');
-    /*this.listeR.forEach(element => {
-      console.log(element[0].nom);
-    });*/
+    this.listeCriticite = this.http.get<CriticiteVm[]>(this.url_gdu + 'criticites');
+
     return this.listeCriticite;
 
   }
 
   afficherListeGravite(): Observable<GraviteVm[]> {
-    this.listeGravite = this.http.get<GraviteVm[]>(this.url_an + 'gravite');
-    /*this.listeR.forEach(element => {
-      console.log(element[0].nom);
-    });*/
+    this.listeGravite = this.http.get<GraviteVm[]>(this.url_gdu + 'gravites');
+
     return this.listeGravite;
 
   }
 
   afficherListeFrequence(): Observable<FrequenceVm[]> {
-    this.listeFrequence = this.http.get<FrequenceVm[]>(this.url_an + 'frequence');
-    /*this.listeR.forEach(element => {
-      console.log(element[0].nom);
-    });*/
+    this.listeFrequence = this.http.get<FrequenceVm[]>(this.url_gdu + 'frequences');
     return this.listeFrequence;
 
   }
 
   afficherListeActivite(): Observable<ActivitesVm[]> {
-    this.listeActivite = this.http.get<ActivitesVm[]>(this.url_an + 'activites');
-    /*this.listeR.forEach(element => {
-      console.log(element[0].nom);
-    });*/
+    this.listeActivite = this.http.get<ActivitesVm[]>(this.url_gdu + 'activites');
+
     return this.listeActivite;
 
   }
+
+
+  creerUt(newUt: string): string {
+    const urlPostUt = this.url_gdu + 'ut?nom=' + newUt;
+    console.log('2 ' + urlPostUt);
+    console.log('3 ' + newUt);
+    this.http.post(urlPostUt, {}).
+      subscribe(
+        (data: any) => {
+          console.log(data);
+          return data;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        });
+    return '';
+  }
+
+  modifUt( idav: number, nomap: string): string {
+
+    const urlPostUt = this.url_gdu + 'utm?id=' + idav + '&nomap=' + nomap;
+
+    this.http.post(urlPostUt, {}).
+      subscribe(
+        (data: any) => {
+          console.log(data);
+          return data;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        });
+    return '';
+  }
+
+
 
 }

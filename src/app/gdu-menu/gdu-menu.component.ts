@@ -30,7 +30,10 @@ export class GduMenuComponent implements OnInit {
     this.connexionBaseAdmin = false;
     this.connexionBaseUser = false;
     this.statutConnexion = true;
-    this.profil = this._cookieService.get('choixProfil') === null ? '0' : this._cookieService.get('choixProfil');
+    /*this.collaborateurConnexion = JSON.parse(this._cookieService.get('col'));
+    if (this.collaborateurConnexion === null) {this.statutConnexion = true; }
+    else {this.statutConnexion = false; }*/
+
     this.validatingForm = new FormGroup({
       loginFormModalEmail: new FormControl('', Validators.email),
       loginFormModalPassword: new FormControl('', Validators.required)
@@ -53,42 +56,58 @@ export class GduMenuComponent implements OnInit {
   connecter() {
 
     console.log(this.loginFormModalEmail.value + '');
+
     this._authSrv.connecter(this.loginFormModalEmail.value + '', this.loginFormModalPassword.value + '')
       .subscribe(
-        // en cas de succès, redirection vers la page /connexion/profil
-        col => this._router.navigate(['/gdu']),
+        // en cas de succès, redirection vers la page /gdu
+        col => {
+        this.collaborateurConnexion = JSON.parse(this._cookieService.get('col'));
+        this.statutConnexion = false;
+        this.connexionBaseAdmin = this.collaborateur.estAdministrateur(this.collaborateurConnexion.roles);
+        this.connexionBaseUser = this.collaborateur.estCollaborateur(this.collaborateurConnexion.roles);
+        console.log('this.statutConnexion ' + this.statutConnexion);
+          //console.log('profil : ' + this.profil);
+        console.log('collaborateurConnexion : ' + this.collaborateurConnexion);
+        console.log('collaborateurConnexion.roles : ' + this.collaborateurConnexion.roles);
+
+        console.log('connexionBaseAdmin : ' + this.connexionBaseAdmin);
+        console.log('connexionBaseUser : ' + this.connexionBaseUser);
+
+        this._router.navigate(['/gdu']);
+
+        },
 
         // en cas d'erreur, affichage d'un message d'erreur
-        err => this.err = true
+        err => { this.err = true; }
       );
-    this.collaborateurConnexion = JSON.parse(this._cookieService.get('col'));
-    //console.log(this._cookieService.get('col'));
-    console.log('profil : '+ this.profil);
-    console.log('collaborateurConnexion : '+ this.collaborateurConnexion);
-    console.log('collaborateurConnexion.roles : '+ this.collaborateurConnexion.roles);
-    this.statutConnexion = false;
-    this.connexionBaseAdmin = this.collaborateur.estAdministrateur(this.collaborateurConnexion.roles);
-    this.connexionBaseUser = this.collaborateur.estCollaborateur(this.collaborateurConnexion.roles);
+
+
+
+    console.log('this.statutConnexion ' + this.statutConnexion);
+    //console.log('profil : ' + this.profil);
+    console.log('collaborateurConnexion : ' + this.collaborateurConnexion);
+    console.log('collaborateurConnexion.roles : ' + this.collaborateurConnexion.roles);
+
     console.log('connexionBaseAdmin : ' + this.connexionBaseAdmin);
     console.log('connexionBaseUser : ' + this.connexionBaseUser);
   }
 
 
-  seConnecter() {
+  /*seConnecter() {
     console.log(this.loginFormModalEmail.value);
     console.log(this.loginFormModalPassword.value);
 
 
-  }
+  }*/
 
   seDeconnecter() {
-    console.log('1' + this.collaborateurConnexion.nom);
+    console.log('111' + this.collaborateurConnexion.nom);
     this._authSrv.seDeconnecter();
-    console.log('2' + this.collaborateurConnexion.nom);
+    console.log('222' + this.collaborateurConnexion.nom);
     this.statutConnexion = true;
     console.log('*Deconnexion&');
     this.collaborateurConnexion = null;
-    console.log('3' + this.collaborateurConnexion.nom);
+
   }
 }
 

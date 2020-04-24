@@ -11,6 +11,7 @@ import { UtVm } from '../domains/UtVm';
 import { LieuVm } from '../domains/LieuVm';
 import { ActivitesVm } from '../domains/ActivitesVm';
 import { DangersVm } from '../domains/DangersVm';
+import { Ut } from '../environments/Ut';
 
 
 @Component({
@@ -19,24 +20,14 @@ import { DangersVm } from '../domains/DangersVm';
   styleUrls: []
 })
 export class GduEvrpComponent implements OnInit {
+
   collaborateurConnecte: Collaborateur;
 
   constructor(private dataService: DataService, private _router: Router,
-     private _cookieService: CookieService) { }
-recup: any;
-  elements3: any = [{
-    id: '1',
-    first: 'Unité de Travail1'
-  }, { id: '2', first: 'Unité de Travail2' }, {
-    id: '3', first: 'Unité de Travail3'
-  }, {
-    id: '4',first: 'Unité de Travail4'
-  }, {
-    id: '5', first: 'Unité de Travail5'
-  }, {    id: '6', first: 'Unité de Travail6'
-  }
+    private _cookieService: CookieService) { }
+  recupId: number;
+  recupNom: string;
 
-  ];
   headElementsUt = ['UT', 'Sélection'];
   headElementsLieu = ['Lieu', 'Sélection'];
   headElementsDg = ['Danger', 'Sélection'];
@@ -58,49 +49,79 @@ recup: any;
   listeDanger: DangersVm[];
   listeRisque$ = this.dataService.afficherListeRisque();
   listeRisque: RisquesVm[];
+  text: string;
+  recupNomAModifier: string;
+  modifNomUt : string;
+
   ngOnInit() {
+
 
     this.listeLieu$.subscribe((param: LieuVm[]) => {
       this.listeLieu = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
     }
     );
     this.listeUt$.subscribe((param: UtVm[]) => {
-      this.listeUt = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
-      );
+      this.listeUt = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+    }
+    );
 
     this.listeCriticite$.subscribe((param: CriticiteVm[]) => {
-        this.listeCriticite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur)); }
-        );
+      this.listeCriticite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur));
+    }
+    );
 
     this.listeGravite$.subscribe((param: GraviteVm[]) => {
-          this.listeGravite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur)); }
-          );
+      this.listeGravite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur));
+    }
+    );
 
     this.listeActivite$.subscribe((param: ActivitesVm[]) => {
-            this.listeActivite = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
-            );
+      this.listeActivite = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+    }
+    );
 
     this.listeDanger$.subscribe((param: DangersVm[]) => {
-              this.listeDanger = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
-              );
+      this.listeDanger = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+    }
+    );
     this.listeRisque$.subscribe((param: RisquesVm[]) => {
-                this.listeRisque = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
-                );
+      this.listeRisque = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+    }
+    );
     this.listeFrequence$.subscribe((param: FrequenceVm[]) => {
-                  this.listeFrequence = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur)); }
-                  );
+      this.listeFrequence = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur));
+    }
+    );
   }
 
 
-  recupItem(utValeur: any[]) {
+  recupItem(utId: number, utValeur: string) {
 
-this.recup = utValeur;
-console.log(this.recup);
+    this.recupNom = utValeur;
+    this.recupId = utId;
+    this.recupNomAModifier = utValeur;
+    console.log(this.recupId);
+    console.log(this.recupNom);
+    return this.recupNom;
   }
 
   afficherModif(): boolean {
 
     this.collaborateurConnecte = JSON.parse(this._cookieService.get('col'));
+    console.log('ModifAffich()' + this.collaborateurConnecte.roles[0]);
     return (this.collaborateurConnecte.roles[0] === this.collaborateurConnecte.ADMIN);
   }
+
+  creerUt1(nouveauNomUt: string) {
+
+    this.dataService.creerUt(nouveauNomUt);
+    console.log('1' + nouveauNomUt);
+  }
+
+  modifUt1(idav: number, nomap: string) {
+
+    this.dataService.modifUt(idav, nomap);
+    console.log('1 Modif ' + nomap);
+  }
+
 }
