@@ -51,7 +51,10 @@ export class GduEvrpComponent implements OnInit {
   listeRisque: RisquesVm[];
   text: string;
   recupNomAModifier: string;
-  modifNomUt : string;
+  modifNomUt: string;
+  modifNomLieu: string;
+  modifNomActivite: string;
+  modifNomDanger: string;
 
   ngOnInit() {
 
@@ -106,22 +109,40 @@ export class GduEvrpComponent implements OnInit {
   }
 
   afficherModif(): boolean {
-
     this.collaborateurConnecte = JSON.parse(this._cookieService.get('col'));
     console.log('ModifAffich()' + this.collaborateurConnecte.roles[0]);
     return (this.collaborateurConnecte.roles[0] === this.collaborateurConnecte.ADMIN);
   }
 
   creerUt1(nouveauNomUt: string) {
-
     this.dataService.creerUt(nouveauNomUt);
-    console.log('1' + nouveauNomUt);
   }
 
   modifUt1(idav: number, nomap: string) {
-
     this.dataService.modifUt(idav, nomap);
-    console.log('1 Modif ' + nomap);
+  }
+
+  creerLieu1(nouveauNomLieu: string) {
+    this.dataService.creerLieu(nouveauNomLieu);
+  }
+
+  modifLieu1(idav: number, nomap: string) {
+    this.dataService.modifLieu(idav, nomap);
+  }
+  creerActivite1(nouveauNomActivite: string) {
+    this.dataService.creerActivite(nouveauNomActivite);
+  }
+
+  modifActivite1(idav: number, nomap: string) {
+    this.dataService.modifActivite(idav, nomap);
+  }
+
+  creerDanger1(nouveauNomActivite: string) {
+    this.dataService.creerDanger(nouveauNomActivite);
+  }
+
+  modifDanger1(idav: number, nomap: string) {
+    this.dataService.modifDanger(idav, nomap);
   }
 
 }

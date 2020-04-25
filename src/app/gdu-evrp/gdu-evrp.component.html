@@ -136,13 +136,14 @@
               <div class="modal-body">
                 Nouveau Lieu de travail
                 <p></p>
-                <input type="text" id="nvLieu" mdbInput class="form-control mb-4"
+                <input type="text" id="nvLieu" name="text" [(ngModel)]="text"  class="form-control mb-4"
                   placeholder="Nouveau Lieu de travail">
               </div>
               <div class="modal-footer">
                 <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                   (click)="basicModal3.hide()" mdbWavesEffect>Fermer</button>
-                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Créer</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                (click)="creerLieu1(text)">Créer</button>
               </div>
             </div>
           </div>
@@ -164,7 +165,7 @@
               <div class="modal-body">
                 Modidier un Lieu de travail
                 <p></p>
-                <input type="text" id="nouveauLieu" mdbInput class="form-control mb-4" value="{{recupNom}}">
+                <input type="text" id="nouveauLieu" [(ngModel)]="modifNomLieu" name="modifNomLieu" mdbInput class="form-control mb-4" #newName="ngModel" value="{{recupNom}}">
               </div>
               <div class="col">
                 <table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true">
@@ -176,7 +177,7 @@
 
                       <td>{{el.nom}}</td>
                       <td> <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-                          (click)="recupItem(el.nom)">Modif</button>
+                          (click)="recupItem(el.id,el.nom)">Modif</button>
                       </td>
                     </tr>
                   </tbody>
@@ -186,7 +187,7 @@
                 <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                   (click)="basicModal4.hide()" mdbWavesEffect>Fermer</button>
                 <button type="button" mdbBtn color="primary" class="relative waves-light"
-                  mdbWavesEffect>Modifier</button>
+                  mdbWavesEffect (click)="modifLieu1(recupId, newName.value)">Modifier</button>
               </div>
             </div>
           </div>
@@ -230,12 +231,12 @@
               <div class="modal-body">
                 Nouvelle Activité
                 <p></p>
-                <input type="text" id="modifLieu" mdbInput class="form-control mb-4" placeholder="Nouvelle Activité">
+                <input type="text" id="creaActivite" name="text" [(ngModel)]="text" class="form-control mb-4" placeholder="Nouvelle Activité">
               </div>
               <div class="modal-footer">
                 <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                   (click)="basicModalAct.hide()" mdbWavesEffect>Fermer</button>
-                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Créer</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect (click)="creerActivite1(text)">Créer</button>
               </div>
             </div>
           </div>
@@ -257,7 +258,7 @@
               <div class="modal-body">
                 Modidier une Activité
                 <p></p>
-                <input type="text" id="nvAct" mdbInput class="form-control mb-4" value="{{recupNom}}">
+                <input type="text" ngModel [(ngModel)]="modifNomActivite" id="modifDg" name="modifNomActivite" mdbInput class="form-control mb-4" #newnomDg="ngModel" value="{{recupNom}}">
               </div>
               <div class="col">
                 <table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true">
@@ -269,7 +270,7 @@
 
                       <td>{{el.nom}}</td>
                       <td> <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-                          (click)="recupItem(el.nom)">Modif</button>
+                          (click)="recupItem(el.id, el.nom)">Modif</button>
                       </td>
                     </tr>
                   </tbody>
@@ -279,7 +280,7 @@
                 <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                   (click)="basicModalActModif.hide()" mdbWavesEffect>Fermer</button>
                 <button type="button" mdbBtn color="primary" class="relative waves-light"
-                  mdbWavesEffect>Modifier</button>
+                  mdbWavesEffect (click)="modifActivite1(recupId, newnomDg.value)">Modifier</button>
               </div>
             </div>
           </div>
@@ -324,12 +325,12 @@
               <div class="modal-body">
                 Nouveau Danger
                 <p></p>
-                <input type="text" id="nouveauDanger" mdbInput class="form-control mb-4" placeholder="Nouveau Danger">
+                <input type="text" id="nouveauDanger" name="text" [(ngModel)]="text" class="form-control mb-4" placeholder="Nouveau Danger">
               </div>
               <div class="modal-footer">
                 <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                   (click)="basicModalDg.hide()" mdbWavesEffect>Fermer</button>
-                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Créer</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect (click)="creerDanger1(text)">Créer</button>
               </div>
             </div>
           </div>
@@ -351,7 +352,7 @@
               <div class="modal-body">
                 Modidier un Danger
                 <p></p>
-                <input type="text" id="ModifierDanger" mdbInput class="form-control mb-4" value="{{recupNom}}">
+                <input type="text" ngModel [(ngModel)]="modifNomDanger" id="modifDg1" name="modifDg1" mdbInput class="form-control mb-4" #modifDg="ngModel" value="{{recupNom}}">
               </div>
               <div class="col">
                 <table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true">
@@ -363,7 +364,7 @@
 
                       <td>{{el.nom}}</td>
                       <td> <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-                          (click)="recupItem(el.nom)">Modif</button>
+                          (click)="recupItem(el.id, el.nom)">Modif</button>
                       </td>
                     </tr>
                   </tbody>
@@ -373,7 +374,7 @@
                 <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                   (click)="basicModalDgModif.hide()" mdbWavesEffect>Fermer</button>
                 <button type="button" mdbBtn color="primary" class="relative waves-light"
-                  mdbWavesEffect>Modifier</button>
+                  mdbWavesEffect (click)="modifDanger1(recupId, modifDg.value)">Modifier</button>
               </div>
             </div>
           </div>
@@ -624,6 +625,7 @@
       <!-- Send button -->
       <div class="row">
         <div class="col-md-4"></div>
+        <div class="col-md-4"><button mdbBtn color="info" class="align-center" type="text">Fermer</button></div>
         <div class="col-md-4"><button mdbBtn color="info" class="align-center" type="submit">Valider</button></div>
         <div class="col-md-4"></div>
       </div>

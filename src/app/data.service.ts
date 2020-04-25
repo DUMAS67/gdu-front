@@ -90,8 +90,7 @@ export class DataService {
 
   creerUt(newUt: string): string {
     const urlPostUt = this.url_gdu + 'ut?nom=' + newUt;
-    console.log('2 ' + urlPostUt);
-    console.log('3 ' + newUt);
+
     this.http.post(urlPostUt, {}).
       subscribe(
         (data: any) => {
@@ -105,7 +104,7 @@ export class DataService {
     return '';
   }
 
-  modifUt( idav: number, nomap: string): string {
+  modifUt(idav: number, nomap: string): string {
 
     const urlPostUt = this.url_gdu + 'utm?id=' + idav + '&nomap=' + nomap;
 
@@ -122,6 +121,107 @@ export class DataService {
     return '';
   }
 
+  creerLieu(newLieu: string): string {
+    const urlPostLieu = this.url_gdu + 'lieu?nom=' + newLieu;
+    console.log(urlPostLieu);
+    console.log(newLieu);
+    this.http.post(urlPostLieu, {}).
+      subscribe(
+        (data: any) => {
+          console.log(data);
+          return data;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        });
+    return '';
+  }
 
+  modifLieu(idav: number, nomap: string): string {
+
+    const urlPostLieu = this.url_gdu + 'lieum?id=' + idav + '&nomap=' + nomap;
+
+    this.http.post(urlPostLieu, {}).
+      subscribe(
+        (data: any) => {
+          console.log(data);
+          return data;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        });
+    return '';
+  }
+
+  creerActivite(newActivite: string): string {
+    const urlPostActivite = this.url_gdu + 'activite?nom=' + newActivite;
+
+
+    this.http.post(urlPostActivite, {}).
+      subscribe(
+        (data: any) => {
+          console.log(data);
+          return data;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        });
+    return '';
+  }
+
+  modifActivite(idav: number, nomap: string): string {
+
+    const urlPostActivite = this.url_gdu + 'activitem?id=' + idav + '&nomap=' + nomap;
+
+    this.http.post(urlPostActivite, {}).
+      subscribe(
+        (data: any) => {
+          console.log(data);
+          return data;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        });
+    return '';
+  }
+
+
+  creerDanger(nouveauNomDanger: string): string {
+    const urlPostDg = this.url_gdu + 'danger?nom=' + nouveauNomDanger;
+
+
+    this.http.post(urlPostDg, {}).
+      subscribe(
+        (data: any) => {
+          console.log(data);
+          return data;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        });
+    return '';
+  }
+
+  modifDanger(idav: number, nomap: string): string {
+
+    const urlPostDg = this.url_gdu + 'dangerm?id=' + idav + '&nomap=' + nomap;
+
+    this.http.post(urlPostDg, {}).
+      subscribe(
+        (data: any) => {
+          console.log(data);
+          return data;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        });
+    return '';
+  }
 
 }
