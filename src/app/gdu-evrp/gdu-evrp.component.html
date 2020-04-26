@@ -14,10 +14,11 @@
       <div class="row">
         <div class="col-2">Unité de Travail</div>
         <div class="col-3"><label></label>
-          <select class="browser-default custom-select mb-4">
+          <select ngModel id="uts"
+          class="browser-default custom-select mb-4" name="uts" #utsNom='ngModel' >
             <option value="" selected>Choisir une Unité de travail</option>
             <option *ngFor="let ut of listeUt" value={{ut.id}}>{{ut.nom}} </option>
-          </select></div>
+            </select></div>
         <div class="col-1"></div>
         <div class="col-3">
           <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
@@ -107,7 +108,7 @@
       <div class="row">
         <div class="col-2">Lieu</div>
         <div class="col-3"><label></label>
-          <select class="browser-default custom-select mb-4">
+          <select ngModel id="lieus" class="browser-default custom-select mb-4" name="lieus" #lieussNom='ngModel'>
             <option value="" selected>Choisir un Lieu</option>
             <option *ngFor="let lieu of listeLieu" value={{lieu.id}}>{{lieu.nom}} </option>
           </select></div>
@@ -200,7 +201,7 @@
       <div class="row">
         <div class="col-2">Activité</div>
         <div class="col-3"><label></label>
-          <select class="browser-default custom-select mb-4">
+          <select ngModel id="activites" class="browser-default custom-select mb-4" name="activites" #activitesNom='ngModel'>
             <option value="" selected>Choisir une Activité</option>
             <option *ngFor="let act of listeActivite" value={{act.id}}>{{act.nom}} </option>
           </select></div>
@@ -295,7 +296,7 @@
       <div class="row">
         <div class="col-2">Danger</div>
         <div class="col-3"><label></label>
-          <select class="browser-default custom-select mb-4">
+          <select ngModel id="dangers" class="browser-default custom-select mb-4" name="dangers" #dangersNom='ngModel'>
             <option value="" selected>Choisir un Danger</option>
             <option *ngFor="let dg of listeDanger" value={{dg.id}}>{{dg.nom}} </option>
           </select></div>
@@ -388,20 +389,20 @@
       <div class="row">
         <div class="col-1">Risque 1</div>
         <div class="col-3"><label></label>
-          <select class="browser-default custom-select mb-4">
+          <select ngModel id="risque1s" class="browser-default custom-select mb-4" name="risque1s" #risques1Nom='ngModel'>
             <option value="" selected>Risque</option>
             <option *ngFor="let risque of listeRisque" value={{risque.id}}>{{risque.nom}} </option>
           </select>
         </div>
         <div class="col-1">Cotation</div>
         <div class="col-2"><label></label>
-          <select class="browser-default custom-select mb-4">
+          <select ngModel id="gr1s" class="browser-default custom-select mb-4" name="gr1s" #gr1sNom='ngModel'>
             <option value="" selected>Gravité</option>
             <option *ngFor="let gr of listeGravite" value={{gr.id}}>{{gr.valeur}} </option>
           </select></div>
 
         <div class="col-2"><label></label>
-          <select class="browser-default custom-select mb-4">
+          <select ngModel id="frq1s" class="browser-default custom-select mb-4" name="frq1s" #frq1sNom='ngModel'>
             <option value="" selected>Fréquence</option>
             <option *ngFor="let fr of listeFrequence" value={{fr.id}}>{{fr.valeur}} </option>
           </select></div>
@@ -451,7 +452,7 @@
                       <td>Dommages réversibles, entraînant des arrêts de travail</td>
                     </tr>
                     <tr>
-                      <td align="center">10</td>
+                      <td align="center">15</td>
                       <td align="center">Vitale</td>
                       <td>Lésions pouvant entrainer la mort</td>
                       <td>Dommages irréversibles (incapacité totale ou partielle voire décès)</td>
@@ -494,9 +495,10 @@
             </div>
           </div>
         </h6>
-        <div class="col-1">Criticité</div>
-        <div class="col-1"><input type="text" id="nvDetailsRq1" class="form-control mb-4" placeholder="">
-        </div>
+        <!--div class="col-1">Criticité</!--div>
+        <div class="col-1"><input *ngIf ="frq1sNom.dirty && gr1sNom.dirty" type="text" id="nvDetailsRq1" class="form-control mb-4"
+          placeholder="{{crit(frq1sNom.value,gr1sNom.value)}}">
+        </div> -->
       </div>
       <!-- Fin Risque1 -->
       <!-- Prevention 1 -->
@@ -504,8 +506,8 @@
         <div class="col-2">Prévention existante</div>
         <div class="col-10">
           <div class="form-group">
-            <textarea class="form-control rounded-0" id="PreventionEx" rows="1"
-              placeholder="Prévention Existante"></textarea>
+              <input type="text" ngModel  id="newPrevEx" name="newPrevEx" mdbInput class="form-control mb-4"
+              #prev1Ex="ngModel" placeholder="Prévention Existante">
           </div>
         </div>
       </div>
@@ -516,13 +518,15 @@
 
 
         <div class="col-2"><label></label>
-          <select class="browser-default custom-select mb-4">
+          <select ngModel id="gr1os" class="browser-default custom-select mb-4" name="gr1os"
+          #gros1Nom='ngModel'>
             <option value="" selected>Gravité</option>
             <option *ngFor="let gr of listeGravite" value={{gr.id}}>{{gr.valeur}} </option>
           </select></div>
 
         <div class="col-2"><label></label>
-          <select class="browser-default custom-select mb-4">
+          <select ngModel id="frq1os" class="browser-default custom-select mb-4" name="frq1os"
+          #frq1osNom='ngModel'>
             <option value="" selected>Fréquence</option>
             <option *ngFor="let fr of listeFrequence" value={{fr.id}}>{{fr.valeur}} </option>
           </select></div>
@@ -530,16 +534,19 @@
           <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModal.show()"
             mdbWavesEffect>?</button>
         </div>
-        <div class="col-1">Criticité</div>
-        <div class="col-1"><input type="text" id="nvDetailsRq2" class="form-control mb-4" placeholder="">
-        </div>
+        <!--div class="col-1">Criticité</!--div>
+
+        <div class="col-1"><input  *ngIf ="frq1osNom.dirty && gros1Nom.dirty" type="text" id="nvDetailsRq2" class="form-control mb-4"
+          placeholder={{crit(frq1osNom.value,gros1Nom.value)}} >
+        </div> -->
 
       </div>
       <div class="row">
         <div class="col-2">Détails</div>
         <div class="col-10">
           <div class="form-group">
-            <textarea class="form-control rounded-0" id="modifPreventionEx" rows="1" placeholder="Détails"></textarea>
+            <input type="text" ngModel  id="newPrev1Mo" name="newPrev1Mo"
+            mdbInput class="form-control mb-4" #prev1Mo="ngModel" placeholder="Détails">
           </div>
         </div>
       </div>
@@ -549,7 +556,7 @@
       <div class="row">
         <div class="col-1">Risque 2</div>
         <div class="col-3"><label></label>
-          <select class="browser-default custom-select mb-4">
+          <select ngModel id="risque2s" class="browser-default custom-select mb-4" name="risque2s" #rsq2sNom='ngModel'>
             <option value="" selected>Choix du Risque</option>
             <option *ngFor="let risque of listeRisque" value={{risque.id}}>{{risque.nom}} </option>
           </select></div>
@@ -557,12 +564,14 @@
 
 
         <div class="col-2"><label></label>
-          <select class="browser-default custom-select mb-4">
+          <select ngModel id="gr2s" class="browser-default custom-select mb-4" name="gr2s"
+          #gr2sNom='ngModel'>
             <option value="" selected>Gravité</option>
             <option *ngFor="let gr of listeGravite" value={{gr.id}}>{{gr.valeur}} </option>
           </select></div>
         <div class="col-2"><label></label>
-          <select class="browser-default custom-select mb-4">
+          <select ngModel id="frq2s" class="browser-default custom-select mb-4" name="frq2s"
+          #frq2sNom='ngModel'>
             <option value="" selected>Fréquence</option>
             <option *ngFor="let fr of listeFrequence" value={{fr.id}}>{{fr.valeur}} </option>
           </select></div>
@@ -570,9 +579,10 @@
           <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModal.show()"
             mdbWavesEffect>?</button>
         </div>
-        <div class="col-1">Criticité</div>
-        <div class="col-1"><input type="text" id="nvDetailsRq3" class="form-control mb-4" placeholder="">
-        </div>
+        <!--div class="col-1">Criticité</!--div>
+        <div class="col-1"><input *ngIf ="frq2sNom.dirty || gr2sNom.dirty"type="text" id="nvDetailsRq3" class="form-control mb-4"
+          placeholder={{crit(frq2sNom.value,gr2sNom.value)}}>
+        </div> -->
       </div>
       <!-- Fin Risque2 -->
 
@@ -581,8 +591,8 @@
         <div class="col-2">Prévention existante</div>
         <div class="col-10">
           <div class="form-group">
-            <textarea class="form-control rounded-0" id="preventionOeuvre" rows="1"
-              placeholder="Prévention Existante"></textarea>
+            <input type="text" ngModel id="newPrev2Ex" name="newPrev2Ex" mdbInput class="form-control mb-4"
+             #prev2Ex="ngModel" placeholder="Prévention Existante">
           </div>
         </div>
       </div>
@@ -592,12 +602,14 @@
         <div class="col-1">Cotation</div>
 
         <div class="col-2"><label></label>
-          <select class="browser-default custom-select mb-4">
+          <select ngModel id="gr2os" class="browser-default custom-select mb-4" name="gr2os"
+          #gr2osNom='ngModel'>
             <option value="" selected>Gravité</option>
             <option *ngFor="let gr of listeGravite" value={{gr.id}}>{{gr.valeur}} </option>
           </select></div>
         <div class="col-2"><label></label>
-          <select class="browser-default custom-select mb-4">
+          <select ngModel id="frq2os" class="browser-default custom-select mb-4" name="frq2os"
+          #frq2osNom='ngModel'>
             <option value="" selected>Fréquence</option>
             <option *ngFor="let fr of listeFrequence" value={{fr.id}}>{{fr.valeur}} </option>
           </select></div>
@@ -606,17 +618,18 @@
           <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModal.show()"
             mdbWavesEffect>?</button>
         </div>
-        <div class="col-1">Criticité</div>
-        <div class="col-1"><input type="text" id="nvDetailsRq4" class="form-control mb-4" placeholder="">
-        </div>
+        <!--div class="col-1">Criticité</!--div>
+        <div class="col-1"><input *ngIf ="frq2osNom.dirty || gr2osNom.dirty"type="text" id="nvDetailsRq4" class="form-control mb-4"
+          placeholder={{crit(frq2osNom.value,gr2osNom.value)}}>
+        </div>-->
 
       </div>
       <div class="row">
         <div class="col-2">Détails</div>
         <div class="col-10">
           <div class="form-group">
-            <textarea class="form-control rounded-0" id="modifPreventionOeuvre" rows="1"
-              placeholder="Détails"></textarea>
+            <input type="text" ngModel  id="newPrev2Mo" name="newPrev2Mo"
+            mdbInput class="form-control mb-4" #prev2Mo="ngModel" placeholder="Détails">
           </div>
         </div>
       </div>
@@ -625,8 +638,18 @@
       <!-- Send button -->
       <div class="row">
         <div class="col-md-4"></div>
-        <div class="col-md-4"><button mdbBtn color="info" class="align-center" type="text">Fermer</button></div>
-        <div class="col-md-4"><button mdbBtn color="info" class="align-center" type="submit">Valider</button></div>
+        <div class="col-md-4"><button mdbBtn color="info" class="align-center" type="text" (click)="fermerEvrp()">Fermer</button></div>
+        <div class="col-md-4"><button mdbBtn color="info" class="align-center" type="text" (click)="creerDuer(utsNom.value,
+          lieussNom.value, activitesNom.value,
+          dangersNom.value, risques1Nom.value,
+          gr1sNom.value, frq1sNom.value,
+          prev1Ex.value, gros1Nom.value,
+          frq1osNom.value, prev1Mo.value,
+          rsq2sNom.value,
+          gr2sNom.value, frq2sNom.value,
+          prev2Ex.value,
+          gr2osNom.value, frq2osNom.value,
+          prev2Mo.value)">Valider</button></div>
         <div class="col-md-4"></div>
       </div>
 

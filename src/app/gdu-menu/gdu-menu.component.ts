@@ -107,6 +107,7 @@ export class GduMenuComponent implements OnInit {
     this.statutConnexion = true;
     console.log('*Deconnexion&');
     this.collaborateurConnexion = null;
+    this._router.navigate(['/gdu']);
 
   }
 }

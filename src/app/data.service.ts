@@ -29,6 +29,8 @@ export class DataService {
   listeFrequence: Observable<FrequenceVm[]>;
   listeActivite: Observable<ActivitesVm[]>;
   ut: Observable<UtVm>;
+  criticite$: Observable<CriticiteVm>;
+  criticite: CriticiteVm;
   constructor(private http: HttpClient) { }
 
 
@@ -224,4 +226,20 @@ export class DataService {
     return '';
   }
 
+  trouverCriticite(id: number): number {
+    const urlGetCrit = this.url_gdu + 'criticite?id=' + id;
+    this.criticite$ = this.http.get<CriticiteVm>(urlGetCrit);
+
+    this.criticite$.subscribe
+      ((param: CriticiteVm) => {
+        this.criticite = new CriticiteVm(param.id, param.valeur);
+        console.log(this.criticite.valeur);
+        return this.criticite.valeur;
+      },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        });
+    return this.criticite.valeur;
+  }
 }
