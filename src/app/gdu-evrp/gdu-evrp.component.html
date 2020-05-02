@@ -14,11 +14,10 @@
       <div class="row">
         <div class="col-2">Unité de Travail</div>
         <div class="col-3"><label></label>
-          <select ngModel id="uts"
-          class="browser-default custom-select mb-4" name="uts" #utsNom='ngModel' >
+          <select ngModel id="uts" class="browser-default custom-select mb-4" name="uts" #utsNom='ngModel'>
             <option value="" selected>Choisir une Unité de travail</option>
             <option *ngFor="let ut of listeUt" value={{ut.id}}>{{ut.nom}} </option>
-            </select></div>
+          </select></div>
         <div class="col-1"></div>
         <div class="col-3">
           <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
@@ -46,14 +45,14 @@
               <div class="modal-body">
                 Nouvelle Unité de travail
                 <p></p>
-                <input type="text" id="ut1" name="text" [(ngModel)]="text" class="form-control mb-4"
+                <input type="text" id="ut1" name="textUt" [(ngModel)]="textUt" class="form-control mb-4"
                   placeholder="Nouvelle Unité de Travail">
               </div>
               <div class="modal-footer">
                 <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                   (click)="basicModal1.hide()" mdbWavesEffect>Fermer</button>
                 <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
-                  (click)="creerUt1(text)">Créer</button>
+                  (click)="creerUt1(textUt)">Créer</button>
               </div>
             </div>
           </div>
@@ -75,7 +74,8 @@
               <div class="modal-body">
                 Modidier une Unité de travail
                 <p></p>
-                <input type="text" ngModel [(ngModel)]="modifNomUt" id="modifUt" name="modifUt" mdbInput class="form-control mb-4" #adDepartOk="ngModel" value="{{recupNomAModifier}}">
+                <input type="text" ngModel [(ngModel)]="modifNomUt" id="modifUt" name="modifUt" mdbInput
+                  class="form-control mb-4" #adDepartOk="ngModel" value="{{recupNomAModifier}}">
               </div>
               <div class="col">
                 <table mdbTable mdbTableScroll scrollY="true" maxHeight="300" bordered="true">
@@ -96,8 +96,8 @@
               <div class="modal-footer">
                 <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                   (click)="basicModal2.hide()" mdbWavesEffect>Fermer</button>
-                <button type="button" mdbBtn color="primary" class="relative waves-light"
-                  mdbWavesEffect (click)="modifUt1(recupId, adDepartOk.value)">Modifier</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                  (click)="modifUt1(recupId, adDepartOk.value)">Modifier</button>
               </div>
             </div>
           </div>
@@ -137,14 +137,14 @@
               <div class="modal-body">
                 Nouveau Lieu de travail
                 <p></p>
-                <input type="text" id="nvLieu" name="text" [(ngModel)]="text"  class="form-control mb-4"
+                <input type="text" id="nvLieu" name="textLieu" [(ngModel)]="textLieu" class="form-control mb-4"
                   placeholder="Nouveau Lieu de travail">
               </div>
               <div class="modal-footer">
                 <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                   (click)="basicModal3.hide()" mdbWavesEffect>Fermer</button>
                 <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
-                (click)="creerLieu1(text)">Créer</button>
+                  (click)="creerLieu1(textLieu)">Créer</button>
               </div>
             </div>
           </div>
@@ -166,7 +166,8 @@
               <div class="modal-body">
                 Modidier un Lieu de travail
                 <p></p>
-                <input type="text" id="nouveauLieu" [(ngModel)]="modifNomLieu" name="modifNomLieu" mdbInput class="form-control mb-4" #newName="ngModel" value="{{recupNom}}">
+                <input type="text" id="nouveauLieu" [(ngModel)]="modifNomLieu" name="modifNomLieu" mdbInput
+                  class="form-control mb-4" #newName="ngModel" value="{{recupNom}}">
               </div>
               <div class="col">
                 <table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true">
@@ -187,8 +188,8 @@
               <div class="modal-footer">
                 <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                   (click)="basicModal4.hide()" mdbWavesEffect>Fermer</button>
-                <button type="button" mdbBtn color="primary" class="relative waves-light"
-                  mdbWavesEffect (click)="modifLieu1(recupId, newName.value)">Modifier</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                  (click)="modifLieu1(recupId, newName.value)">Modifier</button>
               </div>
             </div>
           </div>
@@ -201,7 +202,8 @@
       <div class="row">
         <div class="col-2">Activité</div>
         <div class="col-3"><label></label>
-          <select ngModel id="activites" class="browser-default custom-select mb-4" name="activites" #activitesNom='ngModel'>
+          <select ngModel id="activites" class="browser-default custom-select mb-4" name="activites"
+            #activitesNom='ngModel'>
             <option value="" selected>Choisir une Activité</option>
             <option *ngFor="let act of listeActivite" value={{act.id}}>{{act.nom}} </option>
           </select></div>
@@ -232,12 +234,14 @@
               <div class="modal-body">
                 Nouvelle Activité
                 <p></p>
-                <input type="text" id="creaActivite" name="text" [(ngModel)]="text" class="form-control mb-4" placeholder="Nouvelle Activité">
+                <input type="text" id="creaActivite" name="textAct" [(ngModel)]="textAct" class="form-control mb-4"
+                  placeholder="Nouvelle Activité">
               </div>
               <div class="modal-footer">
                 <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                   (click)="basicModalAct.hide()" mdbWavesEffect>Fermer</button>
-                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect (click)="creerActivite1(text)">Créer</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                  (click)="creerActivite1(textAct)">Créer</button>
               </div>
             </div>
           </div>
@@ -259,7 +263,8 @@
               <div class="modal-body">
                 Modidier une Activité
                 <p></p>
-                <input type="text" ngModel [(ngModel)]="modifNomActivite" id="modifDg" name="modifNomActivite" mdbInput class="form-control mb-4" #newnomDg="ngModel" value="{{recupNom}}">
+                <input type="text" ngModel [(ngModel)]="modifNomActivite" id="modifDg" name="modifNomActivite" mdbInput
+                  class="form-control mb-4" #newnomDg="ngModel" value="{{recupNom}}">
               </div>
               <div class="col">
                 <table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true">
@@ -280,8 +285,8 @@
               <div class="modal-footer">
                 <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                   (click)="basicModalActModif.hide()" mdbWavesEffect>Fermer</button>
-                <button type="button" mdbBtn color="primary" class="relative waves-light"
-                  mdbWavesEffect (click)="modifActivite1(recupId, newnomDg.value)">Modifier</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                  (click)="modifActivite1(recupId, newnomDg.value)">Modifier</button>
               </div>
             </div>
           </div>
@@ -326,12 +331,14 @@
               <div class="modal-body">
                 Nouveau Danger
                 <p></p>
-                <input type="text" id="nouveauDanger" name="text" [(ngModel)]="text" class="form-control mb-4" placeholder="Nouveau Danger">
+                <input type="text" id="nouveauDanger" name="textDg" [(ngModel)]="textDg" class="form-control mb-4"
+                  placeholder="Nouveau Danger">
               </div>
               <div class="modal-footer">
                 <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                   (click)="basicModalDg.hide()" mdbWavesEffect>Fermer</button>
-                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect (click)="creerDanger1(text)">Créer</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                  (click)="creerDanger1(textDg)">Créer</button>
               </div>
             </div>
           </div>
@@ -353,7 +360,8 @@
               <div class="modal-body">
                 Modidier un Danger
                 <p></p>
-                <input type="text" ngModel [(ngModel)]="modifNomDanger" id="modifDg1" name="modifDg1" mdbInput class="form-control mb-4" #modifDg="ngModel" value="{{recupNom}}">
+                <input type="text" ngModel [(ngModel)]="modifNomDanger" id="modifDg1" name="modifDg1" mdbInput
+                  class="form-control mb-4" #modifDg="ngModel" value="{{recupNom}}">
               </div>
               <div class="col">
                 <table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true">
@@ -374,8 +382,8 @@
               <div class="modal-footer">
                 <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                   (click)="basicModalDgModif.hide()" mdbWavesEffect>Fermer</button>
-                <button type="button" mdbBtn color="primary" class="relative waves-light"
-                  mdbWavesEffect (click)="modifDanger1(recupId, modifDg.value)">Modifier</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                  (click)="modifDanger1(recupId, modifDg.value)">Modifier</button>
               </div>
             </div>
           </div>
@@ -389,7 +397,8 @@
       <div class="row">
         <div class="col-1">Risque 1</div>
         <div class="col-3"><label></label>
-          <select ngModel id="risque1s" class="browser-default custom-select mb-4" name="risque1s" #risques1Nom='ngModel'>
+          <select ngModel id="risque1s" class="browser-default custom-select mb-4" name="risque1s"
+            #risques1Nom='ngModel'>
             <option value="" selected>Risque</option>
             <option *ngFor="let risque of listeRisque" value={{risque.id}}>{{risque.nom}} </option>
           </select>
@@ -495,10 +504,10 @@
             </div>
           </div>
         </h6>
-        <!--div class="col-1">Criticité</!--div>
-        <div class="col-1"><input *ngIf ="frq1sNom.dirty && gr1sNom.dirty" type="text" id="nvDetailsRq1" class="form-control mb-4"
-          placeholder="{{crit(frq1sNom.value,gr1sNom.value)}}">
-        </div> -->
+        <div class="col-1">Criticité</div>
+        <div class="col-1"><input *ngIf="frq1sNom.dirty && gr1sNom.dirty" type="text" id="nvDetailsRq1"
+            class="form-control mb-4" placeholder="{{crit(gr1sNom.value,frq1sNom.value)}}">
+        </div>
       </div>
       <!-- Fin Risque1 -->
       <!-- Prevention 1 -->
@@ -506,7 +515,7 @@
         <div class="col-2">Prévention existante</div>
         <div class="col-10">
           <div class="form-group">
-              <input type="text" ngModel  id="newPrevEx" name="newPrevEx" mdbInput class="form-control mb-4"
+            <input type="text" ngModel id="newPrevEx" name="newPrevEx" mdbInput class="form-control mb-4"
               #prev1Ex="ngModel" placeholder="Prévention Existante">
           </div>
         </div>
@@ -518,15 +527,13 @@
 
 
         <div class="col-2"><label></label>
-          <select ngModel id="gr1os" class="browser-default custom-select mb-4" name="gr1os"
-          #gros1Nom='ngModel'>
+          <select ngModel id="gr1os" class="browser-default custom-select mb-4" name="gr1os" #gros1Nom='ngModel'>
             <option value="" selected>Gravité</option>
             <option *ngFor="let gr of listeGravite" value={{gr.id}}>{{gr.valeur}} </option>
           </select></div>
 
         <div class="col-2"><label></label>
-          <select ngModel id="frq1os" class="browser-default custom-select mb-4" name="frq1os"
-          #frq1osNom='ngModel'>
+          <select ngModel id="frq1os" class="browser-default custom-select mb-4" name="frq1os" #frq1osNom='ngModel'>
             <option value="" selected>Fréquence</option>
             <option *ngFor="let fr of listeFrequence" value={{fr.id}}>{{fr.valeur}} </option>
           </select></div>
@@ -534,21 +541,51 @@
           <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModal.show()"
             mdbWavesEffect>?</button>
         </div>
-        <!--div class="col-1">Criticité</!--div>
+        <div class="col-1">Criticité</div>
 
-        <div class="col-1"><input  *ngIf ="frq1osNom.dirty && gros1Nom.dirty" type="text" id="nvDetailsRq2" class="form-control mb-4"
-          placeholder={{crit(frq1osNom.value,gros1Nom.value)}} >
-        </div> -->
+        <div class="col-1"><input *ngIf="frq1osNom.dirty && gros1Nom.dirty" type="text" id="nvDetailsRq2"
+            class="form-control mb-4" placeholder={{crit(gros1Nom.value,frq1osNom.value)}}>
+        </div>
 
       </div>
       <div class="row">
-        <div class="col-2">Détails</div>
-        <div class="col-10">
+        <div class="col-1">Détails</div>
+        <div class="col-9">
           <div class="form-group">
-            <input type="text" ngModel  id="newPrev1Mo" name="newPrev1Mo"
-            mdbInput class="form-control mb-4" #prev1Mo="ngModel" placeholder="Détails">
+            <input type="text" ngModel id="newPrev1Mo" name="newPrev1Mo" mdbInput class="form-control mb-4"
+              #prev1Mo="ngModel" placeholder="Détails">
           </div>
         </div>
+
+        <div *ngIf="(!confirmeDonneesRisque1 && !utsNom.pristine && !lieussNom.pristine && !activitesNom.pristine
+        && !dangersNom.pristine && !risques1Nom.pristine && !gr1sNom.pristine
+        && !frq1sNom.pristine && !prev1Ex.pristine && !gros1Nom.pristine &&
+         !frq1osNom.pristine && !prev1Mo.pristine && !creaEvrp1Ok && (utsNom.value !== null) && (!lieussNom.value !== null) && (!activitesNom.value !== null)
+         && (dangersNom.value !== null) && (risques1Nom.value !== null) && (gr1sNom.value !== null)
+         && (frq1sNom.value !== null) && (prev1Ex.value !== null) && (gros1Nom.value !== null) &&
+          (frq1osNom.value !== null) && (prev1Mo.value !== null))" class="col-md-2">
+          <button size="sm" mdbBtn color="green" class="align-center" type="text" (click)="confirmerDonneesRisque1()">Confirmer
+          </button>
+
+        </div>
+
+        <div *ngIf="(confirmeDonneesRisque1 && (utsNom.value !== null) && (!lieussNom.value !== null) && (!activitesNom.value !== null)
+         && (dangersNom.value !== null) && (risques1Nom.value !== null) && (gr1sNom.value !== null)
+         && (frq1sNom.value !== null) && (prev1Ex.value !== null) && (gros1Nom.value !== null) &&
+          (frq1osNom.value !== null) && (prev1Mo.value !== null))" class="col-md-2">
+          <button size="sm" mdbBtn color="info" class="align-center" type="text"
+            (click)="creerDuer11(utsNom.value,lieussNom.value, activitesNom.value, dangersNom.value, risques1Nom.value, gr1sNom.value, frq1sNom.value, prev1Ex.value, gros1Nom.value,frq1osNom.value, prev1Mo.value)">Valider
+            Risque
+            1</button>
+
+        </div>
+        <div *ngIf="creaEvrp1Ok" class="alert danger-color" role="alert">
+          {{messageValid}}</div>
+        <!--div *ngIf="creaEvrp1Ok">
+          <button size="sm" mdbBtn color="info" class="align-center" type="button"
+            (click)="reinitialiser()">Réinitialiser</button>
+        </!--div>-->
+
       </div>
 
       <!-- Fin Prevention1 -->
@@ -564,14 +601,13 @@
 
 
         <div class="col-2"><label></label>
-          <select ngModel id="gr2s" class="browser-default custom-select mb-4" name="gr2s"
-          #gr2sNom='ngModel'>
+          <select ngModel id="gr2s" class="browser-default custom-select mb-4" name="gr2s" #gr2sNom='ngModel'>
             <option value="" selected>Gravité</option>
             <option *ngFor="let gr of listeGravite" value={{gr.id}}>{{gr.valeur}} </option>
           </select></div>
+
         <div class="col-2"><label></label>
-          <select ngModel id="frq2s" class="browser-default custom-select mb-4" name="frq2s"
-          #frq2sNom='ngModel'>
+          <select ngModel id="frq2s" class="browser-default custom-select mb-4" name="frq2s" #frq2sNom='ngModel'>
             <option value="" selected>Fréquence</option>
             <option *ngFor="let fr of listeFrequence" value={{fr.id}}>{{fr.valeur}} </option>
           </select></div>
@@ -579,10 +615,10 @@
           <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModal.show()"
             mdbWavesEffect>?</button>
         </div>
-        <!--div class="col-1">Criticité</!--div>
-        <div class="col-1"><input *ngIf ="frq2sNom.dirty || gr2sNom.dirty"type="text" id="nvDetailsRq3" class="form-control mb-4"
-          placeholder={{crit(frq2sNom.value,gr2sNom.value)}}>
-        </div> -->
+        <div class="col-1">Criticité</div>
+        <div class="col-1"><input *ngIf="gr2sNom.dirty || frq2sNom.dirty " type="text" id="nvDetailsRq3"
+            class="form-control mb-4" value={{crit(gr2sNom.value,frq2sNom.value)}}>
+        </div>
       </div>
       <!-- Fin Risque2 -->
 
@@ -592,7 +628,7 @@
         <div class="col-10">
           <div class="form-group">
             <input type="text" ngModel id="newPrev2Ex" name="newPrev2Ex" mdbInput class="form-control mb-4"
-             #prev2Ex="ngModel" placeholder="Prévention Existante">
+              #prev2Ex="ngModel" placeholder="Prévention Existante">
           </div>
         </div>
       </div>
@@ -602,14 +638,12 @@
         <div class="col-1">Cotation</div>
 
         <div class="col-2"><label></label>
-          <select ngModel id="gr2os" class="browser-default custom-select mb-4" name="gr2os"
-          #gr2osNom='ngModel'>
+          <select ngModel id="gr2os" class="browser-default custom-select mb-4" name="gr2os" #gr2osNom='ngModel'>
             <option value="" selected>Gravité</option>
             <option *ngFor="let gr of listeGravite" value={{gr.id}}>{{gr.valeur}} </option>
           </select></div>
         <div class="col-2"><label></label>
-          <select ngModel id="frq2os" class="browser-default custom-select mb-4" name="frq2os"
-          #frq2osNom='ngModel'>
+          <select ngModel id="frq2os" class="browser-default custom-select mb-4" name="frq2os" #frq2osNom='ngModel'>
             <option value="" selected>Fréquence</option>
             <option *ngFor="let fr of listeFrequence" value={{fr.id}}>{{fr.valeur}} </option>
           </select></div>
@@ -618,38 +652,53 @@
           <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModal.show()"
             mdbWavesEffect>?</button>
         </div>
-        <!--div class="col-1">Criticité</!--div>
-        <div class="col-1"><input *ngIf ="frq2osNom.dirty || gr2osNom.dirty"type="text" id="nvDetailsRq4" class="form-control mb-4"
-          placeholder={{crit(frq2osNom.value,gr2osNom.value)}}>
-        </div>-->
+        <div class="col-1">Criticité</div>
+        <div class="col-1"><input ngModel #Crit2Mo='ngModel' *ngIf="frq2osNom.dirty || gr2osNom.dirty" type="text"
+            id="crit2Mo" name="crit2Mo" class="form-control mb-4" value={{crit(gr2osNom.value,frq2osNom.value)}}>
+        </div>
 
       </div>
       <div class="row">
-        <div class="col-2">Détails</div>
-        <div class="col-10">
+        <div class="col-1">Détails</div>
+        <div class="col-9">
           <div class="form-group">
-            <input type="text" ngModel  id="newPrev2Mo" name="newPrev2Mo"
-            mdbInput class="form-control mb-4" #prev2Mo="ngModel" placeholder="Détails">
+            <input type="text" ngModel id="newPrev2Mo" name="newPrev2Mo" mdbInput class="form-control mb-4"
+              #prev2Mo="ngModel" placeholder="Détails">
           </div>
         </div>
+        <div
+          *ngIf="(!confirmeDonneesRisque2 && !utsNom.pristine && !lieussNom.pristine &&
+        !activitesNom.pristine && !dangersNom.pristine &&
+        !rsq2sNom.pristine && !gr2sNom.pristine && !frq2sNom.pristine &&
+        !prev2Ex.pristine && !gr2osNom.pristine && !frq2osNom.pristine && !prev2Mo.pristine
+        && !creaEvrp2Ok && (utsNom.value !== null) && (!lieussNom.value !== null) && (!activitesNom.value !== null)
+        && (dangersNom.value !== null) && (rsq2sNom.value !== null) && (gr2sNom.value !== null) && (frq2sNom.value !== null) &&
+        (prev2Ex.value !== null) && (gr2osNom.value !== null) && (frq2osNom.value !== null) && (prev2Mo.value !== null))"
+          class="col-md-2"><button size="sm" mdbBtn color="green" class="align-center" type="text"
+            (click)="confirmerDonneesRisque2()">Confirmer</button>
+        </div>
+
+        <div *ngIf="(confirmeDonneesRisque2
+       && (utsNom.value !== null) && (!lieussNom.value !== null) && (!activitesNom.value !== null)
+      && (dangersNom.value !== null) && (rsq2sNom.value !== null) && (gr2sNom.value !== null) && (frq2sNom.value !== null) &&
+      (prev2Ex.value !== null) && (gr2osNom.value !== null) && (frq2osNom.value !== null) && (prev2Mo.value !== null))"
+          class="col-md-2"><button size="sm" mdbBtn color="info" class="align-center" type="text"
+            (click)="creerDuer12(utsNom.value,lieussNom.value, activitesNom.value, dangersNom.value,rsq2sNom.value,
+          gr2sNom.value, frq2sNom.value, prev2Ex.value,gr2osNom.value,frq2osNom.value,prev2Mo.value)">Valider Risque 2</button>
+        </div>
+
+        <div *ngIf="creaEvrp2Ok" class="alert danger-color" role="alert">
+          {{messageValid}}</div>
+
       </div>
 
       <!-- Fin Prevention2 -->
       <!-- Send button -->
       <div class="row">
         <div class="col-md-4"></div>
-        <div class="col-md-4"><button mdbBtn color="info" class="align-center" type="text" (click)="fermerEvrp()">Fermer</button></div>
-        <div class="col-md-4"><button mdbBtn color="info" class="align-center" type="text" (click)="creerDuer(utsNom.value,
-          lieussNom.value, activitesNom.value,
-          dangersNom.value, risques1Nom.value,
-          gr1sNom.value, frq1sNom.value,
-          prev1Ex.value, gros1Nom.value,
-          frq1osNom.value, prev1Mo.value,
-          rsq2sNom.value,
-          gr2sNom.value, frq2sNom.value,
-          prev2Ex.value,
-          gr2osNom.value, frq2osNom.value,
-          prev2Mo.value)">Valider</button></div>
+        <div class="col-md-4"><button mdbBtn color="info" class="align-center" type="text"
+            (click)="fermerEvrp()">Fermer</button></div>
+
         <div class="col-md-4"></div>
       </div>
 

@@ -9,7 +9,10 @@ import { CriticiteVm } from './domains/CriticiteVm';
 import { GraviteVm } from './domains/Gravite';
 import { FrequenceVm } from './domains/FrequenceVm';
 import { ActivitesVm } from './domains/ActivitesVm';
-import { Ut } from './environments/Ut';
+import { DuerVM } from './domains/DuerVM';
+import { PasVm } from './domains/PasVm';
+import { Duer } from './domains/Duer';
+import { Duer1 } from './domains/Duer1';
 
 @Injectable({
   providedIn: 'root'
@@ -28,9 +31,25 @@ export class DataService {
   listeGravite: Observable<GraviteVm[]>;
   listeFrequence: Observable<FrequenceVm[]>;
   listeActivite: Observable<ActivitesVm[]>;
-  ut: Observable<UtVm>;
   criticite$: Observable<CriticiteVm>;
   criticite: CriticiteVm;
+  frequence$: Observable<FrequenceVm>;
+  frequence: FrequenceVm;
+  gravite$: Observable<GraviteVm>;
+  gravite: GraviteVm;
+  ut$: Observable<UtVm>;
+  ut: UtVm;
+  lieu$: Observable<LieuVm>;
+  lieu: LieuVm;
+  activite$: Observable<ActivitesVm>;
+  activite: ActivitesVm;
+  danger$: Observable<DangersVm>;
+  danger: DangersVm;
+  risque$: Observable<RisquesVm>;
+  risque: RisquesVm;
+  pas$: Observable<PasVm>;
+  pas: PasVm;
+
   constructor(private http: HttpClient) { }
 
 
@@ -226,20 +245,127 @@ export class DataService {
     return '';
   }
 
-  trouverCriticite(id: number): number {
-    const urlGetCrit = this.url_gdu + 'criticite?id=' + id;
-    this.criticite$ = this.http.get<CriticiteVm>(urlGetCrit);
 
-    this.criticite$.subscribe
-      ((param: CriticiteVm) => {
-        this.criticite = new CriticiteVm(param.id, param.valeur);
-        console.log(this.criticite.valeur);
-        return this.criticite.valeur;
-      },
+  trouverUt(id: number): Observable<UtVm> {
+    const urlGetUt = this.url_gdu + 'ut?id=' + id;
+
+    if (id != null) {
+      this.ut$ = this.http.get<UtVm>(urlGetUt);
+      return this.ut$;
+    }
+
+  }
+
+  /*trouverUt(id: number): string {
+    const urlGetUt = this.url_gdu + 'ut?id=' + id;
+
+    if (id != null) {
+    this.http.get<UtVm>(urlGetUt).subscribe
+      ((param: UtVm) => {
+        this.ut = new UtVm(param.id, param.nom);
+        console.log('1' + this.ut.nom);
+      });
+    console.log('2' + this.ut.nom);
+    return this.ut.nom; }
+
+  }*/
+
+  trouverLieu(id: number): Observable<LieuVm> {
+    const urlGetLieu = this.url_gdu + 'lieu?id=' + id;
+    if (id != null) {
+      this.lieu$ = this.http.get<LieuVm>(urlGetLieu);
+
+      return this.lieu$;
+    }
+  }
+
+  trouverActivite(id: number): Observable<ActivitesVm> {
+    const urlGetAct = this.url_gdu + 'activite?id=' + id;
+    if (id != null) {
+      this.activite$ = this.http.get<ActivitesVm>(urlGetAct);
+      return this.activite$;
+    }
+
+  }
+
+  trouverDanger(id: number): Observable<DangersVm> {
+    const urlGetDg = this.url_gdu + 'danger?id=' + id;
+    if (id != null) {
+      this.danger$ = this.http.get<DangersVm>(urlGetDg);
+    }
+    return this.danger$;
+  }
+
+  trouverRisque(id: number): Observable<RisquesVm> {
+    const urlGetRis = this.url_gdu + 'risque?id=' + id;
+    if (id != null) {
+      this.risque$ = this.http.get<RisquesVm>(urlGetRis);}
+    return this.risque$;
+  }
+  trouverGravite(id: number): Observable<GraviteVm> {
+    const urlGetGrav = this.url_gdu + 'gravite?id=' + id;
+    if (id != null) {
+    this.gravite$ = this.http.get<GraviteVm>(urlGetGrav);
+    }
+    return this.gravite$;
+  }
+
+  trouverFrequence(id: number): Observable<FrequenceVm>{
+    const urlGetFreq = this.url_gdu + 'frequence?id=' + id;
+    if (id != null) {
+    this.frequence$ = this.http.get<FrequenceVm>(urlGetFreq);
+    }
+    return this.frequence$;
+  }
+
+
+  trouverCriticite(id: number): Observable<CriticiteVm> {
+    const urlGetCrit = this.url_gdu + 'criticite?id=' + id;
+    if (id != null) {
+    this.criticite$ = this.http.get<CriticiteVm>(urlGetCrit);
+    }
+    return this.criticite$;
+  }
+
+  trouverPas(id: number): Observable<PasVm> {
+    const urlGetPas = this.url_gdu + 'pas?id=' + id;
+    if (id != null) {
+    this.pas$ = this.http.get<PasVm>(urlGetPas);
+    }
+    return this.pas$;
+  }
+
+  creerDuer(duerCrea: Duer): string {
+    const urlPostDuer = this.url_gdu + 'duer';
+
+
+    this.http.post(urlPostDuer, duerCrea).
+      subscribe(
+        (data: any) => {
+          console.log(data.id);
+          return data;
+        },
         (error: HttpErrorResponse) => {
           console.log('error', error);
           return error;
         });
-    return this.criticite.valeur;
+    return '';
   }
+  creerDuer1(duerCrea: Duer1): string {
+    const urlPostDuer = this.url_gdu + 'duer';
+
+    if (duerCrea != null) {
+    this.http.post(urlPostDuer, duerCrea).
+      subscribe(
+        (data: any) => {
+          console.log(data.id);
+          return data;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        }); }
+    return '';
+  }
+
 }
