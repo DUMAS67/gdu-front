@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Collaborateur } from '../auth.domains';
 import { CookieService } from 'ngx-cookie-service';
 import { RisquesVm } from '../domains/RisquesVm';
@@ -43,7 +43,7 @@ export class GduEvrpComponent implements OnInit {
 
 
   constructor(private dataService: DataService, private _router: Router,
-              private _cookieService: CookieService) { }
+              private _cookieService: CookieService, private route:ActivatedRoute ) { }
   recupId: number;
   recupNom: string;
   nomUt: string;
@@ -119,11 +119,6 @@ export class GduEvrpComponent implements OnInit {
     }
     );
 
-    this.listeCriticite$.subscribe((param: CriticiteVm[]) => {
-      this.listeCriticite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur))
-        ;
-    }
-    );
 
     this.listeGravite$.subscribe((param: GraviteVm[]) => {
       this.listeGravite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur));
@@ -183,6 +178,7 @@ export class GduEvrpComponent implements OnInit {
     this.dataService.modifLieu(idav, nomap);
   }
   creerActivite1(nouveauNomActivite: string) {
+    console.log(nouveauNomActivite);
     this.dataService.creerActivite(nouveauNomActivite);
   }
 
@@ -191,6 +187,7 @@ export class GduEvrpComponent implements OnInit {
   }
 
   creerDanger1(nouveauNomActivite: string) {
+
     this.dataService.creerDanger(nouveauNomActivite);
   }
 
@@ -476,6 +473,9 @@ export class GduEvrpComponent implements OnInit {
 
   coherenceDonnee(utsNom: number): boolean {
     if (utsNom != null) { return true; } else { return false; }
+  }
+  rafPageEvrp() {
+    this._router.navigate(['/../gdu/../gdu/evrp'], {relativeTo: this.route});
   }
 }
 /* this.ut1 = new UtVm(this.creaEvrp1.id_UT, this.trouverUt1(this.creaEvrp1.id_UT));
