@@ -109,6 +109,10 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
     this.collaborateurConnecte = JSON.parse(this._cookieService.get('col'));
     return (this.collaborateurConnecte.roles[0] === this.collaborateurConnecte.ADMIN);
   }
+
+
+
+
 }
 
 

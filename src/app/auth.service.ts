@@ -6,7 +6,7 @@ import {Observable} from 'rxjs/internal/Observable';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {catchError, map, tap} from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
-import { of } from 'rxjs';
+import { of, pipe } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 /**
@@ -117,12 +117,32 @@ export class AuthService {
         'Content-Type': 'application/x-www-form-urlencoded'
       })
     };
+
+    console.log(`${environment.baseUrl}${environment.apiLogout}`);
+    this._http.post(`${environment.baseUrl}${environment.apiLogout}`, {}).subscribe(
+     () => {this.cookieService.deleteAll(); }
+    );
+
+
+
+
+
+
+/*
+    const config = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded'
+      })
+    };
     console.log('####seDeconnecter');
     console.log(`${environment.baseUrl}${environment.apiLogout}`);
-    return this._http.post<Collaborateur>(`${environment.baseUrl}${environment.apiLogout}`, null , config)
+    return this._http.post<Collaborateur>('http://localhost:8080/logout', {} , config)
       .pipe(
         tap(col => {this.collaborateurConnecteSub.next(COLLABORATEUR_ANONYME);
-                    this.cookieService.set('col', JSON.stringify(col)); })
+                    this.cookieService.deleteAll();
+                   // console.log(this.cookieService.get('col'));
+                  })
       );
-  }
+  }*/
+}
 }

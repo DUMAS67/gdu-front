@@ -1,672 +1,725 @@
-<div class="container">
-  <p></p>
-  <div class="row"> <b>Evaluation des Risques Professionnels</b></div>
-  <div class="row">
+<div *ngIf="afficherModif()">
+  <div class="container">
     <p></p>
-  </div>
-  <!-- Default form contact -->
-  <form class="">
-
-    <!-- Name -->
-
-    <!-- Unité de Travail -->
+    <div class="row"> <b>Evaluation des Risques Professionnels</b></div>
     <div class="row">
-      <div class="col-2">Unité de Travail</div>
-      <div class="col-3"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Choisir une Unité de travail</option>
-          <option value="1">UT1</option>
-          <option value="2">UT2</option>
-          <option value="3">UT3</option>
-          <option value="4">UT4</option>
-        </select></div>
-      <div class="col-1"></div>
-      <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-          (click)="basicModal1.show()">Créer une Unité de
-          Travail</button>
-      </div>
-      <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-          (click)="basicModal2.show()">Modifier une Unité de
-          Travail</button>
-      </div>
-
-    <!-- Fin Unité de Travail -->
-    <!-- Création Unité de travail -->
-    <div mdbModal #basicModal1="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-      aria-labelledby="myBasicModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal1.hide()">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title w-100" id="myModalLabel">Créer une Unité de travail</h4>
-          </div>
-          <div class="modal-body">
-            Nouvelle Unité de travail
-            <p></p>
-            <input type="text" formControlName="contactFormName" id="defaultContactFormName1" mdbInput
-              class="form-control mb-4" placeholder="Nouvelle Unité de Travail">
-          </div>
-          <div class="modal-footer">
-            <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-              (click)="basicModal1.hide()" mdbWavesEffect>Fermer</button>
-            <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Créer</button>
-          </div>
-        </div>
-      </div>
+      <p></p>
     </div>
+    <!-- Default form contact -->
+    <form class="">
 
-    <!-- Fin Création Unité de travail -->
+      <!-- Name -->
 
-    <!-- Modifier une Unité de travail-->
-    <div mdbModal #basicModal2="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-      aria-labelledby="myBasicModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal2.hide()">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title w-100" id="myModalLabel">Modifier une Unité de travail</h4>
-          </div>
-          <div class="modal-body">
-            Modidier une Unité de travail
-            <p></p>
-            <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
-              class="form-control mb-4" value="{{recup}}">
-          </div>
-          <div class="col">
-            <table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true">
-              <thead>
-                <th *ngFor="let head of headElementsUt" scope="col">{{head}} </th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let el of elements3; let i = index">
-                  <th scope="row">{{el.id}}</th>
-                  <td>{{el.first}}</td>
-                  <td> <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-                      (click)="recupItem(el.first)">Modif</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-              (click)="basicModal2.hide()" mdbWavesEffect>Fermer</button>
-            <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Modifier</button>
-          </div>
+      <!-- Unité de Travail -->
+      <div class="row">
+        <div class="col-2">Unité de Travail</div>
+        <div class="col-3"><label></label>
+          <select ngModel id="uts" class="browser-default custom-select mb-4" name="uts" #utsNom='ngModel'>
+            <option value="" selected>Choisir une Unité de travail</option>
+            <option *ngFor="let ut of listeUt" value={{ut.id}}>{{ut.nom}} </option>
+          </select></div>
+        <div class="col-1"></div>
+        <div class="col-3">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
+            (click)="basicModal1.show()">Créer une Unité de
+            Travail</button>
         </div>
-      </div>
-    </div>
-  </div>
-    <!-- Fin Modifier une Unité de travail-->
-    <!-- Lieu -->
-    <div class="row">
-      <div class="col-2">Lieu</div>
-      <div class="col-3"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Choisir un Lieu</option>
-          <option value="1">Lieu1</option>
-          <option value="2">Lieu2</option>
-          <option value="3">Lieu3</option>
-          <option value="4">Lieu4</option>
-        </select></div>
-      <div class="col-1"></div>
-      <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModal3.show()"
-          mdbWavesEffect>Créer un Lieu </button>
-      </div>
-      <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModal4.show()"
-          mdbWavesEffect>Modifier un Lieu</button>
-      </div>
-
-
-    <!-- Création Lieu de travail -->
-    <div mdbModal #basicModal3="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-      aria-labelledby="myBasicModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal3.hide()">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title w-100" id="myModalLabel">Créer un Lieu de travail</h4>
-          </div>
-          <div class="modal-body">
-            Nouveau Lieu de travail
-            <p></p>
-            <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
-              class="form-control mb-4" placeholder="Nouveau Lieu de travail">
-          </div>
-          <div class="modal-footer">
-            <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-              (click)="basicModal3.hide()" mdbWavesEffect>Fermer</button>
-            <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Créer</button>
-          </div>
+        <div class="col-3">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
+            (click)="basicModal2.show()">Modifier une Unité de
+            Travail</button>
         </div>
-      </div>
-    </div>
 
-    <!-- Fin Création Lieu de travail -->
-
-    <!-- Modifier un lieude travail-->
-    <div mdbModal #basicModal4="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-      aria-labelledby="myBasicModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal4.hide()">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title w-100" id="myModalLabel">Modifier un Lieu de travail</h4>
-          </div>
-          <div class="modal-body">
-            Modidier un Lieu de travail
-            <p></p>
-            <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
-              class="form-control mb-4" value="{{recup}}">
-          </div>
-          <div class="col">
-            <table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true">
-              <thead>
-                <th *ngFor="let head of headElementsLieu" scope="col">{{head}} </th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let el of elements3; let i = index">
-                  <th scope="row">{{el.id}}</th>
-                  <td>{{el.first}}</td>
-                  <td> <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-                      (click)="recupItem(el.first)">Modif</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-              (click)="basicModal4.hide()" mdbWavesEffect>Fermer</button>
-            <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Modifier</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-    <!-- Fin Modifier un lieu de travail-->
-    <!-- Fin Lieu -->
-
-    <!-- Activité -->
-    <div class="row">
-      <div class="col-2">Activité</div>
-      <div class="col-3"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Choisir une Activité</option>
-          <option value="1">Act1</option>
-          <option value="2">Act2</option>
-          <option value="3">Act3</option>
-          <option value="4">Act4</option>
-        </select></div>
-      <div class="col-1"></div>
-      <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModalAct.show()"
-          mdbWavesEffect>Créer une
-          Activité</button>
-      </div>
-      <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModalActModif.show()"
-          mdbWavesEffect>Modifier une
-          activité</button>
-      </div>
-
-
-    <!-- Création Activité -->
-    <div mdbModal #basicModalAct="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-      aria-labelledby="myBasicModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="basicModalAct.hide()">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title w-100" id="myModalLabel">Créer une nouvelle Activité</h4>
-          </div>
-          <div class="modal-body">
-            Nouvelle Activité
-            <p></p>
-            <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
-              class="form-control mb-4" placeholder="Nouvelle Activité">
-          </div>
-          <div class="modal-footer">
-            <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-              (click)="basicModalAct.hide()" mdbWavesEffect>Fermer</button>
-            <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Créer</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Fin Création Activité-->
-
-    <!-- Modifier une Activité-->
-    <div mdbModal #basicModalActModif="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-      aria-labelledby="myBasicModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="basicModalActModif.hide()">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title w-100" id="myModalLabel">Modifier une Activité</h4>
-          </div>
-          <div class="modal-body">
-            Modidier une Activité
-            <p></p>
-            <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
-              class="form-control mb-4" value="{{recup}}">
-          </div>
-          <div class="col">
-            <table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true">
-              <thead>
-                <th *ngFor="let head of headElementsAct" scope="col">{{head}} </th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let el of elements3; let i = index">
-                  <th scope="row">{{el.id}}</th>
-                  <td>{{el.first}}</td>
-                  <td> <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-                      (click)="recupItem(el.first)">Modif</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-              (click)="basicModalActModif.hide()" mdbWavesEffect>Fermer</button>
-            <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Modifier</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-    <!-- Fin Modifier ue Activité-->
-
-
-    <!-- Fin Activité -->
-
-    <!-- Danger -->
-    <div class="row">
-      <div class="col-2">Danger</div>
-      <div class="col-3"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Choisir un Danger</option>
-          <option value="1">Dg1</option>
-          <option value="2">Dg2</option>
-          <option value="3">Dg3</option>
-          <option value="4">Dg4</option>
-        </select></div>
-      <div class="col-1"></div>
-      <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModalDg.show()"
-          mdbWavesEffect>Créer un Danger</button>
-      </div>
-      <div class="col-3">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModalDgModif.show()"
-          mdbWavesEffect>Modifier un
-          Danger</button>
-      </div>
-
-
-    <!-- Création Danger -->
-    <div mdbModal #basicModalDg="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-      aria-labelledby="myBasicModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="basicModalDg.hide()">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title w-100" id="myModalLabel">Créer une nouveau Danger</h4>
-          </div>
-          <div class="modal-body">
-            Nouveau Danger
-            <p></p>
-            <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
-              class="form-control mb-4" placeholder="Nouveau Danger">
-          </div>
-          <div class="modal-footer">
-            <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-              (click)="basicModalDg.hide()" mdbWavesEffect>Fermer</button>
-            <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Créer</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Fin Création Danger -->
-
-    <!-- Modifier un Danger-->
-    <div mdbModal #basicModalDgModif="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-      aria-labelledby="myBasicModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="basicModalDgModif.hide()">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title w-100" id="myModalLabel">Modifier un Danger</h4>
-          </div>
-          <div class="modal-body">
-            Modidier un Danger
-            <p></p>
-            <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput
-              class="form-control mb-4" value="{{recup}}">
-          </div>
-          <div class="col">
-            <table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true">
-              <thead>
-                <th *ngFor="let head of headElementsDg" scope="col">{{head}} </th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let el of elements3; let i = index">
-                  <th scope="row">{{el.id}}</th>
-                  <td>{{el.first}}</td>
-                  <td> <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-                      (click)="recupItem(el.first)">Modif</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-              (click)="basicModalDgModif.hide()" mdbWavesEffect>Fermer</button>
-            <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Modifier</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-    <!-- Fin Modifier Danger-->
-
-    <!-- Fin Danger -->
-
-    <!-- Risque1 -->
-    <div class="row">
-      <div class="col-1">Risque 1</div>
-      <div class="col-3"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Risque</option>
-          <option *ngFor="let risque of listeRisquesEvrp" value={{risque.id}}>{{risque.nom}} </option>
-        </select>
-      </div>
-      <div class="col-1">Cotation</div>
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Fréquence</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select></div>
-
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Gravité</option>
-          <option value="1">1</option>
-          <option value="2">3</option>
-          <option value="3">5</option>
-          <option value="4">10</option>
-        </select></div>
-
-      <div class="col-1">
-        <button mdbBtn type="button" color="default" outline="true" (click)="basicModal.show()" size="sm"
-          mdbWavesEffect>?</button>
-      </div>
-      <h6>
-        <div mdbModal #basicModal="mdbModal" class="modal fade right" tabindex="-1" role="dialog"
-          aria-labelledby="myBasicModalLabel" aria-hidden="true"
-          [config]="{backdrop: false, ignoreBackdropClick: true}">
-          <div class="modal-dialog modal-side modal-top-right" role="document">
+        <!-- Fin Unité de Travail -->
+        <!-- Création Unité de travail -->
+        <div mdbModal #basicModal1="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+          aria-labelledby="myBasicModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal1.hide()">
                   <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title w-100" id="myModalLabel">Cotation</h4>
+                <h4 class="modal-title w-100" id="myModalLabel">Créer une Unité de travail</h4>
               </div>
               <div class="modal-body">
-                <table border="2">
-                  <tr>
-                    <td align="center" width="30%" colspan="2">Gravité - Niveau de gravité de l'accident ou <br />niveau
-                      du danger</td>
-                    <td align="center" bgcolor="yellow">Commentaires</td>
-                    <td align="center" bgcolor="yellow">Conséquences</td>
-                  </tr>
-                  <tr>
-                    <td align="center">1</td>
-                    <td align="center">Mineure</td>
-                    <td>Lésions sans AT</td>
-                    <td>Pas ou peu de dommages</td>
-                  </tr>
-                  <tr>
-                    <td align="center">3</td>
-                    <td align="center">Significative</td>
-                    <td>Lésions avec AT sans séquelles</td>
-                    <td>Dommages sans arrêt de travail</td>
-                  </tr>
-                  <tr>
-                    <td align="center">5</td>
-                    <td align="center">Critique</td>
-                    <td>Lésions avec AT avec séquelles</td>
-                    <td>Dommages réversibles, entraînant des arrêts de travail</td>
-                  </tr>
-                  <tr>
-                    <td align="center">10</td>
-                    <td align="center">Vitale</td>
-                    <td>Lésions pouvant entrainer la mort</td>
-                    <td>Dommages irréversibles (incapacité totale ou partielle voire décès)</td>
-                  </tr>
-                </table>
+                Nouvelle Unité de travail
                 <p></p>
-                <table border="2">
-                  <tr>
-                    <td align="center">Fréquence</td>
-                    <td align="center" bgcolor="yellow">Exposition</td>
-                    <td align="center" bgcolor="yellow">Durée</td>
-                  </tr>
-                  <tr>
-                    <td align="center">1</td>
-                    <td align="center">Occasionnelle</td>
-                    <td>Quelques heures par an</td>
-                  </tr>
-                  <tr>
-                    <td align="center">2</td>
-                    <td align="center">Intermittente</td>
-                    <td>Quelques heures par mois</td>
-                  </tr>
-                  <tr>
-                    <td align="center">3</td>
-                    <td align="center">Fréquente</td>
-                    <td>Quelques heures par semaine</td>
-                  </tr>
-                  <tr>
-                    <td align="center">4</td>
-                    <td align="center">Continue</td>
-                    <td>Quelques heures par jour</td>
-                  </tr>
-                </table>
+                <input type="text" id="ut1" name="textUt" [(ngModel)]="textUt" class="form-control mb-4"
+                  placeholder="Nouvelle Unité de Travail">
               </div>
               <div class="modal-footer">
                 <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-                  (click)="basicModal.hide()" mdbWavesEffect>Close</button>
+                  (click)="basicModal1.hide()" mdbWavesEffect>Fermer</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                  (click)="creerUt1(textUt)">Créer</button>
               </div>
             </div>
           </div>
         </div>
-      </h6>
-      <div class="col-1">Criticité</div>
-      <div class="col-1"><input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="">
-      </div>
-    </div>
-    <!-- Fin Risque1 -->
-    <!-- Prevention 1 -->
-    <div class="row">
-      <div class="col-2">Prévention existante</div>
-      <div class="col-10">
-        <div class="form-group">
-          <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="1"
-            placeholder="Prévention Existante"></textarea>
+
+        <!-- Fin Création Unité de travail -->
+
+        <!-- Modifier une Unité de travail-->
+        <div mdbModal #basicModal2="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+          aria-labelledby="myBasicModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal2.hide()">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">Modifier une Unité de travail</h4>
+              </div>
+              <div class="modal-body">
+                Modidier une Unité de travail
+                <p></p>
+                <input type="text" ngModel [(ngModel)]="modifNomUt" id="modifUt" name="modifUt" mdbInput
+                  class="form-control mb-4" #adDepartOk="ngModel" value="{{recupNomAModifier}}">
+              </div>
+              <div class="col">
+                <table mdbTable mdbTableScroll scrollY="true" maxHeight="300" bordered="true">
+                  <thead>
+                    <th *ngFor="let head of headElementsUt" scope="col">{{head}} </th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let el of listeUt">
+
+                      <td>{{el.nom}}</td>
+                      <td> <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
+                          (click)="recupItem(el.id,el.nom)">Modif</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                  (click)="basicModal2.hide()" mdbWavesEffect>Fermer</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                  (click)="modifUt1(recupId, adDepartOk.value)">Modifier</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-3">Prévention Mise en oeuvre</div>
-      <div class="col-1"></div>
-      <div class="col-1">Cotation</div>
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Fréquence</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select></div>
+      <!-- Fin Modifier une Unité de travail-->
+      <!-- Lieu -->
+      <div class="row">
+        <div class="col-2">Lieu</div>
+        <div class="col-3"><label></label>
+          <select ngModel id="lieus" class="browser-default custom-select mb-4" name="lieus" #lieussNom='ngModel'>
+            <option value="" selected>Choisir un Lieu</option>
+            <option *ngFor="let lieu of listeLieu" value={{lieu.id}}>{{lieu.nom}} </option>
+          </select></div>
+        <div class="col-1"></div>
+        <div class="col-3">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModal3.show()"
+            mdbWavesEffect>Créer un Lieu </button>
+        </div>
+        <div class="col-3">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModal4.show()"
+            mdbWavesEffect>Modifier un Lieu</button>
+        </div>
 
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Gravité</option>
-          <option value="1">1</option>
-          <option value="2">3</option>
-          <option value="3">5</option>
-          <option value="4">10</option>
-        </select></div>
 
-      <div class="col-1">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModal.show()"
-          mdbWavesEffect>?</button>
-      </div>
-      <div class="col-1">Criticité</div>
-      <div class="col-1"><input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="">
-      </div>
+        <!-- Création Lieu de travail -->
+        <div mdbModal #basicModal3="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+          aria-labelledby="myBasicModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal3.hide()">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">Créer un Lieu de travail</h4>
+              </div>
+              <div class="modal-body">
+                Nouveau Lieu de travail
+                <p></p>
+                <input type="text" id="nvLieu" name="textLieu" [(ngModel)]="textLieu" class="form-control mb-4"
+                  placeholder="Nouveau Lieu de travail">
+              </div>
+              <div class="modal-footer">
+                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                  (click)="basicModal3.hide()" mdbWavesEffect>Fermer</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                  (click)="creerLieu1(textLieu)">Créer</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    </div>
-    <div class="row">
-      <div class="col-2">Détails</div>
-      <div class="col-10">
-        <div class="form-group">
-          <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="1"
-            placeholder="Détails"></textarea>
+        <!-- Fin Création Lieu de travail -->
+
+        <!-- Modifier un lieude travail-->
+        <div mdbModal #basicModal4="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+          aria-labelledby="myBasicModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal4.hide()">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">Modifier un Lieu de travail</h4>
+              </div>
+              <div class="modal-body">
+                Modidier un Lieu de travail
+                <p></p>
+                <input type="text" id="nouveauLieu" [(ngModel)]="modifNomLieu" name="modifNomLieu" mdbInput
+                  class="form-control mb-4" #newName="ngModel" value="{{recupNom}}">
+              </div>
+              <div class="col">
+                <table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true">
+                  <thead>
+                    <th *ngFor="let head of headElementsLieu" scope="col">{{head}} </th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let el of listeLieu">
+
+                      <td>{{el.nom}}</td>
+                      <td> <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
+                          (click)="recupItem(el.id,el.nom)">Modif</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                  (click)="basicModal4.hide()" mdbWavesEffect>Fermer</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                  (click)="modifLieu1(recupId, newName.value)">Modifier</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+      <!-- Fin Modifier un lieu de travail-->
+      <!-- Fin Lieu -->
 
-    <!-- Fin Prevention1 -->
-    <!-- Risque2 -->
-    <div class="row">
-      <div class="col-1">Risque 2</div>
-      <div class="col-3"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Choix du Risque</option>
-          <option value="1">Dg1</option>
-          <option value="2">Dg2</option>
-          <option value="3">Dg3</option>
-          <option value="4">Dg4</option>
-        </select></div>
-      <div class="col-1">Cotation</div>
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Fréquence</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select></div>
+      <!-- Activité -->
+      <div class="row">
+        <div class="col-2">Activité</div>
+        <div class="col-3"><label></label>
+          <select ngModel id="activites" class="browser-default custom-select mb-4" name="activites"
+            #activitesNom='ngModel'>
+            <option value="" selected>Choisir une Activité</option>
+            <option *ngFor="let act of listeActivite" value={{act.id}}>{{act.nom}} </option>
+          </select></div>
+        <div class="col-1"></div>
+        <div class="col-3">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModalAct.show()"
+            mdbWavesEffect>Créer une
+            Activité</button>
+        </div>
+        <div class="col-3">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModalActModif.show()"
+            mdbWavesEffect>Modifier une
+            activité</button>
+        </div>
 
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Gravité</option>
-          <option value="1">1</option>
-          <option value="2">3</option>
-          <option value="3">5</option>
-          <option value="4">10</option>
-        </select></div>
 
-      <div class="col-1">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModal.show()"
-          mdbWavesEffect>?</button>
-      </div>
-      <div class="col-1">Criticité</div>
-      <div class="col-1"><input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="">
-      </div>
-    </div>
-    <!-- Fin Risque2 -->
+        <!-- Création Activité -->
+        <div mdbModal #basicModalAct="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+          aria-labelledby="myBasicModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModalAct.hide()">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">Créer une nouvelle Activité</h4>
+              </div>
+              <div class="modal-body">
+                Nouvelle Activité
+                <p></p>
+                <input type="text" id="creaActivite" name="textAct" [(ngModel)]="textAct" class="form-control mb-4"
+                  placeholder="Nouvelle Activité">
+              </div>
+              <div class="modal-footer">
+                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                  (click)="basicModalAct.hide()" mdbWavesEffect>Fermer</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                  (click)="creerActivite1(textAct)">Créer</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <!-- Prevention 2 -->
-    <div class="row">
-      <div class="col-2">Prévention existante</div>
-      <div class="col-10">
-        <div class="form-group">
-          <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="1"
-            placeholder="Prévention Existante"></textarea>
+        <!-- Fin Création Activité-->
+
+        <!-- Modifier une Activité-->
+        <div mdbModal #basicModalActModif="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+          aria-labelledby="myBasicModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModalActModif.hide()">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">Modifier une Activité</h4>
+              </div>
+              <div class="modal-body">
+                Modidier une Activité
+                <p></p>
+                <input type="text" ngModel [(ngModel)]="modifNomActivite" id="modifDg" name="modifNomActivite" mdbInput
+                  class="form-control mb-4" #newnomDg="ngModel" value="{{recupNom}}">
+              </div>
+              <div class="col">
+                <table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true">
+                  <thead>
+                    <th *ngFor="let head of headElementsAct" scope="col">{{head}} </th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let el of listeActivite">
+
+                      <td>{{el.nom}}</td>
+                      <td> <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
+                          (click)="recupItem(el.id, el.nom)">Modif</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                  (click)="basicModalActModif.hide()" mdbWavesEffect>Fermer</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                  (click)="modifActivite1(recupId, newnomDg.value)">Modifier</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-3">Prévention Mise en oeuvre</div>
-      <div class="col-1"></div>
-      <div class="col-1">Cotation</div>
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Fréquence</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select></div>
+      <!-- Fin Modifier ue Activité-->
 
-      <div class="col-2"><label></label>
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Gravité</option>
-          <option value="1">1</option>
-          <option value="2">3</option>
-          <option value="3">5</option>
-          <option value="4">10</option>
-        </select></div>
 
-      <div class="col-1">
-        <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModal.show()"
-          mdbWavesEffect>?</button>
-      </div>
-      <div class="col-1">Criticité</div>
-      <div class="col-1"><input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="">
-      </div>
+      <!-- Fin Activité -->
 
-    </div>
-    <div class="row">
-      <div class="col-2">Détails</div>
-      <div class="col-10">
-        <div class="form-group">
-          <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="1"
-            placeholder="Détails"></textarea>
+      <!-- Danger -->
+      <div class="row">
+        <div class="col-2">Danger</div>
+        <div class="col-3"><label></label>
+          <select ngModel id="dangers" class="browser-default custom-select mb-4" name="dangers" #dangersNom='ngModel'>
+            <option value="" selected>Choisir un Danger</option>
+            <option *ngFor="let dg of listeDanger" value={{dg.id}}>{{dg.nom}} </option>
+          </select></div>
+        <div class="col-1"></div>
+        <div class="col-3">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModalDg.show()"
+            mdbWavesEffect>Créer un Danger</button>
+        </div>
+        <div class="col-3">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModalDgModif.show()"
+            mdbWavesEffect>Modifier un
+            Danger</button>
+        </div>
+
+
+        <!-- Création Danger -->
+        <div mdbModal #basicModalDg="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+          aria-labelledby="myBasicModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModalDg.hide()">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">Créer une nouveau Danger</h4>
+              </div>
+              <div class="modal-body">
+                Nouveau Danger
+                <p></p>
+                <input type="text" id="nouveauDanger" name="textDg" [(ngModel)]="textDg" class="form-control mb-4"
+                  placeholder="Nouveau Danger">
+              </div>
+              <div class="modal-footer">
+                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                  (click)="basicModalDg.hide()" mdbWavesEffect>Fermer</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                  (click)="creerDanger1(textDg)">Créer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fin Création Danger -->
+
+        <!-- Modifier un Danger-->
+        <div mdbModal #basicModalDgModif="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+          aria-labelledby="myBasicModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModalDgModif.hide()">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">Modifier un Danger</h4>
+              </div>
+              <div class="modal-body">
+                Modidier un Danger
+                <p></p>
+                <input type="text" ngModel [(ngModel)]="modifNomDanger" id="modifDg1" name="modifDg1" mdbInput
+                  class="form-control mb-4" #modifDg="ngModel" value="{{recupNom}}">
+              </div>
+              <div class="col">
+                <table mdbTable mdbTableScroll scrollY="true" maxHeight="200" bordered="true">
+                  <thead>
+                    <th *ngFor="let head of headElementsDg" scope="col">{{head}} </th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let el of listeDanger">
+
+                      <td>{{el.nom}}</td>
+                      <td> <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
+                          (click)="recupItem(el.id, el.nom)">Modif</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                  (click)="basicModalDgModif.hide()" mdbWavesEffect>Fermer</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                  (click)="modifDanger1(recupId, modifDg.value)">Modifier</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      <!-- Fin Modifier Danger-->
+
+      <!-- Fin Danger -->
+
+      <!-- Risque1 -->
+      <div class="row">
+        <div class="col-1">Risque 1</div>
+        <div class="col-3"><label></label>
+          <select ngModel id="risque1s" class="browser-default custom-select mb-4" name="risque1s"
+            #risques1Nom='ngModel'>
+            <option value="" selected>Risque</option>
+            <option *ngFor="let risque of listeRisque" value={{risque.id}}>{{risque.nom}} </option>
+          </select>
+        </div>
+        <div class="col-1">Cotation</div>
+        <div class="col-2"><label></label>
+          <select ngModel id="gr1s" class="browser-default custom-select mb-4" name="gr1s" #gr1sNom='ngModel'>
+            <option value="" selected>Gravité</option>
+            <option *ngFor="let gr of listeGravite" value={{gr.id}}>{{gr.valeur}} </option>
+          </select></div>
+
+        <div class="col-2"><label></label>
+          <select ngModel id="frq1s" class="browser-default custom-select mb-4" name="frq1s" #frq1sNom='ngModel'>
+            <option value="" selected>Fréquence</option>
+            <option *ngFor="let fr of listeFrequence" value={{fr.id}}>{{fr.valeur}} </option>
+          </select></div>
+
+
+        <div class="col-1">
+          <button mdbBtn type="button" color="default" outline="true" (click)="basicModal.show()" size="sm"
+            mdbWavesEffect>?</button>
+        </div>
+        <h6>
+          <div mdbModal #basicModal="mdbModal" class="modal fade right" tabindex="-1" role="dialog"
+            aria-labelledby="myBasicModalLabel" aria-hidden="true"
+            [config]="{backdrop: false, ignoreBackdropClick: true}">
+            <div class="modal-dialog modal-side modal-top-right" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                  <h4 class="modal-title w-100" id="myModalLabel">Cotation</h4>
+                </div>
+                <div class="modal-body">
+                  <table border="2">
+                    <tr>
+                      <td align="center" width="30%" colspan="2">Gravité - Niveau de gravité de l'accident ou
+                        <br />niveau
+                        du danger</td>
+                      <td align="center" bgcolor="yellow">Commentaires</td>
+                      <td align="center" bgcolor="yellow">Conséquences</td>
+                    </tr>
+                    <tr>
+                      <td align="center">1</td>
+                      <td align="center">Mineure</td>
+                      <td>Lésions sans AT</td>
+                      <td>Pas ou peu de dommages</td>
+                    </tr>
+                    <tr>
+                      <td align="center">3</td>
+                      <td align="center">Significative</td>
+                      <td>Lésions avec AT sans séquelles</td>
+                      <td>Dommages sans arrêt de travail</td>
+                    </tr>
+                    <tr>
+                      <td align="center">5</td>
+                      <td align="center">Critique</td>
+                      <td>Lésions avec AT avec séquelles</td>
+                      <td>Dommages réversibles, entraînant des arrêts de travail</td>
+                    </tr>
+                    <tr>
+                      <td align="center">15</td>
+                      <td align="center">Vitale</td>
+                      <td>Lésions pouvant entrainer la mort</td>
+                      <td>Dommages irréversibles (incapacité totale ou partielle voire décès)</td>
+                    </tr>
+                  </table>
+                  <p></p>
+                  <table border="2">
+                    <tr>
+                      <td align="center">Fréquence</td>
+                      <td align="center" bgcolor="yellow">Exposition</td>
+                      <td align="center" bgcolor="yellow">Durée</td>
+                    </tr>
+                    <tr>
+                      <td align="center">1</td>
+                      <td align="center">Occasionnelle</td>
+                      <td>Quelques heures par an</td>
+                    </tr>
+                    <tr>
+                      <td align="center">2</td>
+                      <td align="center">Intermittente</td>
+                      <td>Quelques heures par mois</td>
+                    </tr>
+                    <tr>
+                      <td align="center">3</td>
+                      <td align="center">Fréquente</td>
+                      <td>Quelques heures par semaine</td>
+                    </tr>
+                    <tr>
+                      <td align="center">4</td>
+                      <td align="center">Continue</td>
+                      <td>Quelques heures par jour</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                    (click)="basicModal.hide()" mdbWavesEffect>Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </h6>
+        <div class="col-1">Criticité</div>
+        <div class="col-1"><input *ngIf="frq1sNom.dirty && gr1sNom.dirty" type="text" id="nvDetailsRq1"
+            class="form-control mb-4" placeholder="{{crit(gr1sNom.value,frq1sNom.value)}}">
+        </div>
+      </div>
+      <!-- Fin Risque1 -->
+      <!-- Prevention 1 -->
+      <div class="row">
+        <div class="col-2">Prévention existante</div>
+        <div class="col-10">
+          <div class="form-group">
+            <input type="text" ngModel id="newPrevEx" name="newPrevEx" mdbInput class="form-control mb-4"
+              #prev1Ex="ngModel" placeholder="Prévention Existante">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">Prévention Mise en oeuvre</div>
+        <div class="col-1"></div>
+        <div class="col-1">Cotation</div>
+
+
+        <div class="col-2"><label></label>
+          <select ngModel id="gr1os" class="browser-default custom-select mb-4" name="gr1os" #gros1Nom='ngModel'>
+            <option value="" selected>Gravité</option>
+            <option *ngFor="let gr of listeGravite" value={{gr.id}}>{{gr.valeur}} </option>
+          </select></div>
+
+        <div class="col-2"><label></label>
+          <select ngModel id="frq1os" class="browser-default custom-select mb-4" name="frq1os" #frq1osNom='ngModel'>
+            <option value="" selected>Fréquence</option>
+            <option *ngFor="let fr of listeFrequence" value={{fr.id}}>{{fr.valeur}} </option>
+          </select></div>
+        <div class="col-1">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModal.show()"
+            mdbWavesEffect>?</button>
+        </div>
+        <div class="col-1">Criticité</div>
+
+        <div class="col-1"><input *ngIf="frq1osNom.dirty && gros1Nom.dirty" type="text" id="nvDetailsRq2"
+            class="form-control mb-4" placeholder={{crit(gros1Nom.value,frq1osNom.value)}}>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-1">Détails</div>
+        <div class="col-9">
+          <div class="form-group">
+            <input type="text" ngModel id="newPrev1Mo" name="newPrev1Mo" mdbInput class="form-control mb-4"
+              #prev1Mo="ngModel" placeholder="Détails">
+          </div>
+        </div>
+
+        <div *ngIf="(!confirmeDonneesRisque1 && !utsNom.pristine && !lieussNom.pristine && !activitesNom.pristine
+        && !dangersNom.pristine && !risques1Nom.pristine && !gr1sNom.pristine
+        && !frq1sNom.pristine && !prev1Ex.pristine && !gros1Nom.pristine &&
+         !frq1osNom.pristine && !prev1Mo.pristine && !creaEvrp1Ok && (utsNom.value !== null) && (!lieussNom.value !== null) && (!activitesNom.value !== null)
+         && (dangersNom.value !== null) && (risques1Nom.value !== null) && (gr1sNom.value !== null)
+         && (frq1sNom.value !== null) && (prev1Ex.value !== null) && (gros1Nom.value !== null) &&
+          (frq1osNom.value !== null) && (prev1Mo.value !== null))" class="col-md-2">
+          <button size="sm" mdbBtn color="green" class="align-center" type="text" (click)="confirmerDonneesRisque1()">Confirmer
+          </button>
+
+        </div>
+
+        <div *ngIf="(confirmeDonneesRisque1 && (utsNom.value !== null) && (!lieussNom.value !== null) && (!activitesNom.value !== null)
+         && (dangersNom.value !== null) && (risques1Nom.value !== null) && (gr1sNom.value !== null)
+         && (frq1sNom.value !== null) && (prev1Ex.value !== null) && (gros1Nom.value !== null) &&
+          (frq1osNom.value !== null) && (prev1Mo.value !== null))" class="col-md-2">
+          <button size="sm" mdbBtn color="info" class="align-center" type="text"
+            (click)="creerDuer11(utsNom.value,lieussNom.value, activitesNom.value, dangersNom.value, risques1Nom.value, gr1sNom.value, frq1sNom.value, prev1Ex.value, gros1Nom.value,frq1osNom.value, prev1Mo.value)">Valider
+            Risque
+            1</button>
+
+        </div>
+        <div *ngIf="creaEvrp1Ok" class="alert danger-color" role="alert">
+          {{messageValid}}</div>
+        <!--div *ngIf="creaEvrp1Ok">
+          <button size="sm" mdbBtn color="info" class="align-center" type="button"
+            (click)="reinitialiser()">Réinitialiser</button>
+        </!--div>-->
+
+      </div>
+
+      <!-- Fin Prevention1 -->
+      <!-- Risque2 -->
+      <div class="row">
+        <div class="col-1">Risque 2</div>
+        <div class="col-3"><label></label>
+          <select ngModel id="risque2s" class="browser-default custom-select mb-4" name="risque2s" #rsq2sNom='ngModel'>
+            <option value="" selected>Choix du Risque</option>
+            <option *ngFor="let risque of listeRisque" value={{risque.id}}>{{risque.nom}} </option>
+          </select></div>
+        <div class="col-1">Cotation</div>
+
+
+        <div class="col-2"><label></label>
+          <select ngModel id="gr2s" class="browser-default custom-select mb-4" name="gr2s" #gr2sNom='ngModel'>
+            <option value="" selected>Gravité</option>
+            <option *ngFor="let gr of listeGravite" value={{gr.id}}>{{gr.valeur}} </option>
+          </select></div>
+
+        <div class="col-2"><label></label>
+          <select ngModel id="frq2s" class="browser-default custom-select mb-4" name="frq2s" #frq2sNom='ngModel'>
+            <option value="" selected>Fréquence</option>
+            <option *ngFor="let fr of listeFrequence" value={{fr.id}}>{{fr.valeur}} </option>
+          </select></div>
+        <div class="col-1">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModal.show()"
+            mdbWavesEffect>?</button>
+        </div>
+        <div class="col-1">Criticité</div>
+        <div class="col-1"><input *ngIf="gr2sNom.dirty || frq2sNom.dirty " type="text" id="nvDetailsRq3"
+            class="form-control mb-4" value={{crit(gr2sNom.value,frq2sNom.value)}}>
+        </div>
+      </div>
+      <!-- Fin Risque2 -->
+
+      <!-- Prevention 2 -->
+      <div class="row">
+        <div class="col-2">Prévention existante</div>
+        <div class="col-10">
+          <div class="form-group">
+            <input type="text" ngModel id="newPrev2Ex" name="newPrev2Ex" mdbInput class="form-control mb-4"
+              #prev2Ex="ngModel" placeholder="Prévention Existante">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">Prévention Mise en oeuvre</div>
+        <div class="col-1"></div>
+        <div class="col-1">Cotation</div>
+
+        <div class="col-2"><label></label>
+          <select ngModel id="gr2os" class="browser-default custom-select mb-4" name="gr2os" #gr2osNom='ngModel'>
+            <option value="" selected>Gravité</option>
+            <option *ngFor="let gr of listeGravite" value={{gr.id}}>{{gr.valeur}} </option>
+          </select></div>
+        <div class="col-2"><label></label>
+          <select ngModel id="frq2os" class="browser-default custom-select mb-4" name="frq2os" #frq2osNom='ngModel'>
+            <option value="" selected>Fréquence</option>
+            <option *ngFor="let fr of listeFrequence" value={{fr.id}}>{{fr.valeur}} </option>
+          </select></div>
+
+        <div class="col-1">
+          <button mdbBtn type="button" color="default" outline="true" size="sm" (click)="basicModal.show()"
+            mdbWavesEffect>?</button>
+        </div>
+        <div class="col-1">Criticité</div>
+        <div class="col-1"><input ngModel #Crit2Mo='ngModel' *ngIf="frq2osNom.dirty || gr2osNom.dirty" type="text"
+            id="crit2Mo" name="crit2Mo" class="form-control mb-4" value={{crit(gr2osNom.value,frq2osNom.value)}}>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-1">Détails</div>
+        <div class="col-9">
+          <div class="form-group">
+            <input type="text" ngModel id="newPrev2Mo" name="newPrev2Mo" mdbInput class="form-control mb-4"
+              #prev2Mo="ngModel" placeholder="Détails">
+          </div>
+        </div>
+        <div
+          *ngIf="(!confirmeDonneesRisque2 && !utsNom.pristine && !lieussNom.pristine &&
+        !activitesNom.pristine && !dangersNom.pristine &&
+        !rsq2sNom.pristine && !gr2sNom.pristine && !frq2sNom.pristine &&
+        !prev2Ex.pristine && !gr2osNom.pristine && !frq2osNom.pristine && !prev2Mo.pristine
+        && !creaEvrp2Ok && (utsNom.value !== null) && (!lieussNom.value !== null) && (!activitesNom.value !== null)
+        && (dangersNom.value !== null) && (rsq2sNom.value !== null) && (gr2sNom.value !== null) && (frq2sNom.value !== null) &&
+        (prev2Ex.value !== null) && (gr2osNom.value !== null) && (frq2osNom.value !== null) && (prev2Mo.value !== null))"
+          class="col-md-2"><button size="sm" mdbBtn color="green" class="align-center" type="text"
+            (click)="confirmerDonneesRisque2()">Confirmer</button>
+        </div>
+
+        <div *ngIf="(confirmeDonneesRisque2
+       && (utsNom.value !== null) && (!lieussNom.value !== null) && (!activitesNom.value !== null)
+      && (dangersNom.value !== null) && (rsq2sNom.value !== null) && (gr2sNom.value !== null) && (frq2sNom.value !== null) &&
+      (prev2Ex.value !== null) && (gr2osNom.value !== null) && (frq2osNom.value !== null) && (prev2Mo.value !== null))"
+          class="col-md-2"><button size="sm" mdbBtn color="info" class="align-center" type="text"
+            (click)="creerDuer12(utsNom.value,lieussNom.value, activitesNom.value, dangersNom.value,rsq2sNom.value,
+          gr2sNom.value, frq2sNom.value, prev2Ex.value,gr2osNom.value,frq2osNom.value,prev2Mo.value)">Valider Risque 2</button>
+        </div>
+
+        <div *ngIf="creaEvrp2Ok" class="alert danger-color" role="alert">
+          {{messageValid}}</div>
+
+      </div>
+
+      <!-- Fin Prevention2 -->
+      <!-- Send button -->
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"><button mdbBtn color="info" class="align-center" type="text"
+          (click)="rafPageEvrp()">Rafraichir la page</button></div>
+        <div class="col-md-4"><button mdbBtn color="info" class="align-center" type="text"
+            (click)="fermerEvrp()">Fermer</button></div>
+
+        <div class="col-md-4"></div>
+      </div>
+
+
+    </form>
+
+    <!-- Default form contact -->
+  </div>
+</div>
+<div *ngIf="!afficherModif()">
+  <div class="container">
+    <div class=row>
+      <p></p>
     </div>
-
-    <!-- Fin Prevention2 -->
-    <!-- Send button -->
-    <div class="row">
-      <div class="col-md-4"></div>
-      <div class="col-md-4"><button mdbBtn color="info" class="align-center" type="submit">Valider</button></div>
-      <div class="col-md-4"></div>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h2 class="display-4">Attention ! </h2>
+        <p class="lead">Vous devez être en mode Administrateur pour faire des modifications</p>
+      </div>
     </div>
-
-
-  </form>
-
-  <!-- Default form contact -->
+  </div>
 </div>

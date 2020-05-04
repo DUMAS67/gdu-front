@@ -4,7 +4,7 @@
   .texteenblanc {
     color: white;
   }
-  </style>
+</style>
 <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark #f9a825 yellow darken-3">
 
   <!-- Navbar brand -->
@@ -62,13 +62,14 @@
         </div>
       </li>
 
-      <li *ngIf= "statutConnexion" >
+      <li *ngIf="statutConnexion">
         <div class="nav-item">
-        <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-          mdbWavesEffect (click)="frame.show()" size="sm">Connexion</button>
+          <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
+            mdbWavesEffect (click)="frame.show()" size="sm">Connexion</button>
         </div>
       </li>
       <!-- Modal depour l'identification -->
+
       <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
         aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -115,25 +116,31 @@
               <button type="submit" mdbBtn color="default" class="waves-light" mdbWavesEffect
                 (click)="connecter()">Valider</button>
             </div>
+            <div *ngIf="err" class="alert alert-danger" role="alert">
+              <div class="col">
+                <h6> Votre mot de passe ou email n'est pas valide !</h6>
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
-      <li *ngIf="connexionBaseAdmin && !statutConnexion" >
+      <li *ngIf="connexionBaseAdmin && !statutConnexion">
         <div class="alert danger-color" role="alert">
-          <div class ="texteenblanc">{{collaborateurConnexion.nom | uppercase}}</div>
+          <div class="texteenblanc">{{collaborateurConnexion.nom | uppercase}}</div>
         </div>
-          </li>
-          <li *ngIf="connexionBaseUser && !statutConnexion" >
-            <div class="alert default-color" role="alert">
-              <div class ="texteenblanc">{{collaborateurConnexion.nom | uppercase}}</div>
-            </div>
-              </li>
-        <!--{{collaborateurConnexion.nom | uppercase}} {{collaborateurConnexion.prenom | titlecase}}-->
+      </li>
+      <li *ngIf="connexionBaseUser && !statutConnexion">
+        <div class="alert default-color" role="alert">
+          <div class="texteenblanc">{{collaborateurConnexion.nom | uppercase}}</div>
+        </div>
+      </li>
+      <!--{{collaborateurConnexion.nom | uppercase}} {{collaborateurConnexion.prenom | titlecase}}-->
       <!--Navbar-->
-      <li *ngIf= "!statutConnexion" >
+      <li *ngIf="!statutConnexion">
         <div class="nav-item">
-        <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-          mdbWavesEffect (click)="seDeconnecter()" size="sm">Deconnexion</button>
+          <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
+            mdbWavesEffect (click)="seDeconnecter()" size="sm">Deconnexion</button>
         </div>
       </li>
     </ul>
