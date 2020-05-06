@@ -236,16 +236,7 @@ export class GduEvrpComponent implements OnInit {
     );
     return this.nomRisque;
   }
-  trouverCriticite1(id: number): number {
 
-    this.dataService.trouverCriticite(id).subscribe(
-      (param: CriticiteVm) => {
-        this.valeurCriticite = param.valeur;
-        console.log('criticité recherchée : ' + param.valeur);
-      }
-    );
-    return this.valeurCriticite;
-  }
 
   trouverFrequence1(id: number): number {
 
@@ -431,18 +422,8 @@ export class GduEvrpComponent implements OnInit {
     console.log('Prévention 2 MO: ' + this.creaEvrp2.prevMo);
 
     console.log('AA' + this.creaEvrp1.id_ut);
-    /*this.trouverUt1(this.creaEvrp1.id_ut).subscribe((a: UtVm) => {
-    this.a = a.nom;
-    console.log('&&&' + this.a);
-    });
-    /* Dans ce cas le console log attend la réponse du subscribe -
-    Pour récupérer une donnée efficacement on la récupère directement dans le subcribe */
 
-    /*this.newDuer1 = new Duer1( utsNom,
-      lieusNom, activitesNom, dangersNom,
-      risques1Nom, gr1sNom, frq1sNom, this.crit1,
-      prev1Ex, gros1Nom, frq1osNom, this.crit1o,
-      prev1Mo);*/
+
 
     if ((this.creaEvrp1Ok) && (this.creaEvrp2Ok)) {
 
