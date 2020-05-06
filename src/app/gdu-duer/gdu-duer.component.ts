@@ -193,15 +193,21 @@ affichePareto() {
 
 
   this.listeDuerFront$.subscribe((param: DuerFront[]) => {
-    let sumCrit: number = param.map( a => (a.gravite_Ex * a.frequence_Ex)).reduce((a, b) => a + b);
+    let sumCrit: number = param.map( a => { const criticite = a.gravite_Ex * a.frequence_Ex;
+                                            a['criticite_Ex']= criticite;
+                                            return criticite; })
+  // crée un champ supplémentaire et temporaire de l'objet Duer de paramètre
+  // but : ne pas refaire les calculs de criticité à cahque fois. Ce champ
+  // reste sur l'objet seulement pour la fonction Pareto (mutation temporaire de l'objet)
+    .reduce((a, b) => a + b);
     sumCrit = 0.8 * sumCrit;
     console.log('sumCrit : '+ sumCrit);
     let sommeCumul = 0;
     this.elements = param.sort((duer1, duer2) =>
-    ((duer2.gravite_Ex * duer2.frequence_Ex) - (duer1.gravite_Ex * duer1.frequence_Ex)))
-    .filter(duer => { const criticite: number = duer.gravite_Ex * duer.frequence_Ex;
-                      sommeCumul += criticite;
-                      console.log('sommeCumul : '+ sommeCumul);
+    duer2['criticite_Ex'] - duer1['criticite_Ex'])
+    .filter(duer => { sommeCumul += duer['criticite_Ex'];
+                      console.log(duer['criticite_Ex']);
+                      console.log('sommeCumul : ' + sommeCumul);
                       return sommeCumul <= sumCrit; } );
        });
   this.elements = this.mdbTable.getDataSource();
