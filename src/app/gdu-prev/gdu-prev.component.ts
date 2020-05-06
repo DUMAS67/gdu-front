@@ -57,8 +57,6 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
   collaborateurConnecte: Collaborateur;
   listeLieu$ = this.dataService.afficherListeLieu();
   listeLieu: LieuVm[];
-  listeCriticite$ = this.dataService.afficherListeCriticite();
-  listeCriticite: CriticiteVm[];
   listeUt$ = this.dataService.afficherListeUt();
   listeUt: UtVm[];
   listeGravite$ = this.dataService.afficherListeGravite();
@@ -92,9 +90,6 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
       this.listeUt = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
       );
 
-    this.listeCriticite$.subscribe((param: CriticiteVm[]) => {
-        this.listeCriticite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur)); }
-        );
 
     this.listeGravite$.subscribe((param: GraviteVm[]) => {
           this.listeGravite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur)); }

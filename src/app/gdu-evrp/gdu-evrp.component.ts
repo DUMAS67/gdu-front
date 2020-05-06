@@ -20,6 +20,7 @@ import { AsyncPipe } from '@angular/common';
 import { Duer1 } from '../domains/Duer1';
 import { Observable } from 'rxjs';
 import { FnParam } from '@angular/compiler/src/output/output_ast';
+import { NgForm } from '@angular/forms';
 
 
 @Component({
@@ -104,6 +105,7 @@ export class GduEvrpComponent implements OnInit {
   duerB1: Duer;
   creaEvrp1Ok = false;
   creaEvrp2Ok = false;
+  finValid = false;
   messageValid = '';
   confirmeDonneesRisque1 = false;
   confirmeDonneesRisque2 = false;
@@ -142,7 +144,6 @@ export class GduEvrpComponent implements OnInit {
       this.listeFrequence = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur));
     }
     );
-
 
   }
 
@@ -236,16 +237,7 @@ export class GduEvrpComponent implements OnInit {
     );
     return this.nomRisque;
   }
-  trouverCriticite1(id: number): number {
 
-    this.dataService.trouverCriticite(id).subscribe(
-      (param: CriticiteVm) => {
-        this.valeurCriticite = param.valeur;
-        console.log('criticité recherchée : ' + param.valeur);
-      }
-    );
-    return this.valeurCriticite;
-  }
 
   trouverFrequence1(id: number): number {
 
@@ -431,18 +423,8 @@ export class GduEvrpComponent implements OnInit {
     console.log('Prévention 2 MO: ' + this.creaEvrp2.prevMo);
 
     console.log('AA' + this.creaEvrp1.id_ut);
-    /*this.trouverUt1(this.creaEvrp1.id_ut).subscribe((a: UtVm) => {
-    this.a = a.nom;
-    console.log('&&&' + this.a);
-    });
-    /* Dans ce cas le console log attend la réponse du subscribe -
-    Pour récupérer une donnée efficacement on la récupère directement dans le subcribe */
 
-    /*this.newDuer1 = new Duer1( utsNom,
-      lieusNom, activitesNom, dangersNom,
-      risques1Nom, gr1sNom, frq1sNom, this.crit1,
-      prev1Ex, gros1Nom, frq1osNom, this.crit1o,
-      prev1Mo);*/
+
 
     if ((this.creaEvrp1Ok) && (this.creaEvrp2Ok)) {
 
@@ -475,7 +457,11 @@ export class GduEvrpComponent implements OnInit {
     if (utsNom != null) { return true; } else { return false; }
   }
   rafPageEvrp() {
-    this._router.navigate(['/../gdu/../gdu/evrp'], {relativeTo: this.route});
+    this.finValid = true;
+    this.confirmeDonneesRisque1 = false;
+    this.confirmeDonneesRisque2 = false;
+    this.creaEvrp1Ok = false;
+    this.creaEvrp2Ok = false;
   }
 }
 /* this.ut1 = new UtVm(this.creaEvrp1.id_UT, this.trouverUt1(this.creaEvrp1.id_UT));

@@ -6,13 +6,14 @@
       <p></p>
     </div>
     <!-- Default form contact -->
-    <form class="">
+    <form #userForm='ngForm' class="">
 
       <!-- Name -->
 
       <!-- Unité de Travail -->
       <div class="row">
         <div class="col-2">Unité de Travail</div>
+
         <div class="col-3"><label></label>
           <select ngModel id="uts" class="browser-default custom-select mb-4" name="uts" #utsNom='ngModel'>
             <option value="" selected>Choisir une Unité de travail</option>
@@ -564,7 +565,8 @@
          && (dangersNom.value !== null) && (risques1Nom.value !== null) && (gr1sNom.value !== null)
          && (frq1sNom.value !== null) && (prev1Ex.value !== null) && (gros1Nom.value !== null) &&
           (frq1osNom.value !== null) && (prev1Mo.value !== null))" class="col-md-2">
-          <button size="sm" mdbBtn color="green" class="align-center" type="text" (click)="confirmerDonneesRisque1()">Confirmer
+          <button size="sm" mdbBtn color="green" class="align-center" type="text"
+            (click)="confirmerDonneesRisque1()">Confirmer
           </button>
 
         </div>
@@ -682,12 +684,12 @@
        && (utsNom.value !== null) && (!lieussNom.value !== null) && (!activitesNom.value !== null)
       && (dangersNom.value !== null) && (rsq2sNom.value !== null) && (gr2sNom.value !== null) && (frq2sNom.value !== null) &&
       (prev2Ex.value !== null) && (gr2osNom.value !== null) && (frq2osNom.value !== null) && (prev2Mo.value !== null))"
-          class="col-md-2"><button size="sm" mdbBtn color="info" class="align-center" type="text"
-            (click)="creerDuer12(utsNom.value,lieussNom.value, activitesNom.value, dangersNom.value,rsq2sNom.value,
-          gr2sNom.value, frq2sNom.value, prev2Ex.value,gr2osNom.value,frq2osNom.value,prev2Mo.value)">Valider Risque 2</button>
+          class="col-md-2"><button size="sm" mdbBtn color="info" class="align-center" type="text" (click)="creerDuer12(utsNom.value,lieussNom.value, activitesNom.value, dangersNom.value,rsq2sNom.value,
+          gr2sNom.value, frq2sNom.value, prev2Ex.value,gr2osNom.value,frq2osNom.value,prev2Mo.value)">Valider Risque
+            2</button>
         </div>
 
-        <div *ngIf="creaEvrp2Ok" class="alert danger-color" role="alert">
+        <div *ngIf="creaEvrp2Ok"  class="alert danger-color" role="alert">
           {{messageValid}}</div>
 
       </div>
@@ -695,18 +697,26 @@
       <!-- Fin Prevention2 -->
       <!-- Send button -->
       <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4"><button mdbBtn color="info" class="align-center" type="text"
-          (click)="rafPageEvrp()">Rafraichir la page</button></div>
-        <div class="col-md-4"><button mdbBtn color="info" class="align-center" type="text"
+        <div class="col-md-2"></div>
+        <div class="col-md-4"><button mdbBtn color="orange" class="align-center" type="text" (click)="
+          utsNom.reset(''); lieussNom.reset('');activitesNom.reset('');
+          dangersNom.reset(''); risques1Nom.reset('');gr1sNom.reset('');
+         frq1sNom.reset(''); prev1Ex.reset(''); gros1Nom.reset('');
+          frq1osNom.reset(''); prev1Mo.reset('');
+          rsq2sNom.reset(''); gr2sNom.reset(''); frq2sNom.reset(''); prev2Ex.reset(''); gr2osNom.reset(''); frq2osNom.reset(''); prev2Mo.reset('')
+          ;rafPageEvrp()">Rafraichir la page en entier</button></div>
+        <div class="col-md-4"><button mdbBtn color="green" class="align-center" type="text" (click)="
+          risques1Nom.reset('');gr1sNom.reset('');
+         frq1sNom.reset(''); prev1Ex.reset(''); gros1Nom.reset('');
+          frq1osNom.reset(''); prev1Mo.reset('');
+          rsq2sNom.reset(''); gr2sNom.reset(''); frq2sNom.reset(''); prev2Ex.reset(''); gr2osNom.reset(''); frq2osNom.reset(''); prev2Mo.reset('')
+          ;rafPageEvrp()">Rafraichir les risques</button></div>
+        <div class="col-md-2"><button mdbBtn color="info" class="align-center" type="text"
             (click)="fermerEvrp()">Fermer</button></div>
 
         <div class="col-md-4"></div>
       </div>
-
-
     </form>
-
     <!-- Default form contact -->
   </div>
 </div>

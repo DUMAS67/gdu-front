@@ -13,6 +13,7 @@ import { DuerVM } from './domains/DuerVM';
 import { PasVm } from './domains/PasVm';
 import { Duer } from './domains/Duer';
 import { Duer1 } from './domains/Duer1';
+import { DuerFront } from './domains/DuerFront';
 
 @Injectable({
   providedIn: 'root'
@@ -27,12 +28,10 @@ export class DataService {
   listeD: Observable<DangersVm[]>;
   listeUt: Observable<UtVm[]>;
   listeLieu: Observable<LieuVm[]>;
-  listeCriticite: Observable<CriticiteVm[]>;
+  listeCriticite: Observable<number[]>;
   listeGravite: Observable<GraviteVm[]>;
   listeFrequence: Observable<FrequenceVm[]>;
   listeActivite: Observable<ActivitesVm[]>;
-  criticite$: Observable<CriticiteVm>;
-  criticite: CriticiteVm;
   frequence$: Observable<FrequenceVm>;
   frequence: FrequenceVm;
   gravite$: Observable<GraviteVm>;
@@ -49,6 +48,10 @@ export class DataService {
   risque: RisquesVm;
   pas$: Observable<PasVm>;
   pas: PasVm;
+  listeDuerFront: Observable<DuerFront[]>;
+  listeDuerFrontParCrititicite: Observable<DuerFront[]>;
+  listeDuerFrontParUt: Observable<DuerFront[]>;
+  listeDuerFrontParLieu: Observable<DuerFront[]>;
 
   constructor(private http: HttpClient) { }
 
@@ -74,6 +77,14 @@ export class DataService {
 
   }
 
+
+  afficherListeUtduDuer(): Observable<UtVm[]> {
+    this.listeUt = this.http.get<UtVm[]>(this.url_gdu + 'duerlut');
+
+    return this.listeUt;
+
+  }
+
   afficherListeLieu(): Observable<LieuVm[]> {
     this.listeLieu = this.http.get<LieuVm[]>(this.url_gdu + 'lieus');
 
@@ -81,10 +92,10 @@ export class DataService {
 
   }
 
-  afficherListeCriticite(): Observable<CriticiteVm[]> {
-    this.listeCriticite = this.http.get<CriticiteVm[]>(this.url_gdu + 'criticites');
+  afficherListeLieuDansDuer(): Observable<LieuVm[]> {
+    this.listeLieu = this.http.get<LieuVm[]>(this.url_gdu + 'duerllieu');
 
-    return this.listeCriticite;
+    return this.listeLieu;
 
   }
 
@@ -107,6 +118,38 @@ export class DataService {
     return this.listeActivite;
 
   }
+
+  afficherListeDuerFront(): Observable<DuerFront[]> {
+    this.listeDuerFront = this.http.get<DuerFront[]>(this.url_gdu + 'duerf');
+
+    return this.listeDuerFront;
+  }
+
+  afficherListeDuerFrontParCriticite(crit: number): Observable<DuerFront[]> {
+    console.log(crit);
+    this.listeDuerFrontParCrititicite = this.http.get<DuerFront[]> (this.url_gdu + 'duercc?crit=' + crit);
+    return this.listeDuerFrontParCrititicite;
+  }
+
+  afficherListeDuerFrontParUt(ut: number): Observable<DuerFront[]> {
+    console.log(ut);
+    this.listeDuerFrontParUt = this.http.get<DuerFront[]> (this.url_gdu + 'duerut?ut=' + ut);
+    return this.listeDuerFrontParUt;
+  }
+
+  afficherListeDuerFrontParLieu(lieu: number): Observable<DuerFront[]> {
+    console.log(lieu);
+    this.listeDuerFrontParLieu = this.http.get<DuerFront[]> (this.url_gdu + 'duerlieu?lieu=' + lieu);
+    console.log(this.listeDuerFrontParLieu);
+    return this.listeDuerFrontParLieu;
+  }
+
+  afficherListeCriticite(): Observable<number[]> {
+    this.listeCriticite = this.http.get<number[]>(this.url_gdu + 'duerc');
+
+    return this.listeCriticite;
+  }
+
 
 
   creerUt(newUt: string): string {
@@ -319,13 +362,7 @@ export class DataService {
   }
 
 
-  trouverCriticite(id: number): Observable<CriticiteVm> {
-    const urlGetCrit = this.url_gdu + 'criticite?id=' + id;
-    if (id != null) {
-    this.criticite$ = this.http.get<CriticiteVm>(urlGetCrit);
-    }
-    return this.criticite$;
-  }
+
 
   trouverPas(id: number): Observable<PasVm> {
     const urlGetPas = this.url_gdu + 'pas?id=' + id;
