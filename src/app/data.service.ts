@@ -52,6 +52,7 @@ export class DataService {
   listeDuerFrontParCrititicite: Observable<DuerFront[]>;
   listeDuerFrontParUt: Observable<DuerFront[]>;
   listeDuerFrontParLieu: Observable<DuerFront[]>;
+  listeDuerFrontParCrititiciteMo: Observable<DuerFront[]>;
 
   constructor(private http: HttpClient) { }
 
@@ -130,6 +131,12 @@ export class DataService {
     this.listeDuerFrontParCrititicite = this.http.get<DuerFront[]> (this.url_gdu + 'duercc?crit=' + crit);
     return this.listeDuerFrontParCrititicite;
   }
+  afficherListeDuerFrontParCriticiteMo(crit: number): Observable<DuerFront[]> {
+    console.log(crit);
+    this.listeDuerFrontParCrititiciteMo = this.http.get<DuerFront[]> (this.url_gdu + 'duercmo?crit=' + crit);
+    return this.listeDuerFrontParCrititiciteMo;
+  }
+
 
   afficherListeDuerFrontParUt(ut: number): Observable<DuerFront[]> {
     console.log(ut);
@@ -144,12 +151,19 @@ export class DataService {
     return this.listeDuerFrontParLieu;
   }
 
+  /* trouve la liste des criticité dans les préventions existantes*/
   afficherListeCriticite(): Observable<number[]> {
     this.listeCriticite = this.http.get<number[]>(this.url_gdu + 'duerc');
 
     return this.listeCriticite;
   }
 
+  /* trouve la liste des criticité dans les préventions à Maître en Oeuvre*/
+  afficherListeCriticiteMo(): Observable<number[]> {
+    this.listeCriticite = this.http.get<number[]>(this.url_gdu + 'duercmos');
+
+    return this.listeCriticite;
+  }
 
 
   creerUt(newUt: string): string {
