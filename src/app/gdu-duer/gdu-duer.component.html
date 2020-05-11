@@ -73,15 +73,21 @@
         <tr mdbTableCol *ngFor="let el of elements; let i = index">
           <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
             {{el.id}}</th>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.ut}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.lieu}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.activite}}
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.ut}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.lieu}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.activite}}
           </td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.danger}}
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.danger}}
           </td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.risque}}
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.risque}}
           </td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.gravite_Ex}}
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.gravite_Ex}}
           </td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
             {{el.frequence_Ex}}</td>
@@ -118,74 +124,90 @@
                     <div class="modal-body ">
 
                       <div class="row">
-                        <div class="col-2">id DUER</div>
+                        <div class="col-2">id DUER : </div>
                         <div class="col-2">{{el.id}}</div>
                         <div class="col-1"></div>
-                        <div class="col-1">Danger </div>
-                        <div class="col-1"></div>
+                        <div class="col-2">Danger : </div>
+                        <div class="col-1">{{el.danger}}</div>
                         <div class="col-3"></div>
-                        <div class="col-1"></div>
                       </div>
                       <div class="row">
                         <p></p>
                       </div>
                       <div class="row">
-                        <div class="col-2">Risque</div>
-                        <div class="col-6">{{el.risques2}}</div>
-                        <div class="row">
-                          <p></p>
+
+                        <div class="col-2">Risque : </div>
+                        <div class="col-6">{{el.risque}}</div>
+
+                      </div>
+                      <div class="row">
+                        <p></p>
+                      </div>
+                      <div class="row">
+                        <div class="col">Prévention à mettre en oeuvre : </div>
+                      </div>
+                      <div class="row">
+                        <p></p>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-12">
+                          <input type="text" ngModel id="pasPrev" name="pasPrev" #pasPrev="ngModel" mdbInput
+                            class="form-control mb-4" placeholder="">
                         </div>
-                      </div>
-                      <div class="row">
-                        <p></p>
-                      </div>
-                      <div class="row">
-                        <div class="col">Prévention à mettre en oeuvre</div>
-                      </div>
-                      <div class="row">
-                        <p></p>
-                      </div>
-                      <div class="row"></div>
-                      <div class="col">
-                        <input type="number" id="duer2" mdbInput class="form-control mb-4" placeholder="Prévention à mettre en oeuvre">
-                      </div>
+                      </div> <!-- debut bug-->
+
                       <div class="row">
                         <div class="col-2">
-                          Budget
+                          Budget :
                         </div>
                         <div class="col-4">
-                          <input type="number" id="duer3" mdbInput class="form-control mb-4" placeholder="">
+                          <input type="number" ngModel id="pasBudget" name="pasBudget"  #pasBudget="ngModel" mdbInput
+                            class="form-control mb-4" placeholder="">
                         </div>
 
-                        <div class="col-1">Qui ?
+                        <div class="col-2">Qui ? :
                         </div>
-                        <div class="col-4">
-                          <input type="text" id="duer4" mdbInput class="form-control mb-4" placeholder="">
+                        <div class="col-3">
+                          <input type="text" ngModel id="pasQui" name="pasQui" #pasQui="ngModel" mdbInput
+                            class="form-control mb-4" placeholder="">
                         </div>
                       </div>
+                      <!--fin bug-->
                       <div class="row">
                         <div class="col-2">
-                          Délai
+                          Délai :
                         </div>
                         <div class="col-4">
-                          <input type="date" id="duer5" mdbInput class="form-control mb-4" placeholder="">
+                          <input type="date" ngModel id="pasDelai" name="pasDelai" #pasDelai="ngModel" mdbInput
+                            class="form-control mb-4" placeholder="">
                         </div>
+                        <!-- modif de fait ?-->
+                        <!-- div class="col-2">Fait ? :
+                        </div> -->
 
-                        <div class="col-2">Fait ?
-                        </div>
-                        <div class="col-1">
-                          <mdb-checkbox [default]="true">
-                          </mdb-checkbox>
-                        </div>
-                        <div class="col-3"></div>
+                        <!-- Default indeterminate -->
+                        <!-- Default unchecked -->
+                        <!--
+                        <div class="col-4">
+                          <input type="checkbox" id="pasEtat" name="pasEtat" ngModel #pasEtat="ngModel">
+
+                        </div> -->
                       </div>
                     </div>
                     <div class="modal-footer">
                       <!-- Pagination -->
-                      <button type="submit" mdbBtn color="green" class="waves-light" aria-label="Close"
-                        mdbWavesEffect>Effacer</button>
-                      <button type="submit" mdbBtn color="orange" class="waves-light" aria-label="Close"
+<!--
+                      <button type="button" mdbBtn color="green" class="waves-light" aria-label="Effacer"
+                        mdbWavesEffect>Effacer</button> -->
+
+                      <button type="submit" mdbBtn color="red" class="waves-light" aria-label="Creer" mdbWavesEffect
+                        (click)="creerPas1(el.id, pasPrev.value, pasBudget.value,pasQui.value, pasDelai.value); basicModal.hide()">
+                        Créer</button>
+<!--
+                      <button type="button" mdbBtn color="orange" class="waves-light" aria-label="Modifier"
                         mdbWavesEffect>Modifier</button>
+-->
                       <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                         (click)="basicModal.hide()" mdbWavesEffect>Fermer</button>
                     </div>
@@ -211,12 +233,11 @@
                       <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal1.hide()">
                         <span aria-hidden="true">×</span>
                       </button>
-                      <h4 class="modal-title w-100" id="myModalLabel">Modification Risques</h4>
+                      <h4 class="modal-title w-100" id="myModalLabel1">Modification Risques</h4>
                     </div>
                     <div class="modal-body ">
                       <div class="row">
                         <div class="col-4">id DUER : {{el.id}}</div>
-
                         <div class="col-4">Unité de Travail : {{el.ut}}</div>
                         <div class="col-3">Lieu : {{el.lieu}}</div>
                       </div>
@@ -234,28 +255,51 @@
                         <p></p>
                       </div>
                       <div class="row">
-                        <div class="col-1">G</div>
+                        <div class="col-3">Cotation actuelle </div>
                         <div class="col-2">
-                          <select class="browser-default custom-select mb-4">
+                          Gravite : {{el.gravite_Ex}}
+                        </div>
+                        <div class="col-1"></div>
+                        <div class="col-2"> Fréquence : {{el.frequence_Ex}}
+                        </div>
+                        <div class="col-2"> Criticité : </div>
+                        <div class="col-1"> {{critValeur(el.gravite_Ex, el.frequence_Ex)}}</div>
+                      </div>
+                      <div class="row">
+                        <p></p>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-3">Cotation révaluée</div>
+                        <div class="col-2">
+                          <select ngModel id="newGr" name="newGr" #newGr="ngModel"
+                            class="browser-default custom-select mb-4">
                             <option value="" selected>Gravité</option>
                             <option *ngFor="let gr of listeGravite" value={{gr.id}}>{{gr.valeur}} </option>
                           </select>
                         </div>
-                        <div class="col-1">F</div>
+                        <div class="col-1"></div>
                         <div class="col-2">
-                          <select class="browser-default custom-select mb-4">
+                          <select ngModel id="newFr" name="newFr" #newFr="ngModel"
+                            class="browser-default custom-select mb-4">
                             <option value="" selected>Fréquence</option>
                             <option *ngFor="let fr of listeFrequence" value={{fr.id}}>{{fr.valeur}} </option>
                           </select>
                         </div>
-                        <div class="col-2">C :
+                        <div class="col-1">Criticité</div>
+                        <div class="col-2"><input *ngIf="newFr.dirty && newGr.dirty" type="text" id="nvDetailsRq1"
+                            class="form-control mb-4" placeholder="{{critIndice(newGr.value,newFr.value)}}">
                         </div>
                       </div>
-                      <div class="row">
+                      <div class=" row">
                         <div class="col-4">Prévention existante</div>
                       </div>
+                      <div class="row">
+                        <p></p>
+                      </div>
                       <div class="col">
-                        <input type="text" id="duer" mdbInput class="form-control mb-4" placeholder="{{el.prevEx}}">
+                        <input type="text" ngModel id="newPrev" #newPrev="ngModel" name="newPrev" mdbInput
+                          class="form-control mb-4" placeholder={{el.prevExistante}}>
                       </div>
                       <div class="row">
 
@@ -265,46 +309,91 @@
                         <p></p>
                       </div>
                       <div class="row">
-                        <div class="col-4">Risque : {{el.risque}}</div>
+                        <div class="col-3">Cotation actuelle </div>
+                        <div class="col-2">
+                          Gravite : {{el.gravite_Mo}}
+                        </div>
+                        <div class="col-1"></div>
+                        <div class="col-2"> Fréquence : {{el.frequence_Mo}}
+                        </div>
+                        <div class="col-2"> Criticité : </div>
+                        <div class="col-1"> {{critValeur(el.gravite_Mo, el.frequence_Mo)}}</div>
                       </div>
                       <div class="row">
                         <p></p>
                       </div>
                       <div class="row">
-                        <div class="col-1">G</div>
+                        <div class="col-3">Cotation</div>
                         <div class="col-2">
-                          <select class="browser-default custom-select mb-4">
+                          <select ngModel id="newGrMo" name="newGrMo" #newGrMo="ngModel"
+                            class="browser-default custom-select mb-4">
                             <option value="" selected>Gravité</option>
                             <option *ngFor="let gr of listeGravite" value={{gr.id}}>{{gr.valeur}} </option>
                           </select>
                         </div>
-                        <div class="col-1">F</div>
+                        <div class="col-1"></div>
                         <div class="col-2">
-                          <select class="browser-default custom-select mb-4">
+                          <select ngModel id="newFrMo" name="newFrMo" #newFrMo="ngModel"
+                            class="browser-default custom-select mb-4">
                             <option value="" selected>Fréquence</option>
                             <option *ngFor="let fr of listeFrequence" value={{fr.id}}>{{fr.valeur}} </option>
                           </select>
                         </div>
-                        <div class="col-2">C : </div>
-                      </div>
 
+
+                        <div class="col-1">Criticité</div>
+                        <div class="col-2"><input *ngIf="newFrMo.dirty && newGrMo.dirty" type="text" id="nvDetailsRq1"
+                            class="form-control mb-4" placeholder="{{critIndice(newGrMo.value,newFrMo.value)}}">
+                        </div>
+                      </div>
                       <div class="col">
-                        <input type="text" mdbInput class="form-control mb-4" placeholder="{{el.prevMo}}">
+                        <input type="text" ngModel id="newPrevMo" name="newPrevMo" mdbInput class="form-control mb-4"
+                          #newPrevMo="ngModel" placeholder={{el.prevMiseEnOeuvre}}>
                       </div>
                     </div>
 
                     <div class="modal-footer">
-
-                      <button type="submit" mdbBtn color="orange" class="waves-light" aria-label="Close"
-                        (click)="basicModal1.hide()" mdbWavesEffect>Modifier</button>
+                      <button
+                        *ngIf="!newGr.pristine && !newFr.pristine && !newPrev.pristine && !newGrMo.pristine && !newFrMo.pristine && !newPrevMo.pristine"
+                        type="text" mdbBtn color="orange" class="waves-light" aria-label="Close"
+                        (click)="modifierDuer1(el.id, newGr.value,newFr.value, newPrev.value, newGrMo.value,newFrMo.value, newPrevMo.value); basicModal1.hide()"
+                        mdbWavesEffect>Modifier
+                      </button>
+                      <button type="button" mdbBtn color="orange" class="waves-light" aria-label="Close"
+                        (click)="basicModal2.show()" mdbWavesEffect>Détruire une Evrp
+                      </button>
                       <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-                        (click)="basicModal1.hide()" mdbWavesEffect>Fermer</button>
+                        (click)="basicModal1.hide()" mdbWavesEffect>Fermer
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
             </form>
-
+            <!-- Modal Confirmation suppression -->
+            <div mdbModal #basicModal2="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+              aria-labelledby="myBasicModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-sm modal-notify modal-danger" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal2.hide()">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title w-100" id="myModalLabel">Confirmation Suppression Evrp</h4>
+                  </div>
+                  <div class="modal-body">
+                    Vous êtes sur le point d'éliminer l'Evrp d'id : {{el.id}}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" mdbBtn color="primary" class="relative waves-light" aria-label="Close"
+                      (click)="detruireEvrp1(el.id); basicModal2.hide()" mdbWavesEffect>Confirmer</button>
+                    <button type="button" mdbBtn color="secondary" class="relative waves-light" mdbWavesEffect
+                      (click)="basicModal2.hide()">Fermer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Fin Modal Confirmation suppression -->
             <!--Fin Modal-->
           </td>
         </tr>
@@ -317,7 +406,5 @@
         </tr>
       </tfoot>
     </table>
-
-
   </div>
 </div>
