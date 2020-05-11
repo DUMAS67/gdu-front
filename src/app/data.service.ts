@@ -54,6 +54,7 @@ export class DataService {
   listeDuerFrontParCrititicite: Observable<DuerFront[]>;
   listeDuerFrontParUt: Observable<DuerFront[]>;
   listeDuerFrontParLieu: Observable<DuerFront[]>;
+
   subjectActUt: BehaviorSubject<UtVm[]>;
   listePas: Observable<PasVm[]>;
 
@@ -63,6 +64,8 @@ export class DataService {
     this.subjectActUt = new BehaviorSubject(tabUtm);
     console.log(this.subjectActUt);
    }
+
+  listeDuerFrontParCrititiciteMo: Observable<DuerFront[]>;
 
 
 
@@ -147,6 +150,12 @@ export class DataService {
     this.listeDuerFrontParCrititicite = this.http.get<DuerFront[]> (this.url_gdu + 'duercc?crit=' + crit);
     return this.listeDuerFrontParCrititicite;
   }
+  afficherListeDuerFrontParCriticiteMo(crit: number): Observable<DuerFront[]> {
+    console.log(crit);
+    this.listeDuerFrontParCrititiciteMo = this.http.get<DuerFront[]> (this.url_gdu + 'duercmo?crit=' + crit);
+    return this.listeDuerFrontParCrititiciteMo;
+  }
+
 
   afficherListeDuerFrontParUt(ut: number): Observable<DuerFront[]> {
     console.log(ut);
@@ -161,16 +170,25 @@ export class DataService {
     return this.listeDuerFrontParLieu;
   }
 
+  /* trouve la liste des criticité dans les préventions existantes*/
   afficherListeCriticite(): Observable<number[]> {
     this.listeCriticite = this.http.get<number[]>(this.url_gdu + 'duerc');
 
     return this.listeCriticite;
   }
 
+
   afficherListePas(): Observable<PasVm[]> {
 
     this.listePas = this.http.get < PasVm[] > (this.url_gdu + 'pass');
     return this.listePas;
+
+  /* trouve la liste des criticité dans les préventions à Maître en Oeuvre*/
+  afficherListeCriticiteMo(): Observable<number[]> {
+    this.listeCriticite = this.http.get<number[]>(this.url_gdu + 'duercmos');
+
+    return this.listeCriticite;
+
   }
 
 
