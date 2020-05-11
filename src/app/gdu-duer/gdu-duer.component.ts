@@ -12,6 +12,7 @@ import { UtVm } from '../domains/UtVm';
 import { GraviteVm } from '../domains/Gravite';
 import { FrequenceVm } from '../domains/FrequenceVm';
 import { DuerFront } from '../domains/DuerFront';
+import { PasVm } from '../domains/PasVm';
 
 
 @Component({
@@ -35,6 +36,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
   listeDuerFrontParUt: DuerFront[];
   listeDuerFrontParLieu$: Observable<DuerFront[]>;
   listeDuerFrontParLieu: DuerFront[];
+  criticite: number;
 
 
   constructor(private dataService: DataService, private _router: Router, private _cookieService: CookieService,
@@ -65,14 +67,15 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
       this.elements = param.map(c => new DuerFront(
         c.id, c.ut, c.lieu, c.activite, c.danger, c.risque, c.gravite_Ex,
         c.frequence_Ex, c.prevExistante, c.gravite_Mo, c.frequence_Mo, c.prevMiseEnOeuvre, c.pas))
-      .sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
+        .sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
       console.log(this.elements.length);
       this.mdbTable.setDataSource(this.elements);
-      console.log('1 '+this.elements.length);
+      console.log('1 ' + this.elements.length);
       this.elements = this.mdbTable.getDataSource();
-      console.log('2 '+this.elements.length);
+      console.log('2 ' + this.elements.length);
       this.previous = this.mdbTable.getDataSource();
-      console.log('3 '+this.elements.length);}
+      console.log('3 ' + this.elements.length);
+    }
     );
 
 
@@ -83,18 +86,22 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     }
     );
     this.listeUt$.subscribe((param: UtVm[]) => {
-      this.listeUt = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0))); }
-      );
+      this.listeUt = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+    }
+    );
 
     this.listeGravite$.subscribe((param: GraviteVm[]) => {
-          this.listeGravite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur)); }
-          );
+      this.listeGravite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur));
+    }
+    );
     this.listeFrequence$.subscribe((param: FrequenceVm[]) => {
-            this.listeFrequence = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur)); }
-            );
-    this.listeCriticite$.subscribe(( param: number[]) => {
-           this.listeCriticite = param.filter(a => a).sort((a, b) => (a - b)); }
-  );
+      this.listeFrequence = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur));
+    }
+    );
+    this.listeCriticite$.subscribe((param: number[]) => {
+      this.listeCriticite = param.filter(a => a).sort((a, b) => (a - b));
+    }
+    );
   }
 
   ngAfterViewInit() {
@@ -104,10 +111,10 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     this.cdRef.detectChanges();
 
 
-   /* console.log(this.mdbTablePagination.maxVisibleItems);
-    console.log(this.mdbTablePagination.firstItemIndex);
-    console.log(this.mdbTablePagination.lastItemIndex);
-    console.log(this.cdRef.detectChanges());*/
+    /* console.log(this.mdbTablePagination.maxVisibleItems);
+     console.log(this.mdbTablePagination.firstItemIndex);
+     console.log(this.mdbTablePagination.lastItemIndex);
+     console.log(this.cdRef.detectChanges());*/
 
   }
 
@@ -121,29 +128,29 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     return a * b;
   }
 
-rafraichirSelection() {
-  this.listeDuerFront$.subscribe((param: DuerFront[]) => {
+  rafraichirSelection() {
+    this.listeDuerFront$.subscribe((param: DuerFront[]) => {
 
-    this.elements = param.map(c => new DuerFront(
-      c.id, c.ut, c.lieu, c.activite, c.danger, c.risque, c.gravite_Ex,
-      c.frequence_Ex, c.prevExistante, c.gravite_Mo, c.frequence_Mo, c.prevMiseEnOeuvre, c.pas))
-    .sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
+      this.elements = param.map(c => new DuerFront(
+        c.id, c.ut, c.lieu, c.activite, c.danger, c.risque, c.gravite_Ex,
+        c.frequence_Ex, c.prevExistante, c.gravite_Mo, c.frequence_Mo, c.prevMiseEnOeuvre, c.pas))
+        .sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
 
-    console.log(this.elements.length);
+      console.log(this.elements.length);
 
-    this.mdbTable.setDataSource(this.elements);
-    this.elements = this.mdbTable.getDataSource();
-    this.previous = this.mdbTable.getDataSource();
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    this.cdRef.detectChanges();
+      this.mdbTable.setDataSource(this.elements);
+      this.elements = this.mdbTable.getDataSource();
+      this.previous = this.mdbTable.getDataSource();
+      this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
+      this.mdbTablePagination.calculateFirstItemIndex();
+      this.mdbTablePagination.calculateLastItemIndex();
+      this.cdRef.detectChanges();
+    }
+    );
+
   }
-  );
 
-}
-
-  afficheListeDuerParCriticite(crit: number)  {
+  afficheListeDuerParCriticite(crit: number) {
 
 
     this.listeDuerFrontParCriticite$ = this.dataService.afficherListeDuerFrontParCriticite(crit);
@@ -158,23 +165,23 @@ rafraichirSelection() {
       this.cdRef.detectChanges();
     });
   }
-    afficheListeDuerParUt(ut: number)  {
+  afficheListeDuerParUt(ut: number) {
 
-      this.listeDuerFrontParUt$ = this.dataService.afficherListeDuerFrontParUt(ut);
-      this.listeDuerFrontParUt$.subscribe((param: DuerFront[]) => {
-        this.listeDuerFrontParUt = param.map(a => a).sort((a, b) => (a.lieu.charCodeAt(0) - b.lieu.charCodeAt(0)));
-        this.mdbTable.setDataSource(this.listeDuerFrontParUt);
-        console.log(this.listeDuerFrontParUt[0].id);
-        this.elements = this.mdbTable.getDataSource();
-        this.previous = this.mdbTable.getDataSource();
-        this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
-        this.mdbTablePagination.calculateFirstItemIndex();
-        this.mdbTablePagination.calculateLastItemIndex();
-        this.cdRef.detectChanges();
-      });
+    this.listeDuerFrontParUt$ = this.dataService.afficherListeDuerFrontParUt(ut);
+    this.listeDuerFrontParUt$.subscribe((param: DuerFront[]) => {
+      this.listeDuerFrontParUt = param.map(a => a).sort((a, b) => (a.lieu.charCodeAt(0) - b.lieu.charCodeAt(0)));
+      this.mdbTable.setDataSource(this.listeDuerFrontParUt);
+      console.log(this.listeDuerFrontParUt[0].id);
+      this.elements = this.mdbTable.getDataSource();
+      this.previous = this.mdbTable.getDataSource();
+      this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
+      this.mdbTablePagination.calculateFirstItemIndex();
+      this.mdbTablePagination.calculateLastItemIndex();
+      this.cdRef.detectChanges();
+    });
   }
 
-  afficheListeDuerParLieu(lieu: number)  {
+  afficheListeDuerParLieu(lieu: number) {
 
     this.listeDuerFrontParLieu$ = this.dataService.afficherListeDuerFrontParLieu(lieu);
     this.listeDuerFrontParLieu$.subscribe((param: DuerFront[]) => {
@@ -188,44 +195,85 @@ rafraichirSelection() {
       this.mdbTablePagination.calculateLastItemIndex();
       this.cdRef.detectChanges();
     });
-}
-affichePareto() {
-
-
-  this.listeDuerFront$.subscribe((param: DuerFront[]) => {
-    let sumCrit: number = param.map( a => { const criticite = a.gravite_Ex * a.frequence_Ex;
-                                            a['criticite_Ex']= criticite;
-                                            return criticite; })
-  // crée un champ supplémentaire et temporaire de l'objet Duer de paramètre
-  // but : ne pas refaire les calculs de criticité à cahque fois. Ce champ
-  // reste sur l'objet seulement pour la fonction Pareto (mutation temporaire de l'objet)
-    .reduce((a, b) => a + b);
-    sumCrit = 0.8 * sumCrit;
-    console.log('sumCrit : '+ sumCrit);
-    let sommeCumul = 0;
-    this.elements = param.sort((duer1, duer2) =>
-    duer2['criticite_Ex'] - duer1['criticite_Ex'])
-    .filter(duer => { sommeCumul += duer['criticite_Ex'];
-                      console.log(duer['criticite_Ex']);
-                      console.log('sommeCumul : ' + sommeCumul);
-                      return sommeCumul <= sumCrit; } );
-       });
-  this.elements = this.mdbTable.getDataSource();
-  this.previous = this.mdbTable.getDataSource();
-  this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
-  this.mdbTablePagination.calculateFirstItemIndex();
-  this.mdbTablePagination.calculateLastItemIndex();
-  this.cdRef.detectChanges();
-
   }
+  affichePareto() {
 
 
-
-emitDataSourceChange() {
-    this.mdbTable.dataSourceChange().subscribe((data: any) => {
-      console.log(data);
+    this.listeDuerFront$.subscribe((param: DuerFront[]) => {
+      let sumCrit: number = param.map(a => {
+        const criticite = a.gravite_Ex * a.frequence_Ex;
+        a['criticite_Ex'] = criticite;
+        return criticite;
+      })
+        // crée un champ supplémentaire et temporaire de l'objet Duer de paramètre
+        // but : ne pas refaire les calculs de criticité à cahque fois. Ce champ
+        // reste sur l'objet seulement pour la fonction Pareto (mutation temporaire de l'objet)
+        .reduce((a, b) => a + b);
+      sumCrit = 0.8 * sumCrit;
+      console.log('sumCrit : ' + sumCrit);
+      let sommeCumul = 0;
+      this.elements = param.sort((duer1, duer2) =>
+        duer2['criticite_Ex'] - duer1['criticite_Ex'])
+        .filter(duer => {
+          sommeCumul += duer['criticite_Ex'];
+          console.log(duer['criticite_Ex']);
+          console.log('sommeCumul : ' + sommeCumul);
+          return sommeCumul <= sumCrit;
+        });
     });
+    this.elements = this.mdbTable.getDataSource();
+    this.previous = this.mdbTable.getDataSource();
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
+    this.mdbTablePagination.calculateFirstItemIndex();
+    this.mdbTablePagination.calculateLastItemIndex();
+    this.cdRef.detectChanges();
+
   }
+  critValeur(valeur1: number, valeur2: number): number {
+    return valeur1 * valeur2;
+  }
+
+  critIndice(valeur1: number, valeur2: number): number {
+
+    console.log('Valeur de la Gravité  :' + this.listeGravite[valeur1 - 1].valeur);
+    console.log('Valeur de la Fréquence  :' + this.listeFrequence[valeur2 - 1].valeur);
+    this.criticite = this.listeGravite[valeur1 - 1].valeur * this.listeFrequence[valeur2 - 1].valeur;
+    console.log('valeurx = ' + this.criticite);
+    return this.criticite;
+  }
+
+  modifierDuer1(id: number, gr: number, fr: number, prev: string, grMo: number, frMo: number, prevMo: string) {
+
+    this.dataService.modifDuer(id, gr, fr, prev, grMo, frMo, prevMo);
+  }
+
+  detruireEvrp1(id: number) {
+    console.log('id a détrure : ' + id);
+    this.dataService.detruireEvrp(id);
+  }
+
+  creerPas1(
+            idDuer: number,
+            action: string,
+            budget: number,
+            qui: string,
+            delai: Date,
+            ) {
+
+    console.log('idDuer : ' + idDuer);
+    console.log('action :' + action);
+    console.log('budget :' + budget);
+    console.log('qui : ' + qui);
+    console.log('delai : ' + delai);
+
+
+    this.dataService.creerPas(new PasVm(null, idDuer,
+      action,
+      budget,
+      qui, delai, false));
+
+  }
+
 }
 
 

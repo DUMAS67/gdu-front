@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 import { RisquesVm } from './domains/RisquesVm';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { DangersVm } from './domains/DangersVm';
@@ -14,6 +14,8 @@ import { PasVm } from './domains/PasVm';
 import { Duer } from './domains/Duer';
 import { Duer1 } from './domains/Duer1';
 import { DuerFront } from './domains/DuerFront';
+import { tap } from 'rxjs/operators';
+import { Ut } from './environments/Ut';
 
 @Injectable({
   providedIn: 'root'
@@ -52,8 +54,17 @@ export class DataService {
   listeDuerFrontParCrititicite: Observable<DuerFront[]>;
   listeDuerFrontParUt: Observable<DuerFront[]>;
   listeDuerFrontParLieu: Observable<DuerFront[]>;
+  subjectActUt: BehaviorSubject<UtVm[]>;
+  listePas: Observable<PasVm[]>;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+
+    let tabUtm: UtVm[] = [];
+    this.subjectActUt = new BehaviorSubject(tabUtm);
+    console.log(this.subjectActUt);
+   }
+
+
 
 
   afficherListeRisque(): Observable<RisquesVm[]> {
@@ -71,10 +82,16 @@ export class DataService {
   }
 
   afficherListeUt(): Observable<UtVm[]> {
-    this.listeUt = this.http.get<UtVm[]>(this.url_gdu + 'uts');
+    this.listeUt = this.http.get<UtVm[]>(this.url_gdu + 'uts').
+    pipe(
+        tap(utS => {
+  this.subjectActUt.next(utS);
+  this.subjectActUt.forEach(sub => console.log(sub));
+
+})
+    );
 
     return this.listeUt;
-
   }
 
 
@@ -150,15 +167,24 @@ export class DataService {
     return this.listeCriticite;
   }
 
+  afficherListePas(): Observable<PasVm[]> {
+
+    this.listePas = this.http.get < PasVm[] > (this.url_gdu + 'pass');
+    return this.listePas;
+  }
 
 
   creerUt(newUt: string): string {
     const urlPostUt = this.url_gdu + 'ut?nom=' + newUt;
 
-    this.http.post(urlPostUt, {}).
+    this.http.post(urlPostUt, {responseType: 'text'}).
       subscribe(
         (data: any) => {
           console.log(data);
+          this.afficherListeUt().subscribe((listeUt: UtVm[]) => {
+            this.subjectActUt.next(listeUt);
+          });
+          // indique au subject qu'une nouvelle donnée est créée
           return data;
         },
         (error: HttpErrorResponse) => {
@@ -191,11 +217,11 @@ export class DataService {
     console.log(newLieu);
     this.http.post(urlPostLieu, {}).
       subscribe(
-        (data: any) => {
+        (data: string) => {
           console.log(data);
           return data;
         },
-        (error: HttpErrorResponse) => {
+        (error: string) => {
           console.log('error', error);
           return error;
         });
@@ -342,7 +368,7 @@ export class DataService {
   trouverRisque(id: number): Observable<RisquesVm> {
     const urlGetRis = this.url_gdu + 'risque?id=' + id;
     if (id != null) {
-      this.risque$ = this.http.get<RisquesVm>(urlGetRis);}
+      this.risque$ = this.http.get<RisquesVm>(urlGetRis); }
     return this.risque$;
   }
   trouverGravite(id: number): Observable<GraviteVm> {
@@ -353,7 +379,7 @@ export class DataService {
     return this.gravite$;
   }
 
-  trouverFrequence(id: number): Observable<FrequenceVm>{
+  trouverFrequence(id: number): Observable<FrequenceVm> {
     const urlGetFreq = this.url_gdu + 'frequence?id=' + id;
     if (id != null) {
     this.frequence$ = this.http.get<FrequenceVm>(urlGetFreq);
@@ -361,8 +387,21 @@ export class DataService {
     return this.frequence$;
   }
 
+creerPas(newPas: PasVm){
+const urlPostPas = this.url_gdu + 'pasc';
 
-
+this.http.post(urlPostPas, newPas).
+      subscribe(
+        (data: any) => {
+          console.log(data.id);
+          return data;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        });
+return '';
+  }
 
   trouverPas(id: number): Observable<PasVm> {
     const urlGetPas = this.url_gdu + 'pas?id=' + id;
@@ -405,4 +444,41 @@ export class DataService {
     return '';
   }
 
+
+  modifDuer(id: number, gravite_Ex, frequence_Ex, prevEx, graviteMo, frequenceMo, prevMo): string {
+
+    const urlPostDuerM = this.url_gdu + 'duerm?id=' + id + '&grEx=' + gravite_Ex +
+      '&frEx=' + frequence_Ex + '&prev=' + prevEx + '&grMo=' + graviteMo +
+      '&frMo=' + frequenceMo + '&prevMo=' + prevMo;
+
+    this.http.post(urlPostDuerM, {}).
+      subscribe(
+        (data: any) => {
+          console.log(data);
+          return data;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        });
+    return '';
+  }
+
+  detruireEvrp(id: number): string {
+
+const urlGetDEvrp = this.url_gdu + 'duerd?id=' + id;
+console.log(urlGetDEvrp);
+if (id != null) {
+     this.http.post(urlGetDEvrp, { }).subscribe(
+      (data: any) => {
+        console.log(data);
+        return data;
+      },
+      (error: HttpErrorResponse) => {
+        console.log('error', error);
+        return error;
+      });
+     return '';
+    }
+  }
 }
