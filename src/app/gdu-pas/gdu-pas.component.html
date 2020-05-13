@@ -5,47 +5,52 @@
   <div class="row">
     <div class="col-3"><b>Plan d'Actions Spécifiques</b></div>
     <div class="col-2"><label></label>
-      <select class="browser-default custom-select mb-4">
-        <option value="" selected>Ut</option>
-        <option *ngFor="let ut of listeUt" value={{ut.id}}>{{ut.nom}} </option>
+      <select ngModel id="dg" name="dg" #dg='ngModel' class="browser-default custom-select mb-4">
+        <option value="" selected>Danger</option>
+        <option *ngFor="let ut of listeDanger" value={{ut.id}}>{{ut.nom}} </option>
       </select></div>
 
-    <div class="col-2"><label></label>
-
-        <select class="browser-default custom-select mb-4">
-          <option value="" selected>Risque</option>
-          <option *ngFor="let risque of listeRisques" value={{risque.id}}>{{risque.nom}} </option>
-
-        </select>
-      </div>
 
     <div class="col-2"><label></label>
-      <select class="browser-default custom-select mb-4">
+
+      <select ngModel id="rq" name="rq" #rq='ngModel' class="browser-default custom-select mb-4">
+        <option value="" selected>Risque</option>
+        <option *ngFor="let risque of listeRisques" value={{risque.id}}>{{risque.nom}} </option>
+
+      </select>
+    </div>
+
+    <div class="col-1"><label></label>
+      <select ngModel id="qui" name="qui" #qui='ngModel' class="browser-default custom-select mb-4">
         <option value="" selected>Qui ?</option>
-        <option value={{test[0].id}}>{{test[0].nom}}</option>
-        <option value="2">Pascal</option>
-        <option value="3">Florence</option>
-        <option value="4">4</option>
-        <option value="4">5</option>
-      </select></div>
 
+        <option  *ngFor="let qui of listeQui" value={{qui}}>{{qui}}</option>
+
+      </select></div>
+      <div class="col-2">
+        <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
+          (click)="raffraichirPas(); dg.reset('');rq.reset('');qui.reset('')">Rafraichir</button>
+      </div>
 
     <div class="col-2">
       <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Impression</button>
     </div>
   </div>
-  <div class ="row">
-    <div class="col-3"></div>
-    <div class="col-2">
-      <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Selectionner</button>
+  <div class="row">
+
+     <div *ngIf="dg.dirty" class="col-2">
+      <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
+        (click)="afficheListePasParDanger(dg.value) ">Selectionner Danger</button>
     </div>
-    <div class="col-2">
-      <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Selectionner</button>
+    <div *ngIf="rq.dirty" class="col-2">
+      <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
+        (click)="afficheListePasParRisque(rq.value)">Selectionner Risque</button>
     </div>
-    <div class="col-2">
-      <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Selectionner</button>
+
+    <div *ngIf="qui.dirty" class="col-2">
+      <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
+        (click)="afficheListePasParQui(qui.value)">Selectionner Qui?</button>
     </div>
-  </div>
   <!-- Fin Sélection -->
 
   <div class="container">
@@ -60,115 +65,164 @@
         </tr>
       </thead>
       <tbody>
-        <tr mdbTableCol *ngFor="let el of elements">
-          <th scope="row">{{el.id}}</th>
-          <td>{{el.heading1}}</td>
-          <td>{{el.heading2}}</td>
-          <td>{{el.heading3}}</td>
-          <td>{{el.heading4}}</td>
-          <td>{{el.heading5}}</td>
-          <td>{{el.heading6}}</td>
-
-          <td>
-            <!-- Default unchecked -->
-            <mdb-checkbox [default]="true"></mdb-checkbox>
-            <!-- Default unchecked-->
+        <tr mdbTableCol *ngFor="let el of elements; let i = index">
+          <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
+            {{el.id}}</th>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.idDuer}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.danger}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.risque}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.action}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.budget}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.qui}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.delai | date :"dd/MM/yyyy"}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            {{el.etat}} <mdb-icon fas icon="check"></mdb-icon>
           </td>
           <!-- Material unchecked -->
-          <td *ngIf="afficherModif()"><button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect
-              type="button" class="m-0 relative waves-light" (click)="basicModal1.show()">Modifier</button>
-          </td>
-          <!-- Partie modale PAS -->
-          <form>
-            <div mdbModal #basicModal1="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-              aria-labelledby="myBasicModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal1.hide()">
-                      <span aria-hidden="true">×</span>
-                    </button>
-                    <h4 class="modal-title w-100" id="myModalLabel">Plan d'Action Spécifique</h4>
-                  </div>
-                  <div class="modal-body ">
-                    <div class="row">
-                      <div class="col-2">id DUER</div>
-                      <div class="col-2">{{el.id}}</div>
-                      <div class="col-1"></div>
-                      <div class="col-1">Danger </div>
-                      <div class="col-1"></div>
-                      <div class="col-3">{{el.heading1}}</div>
-                      <div class="col-1"></div>
+          <td
+            *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex && afficherModif()">
+            <button mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
+              class="m-0 relative waves-light" (click)="basicModalpas.show()">Modifier</button>
+
+            <!-- Partie modale PAS -->
+            <form>
+              <div mdbModal #basicModalpas="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="myBasicModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close pull-right" aria-label="Close" (click)="basicModalpas.hide()">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                      <h4 class="modal-title w-100" id="myModalLabel">Plan d'Action Spécifique</h4>
                     </div>
-                    <div class="row">
-                      <p></p>
-                    </div>
-                    <div class="row">
-                      <div class="col-2">Risque</div>
-                      <div class="col-6">{{el.heading2}}</div>
+                    <div class="modal-body ">
+                      <div class="row">
+                        <div class="col-2">id DUER :</div>
+                        <div class="col-2">{{el.idDuer}}</div>
+                        <div class="col-1"></div>
+                        <div class="col-2">Danger :</div>
+                        <div class="col-1"></div>
+                        <div class="col-3">{{el.danger}}</div>
+                        <div class="col-1"></div>
+                      </div>
                       <div class="row">
                         <p></p>
                       </div>
+                      <div class="row">
+                        <div class="col-2">Risque :</div>
+                        <div class="col-6">{{el.risque}}</div>
+                        <div class="row">
+                          <p></p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <p></p>
+                      </div>
+                      <div class="row">
+                        <div class="col">Prévention à mettre en oeuvre : </div>
+                      </div>
+                      <div class="row">
+                        <p></p>
+                      </div>
+                      <div class="row"></div>
+                      <div class="col">
+                        <input type="text" ngModel id="pasModifAction" name="pasModifAction" #pasModifAction="ngModel" mdbInput class="form-control mb-4"
+                          placeholder="{{el.action}}">
+                      </div>
+                      <div class="row">
+                        <div class="col-2">
+                          Budget :
+                                                </div>
+                        <div class="col-4">
+                          <input type="number" ngModel id="pasModifBudget" name="pasModifBudget" #pasModifBudget="ngModel" mdbInput class="form-control mb-4"
+                            placeholder="{{el.budget}}">
+                        </div>
+                        <div class="col-1">Qui :
+                        </div>
+                        <div class="col-4">
+                          <input type="text" ngModel id="pasModifQui" name="pasModifQui" #pasModifQui="ngModel" mdbInput class="form-control mb-4"
+                            placeholder="{{el.qui}}">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-2">
+                          Délai prévu :
+                        </div>
+                        <div class="col-4">
+
+                         {{el.delai|date : "dd/MM/yyyy"}}
+                          <!-- {{el.delai | date : "yyyy-MM-dd"}}   -->
+                        </div>
+                        <div class="col-2">Fait ?
+                        </div>
+                        <div class="col-1">
+                          <!-- Default checked -->
+                          <mdb-checkbox ngModel id="pasModiFait" name="pasModiFait" #pasModiFait="ngModel" ></mdb-checkbox>
+                        </div>
+                        <div class="col-3"></div>
+                      </div>
+                      <div class="row">
+                        <div class="col-2">
+                          Délai à modifier :
+                        </div>
+                        <div class="col-4">
+                          <input type="date" ngModel id="pasModifDelai1" name="pasModifDelai1" #pasModifDelai1="ngModel" mdbInput
+                          class="form-control mb-4">
+                        </div>
+                      </div>
                     </div>
-                    <div class="row">
-                      <p></p>
-                    </div>
-                    <div class="row">
-                      <div class="col">Prévention à mettre en oeuvre</div>
-                    </div>
-                    <div class="row">
-                      <p></p>
-                    </div>
-                    <div class="row"></div>
-                    <div class="col">
-                      <input type="number" id="defaultContactFormName" mdbInput class="form-control mb-4"
-                        placeholder="{{el.heading3}}">
-                    </div>
-                    <div class="row">
-                      <div class="col-2">
-                        Budget
-                      </div>
-                      <div class="col-4">
-                        <input type="number" id="defaultContactFormName" mdbInput class="form-control mb-4"
-                          placeholder="{{el.heading4}}">
-                      </div>
-                      <div class="col-1">Qui ?
-                      </div>
-                      <div class="col-4">
-                        <input type="text" id="defaultContactFormName" mdbInput class="form-control mb-4"
-                          placeholder="{{el.heading5}}">
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-2">
-                        Délai
-                      </div>
-                      <div class="col-4">
-                        <input type="date" id="defaultContactFormName" mdbInput class="form-control mb-4"
-                          placeholder="{{el.heading6}}">
-                      </div>
-                      <div class="col-2">Fait ?
-                      </div>
-                      <div class="col-1">
-                        <!-- Default checked -->
-                        <mdb-checkbox [checked]="false" [default]="true"></mdb-checkbox>
-                      </div>
-                      <div class="col-3"></div>
+                    <div class="modal-footer">
+                      <!-- Pagination -->
+                      <button type="button" mdbBtn color="green" class="waves-light" aria-label="Effacer"
+                        mdbWavesEffect (click)= "pasModifAction.reset(''); pasModifBudget.reset(''); pasModifQui.reset('');
+                        pasModiFait.reset(''); pasModifDelai1.reset('')">Effacer</button>
+                      <button *ngIf="(pasModiFait.value != null) && (pasModifAction.value != null) && (pasModifBudget.value != null)
+                      && (pasModifQui.value != null) && (pasModiFait.value != null) && (pasModifDelai1.value != null) && !pasModifAction.pristine &&
+                      !pasModifBudget.pristine && !pasModifQui.pristine && !pasModifDelai1.pristine"
+                      (click) = "modifierPas1(el.id,el.idDuer,pasModifAction.value, pasModifBudget.value, pasModifQui.value, pasModifDelai1.value, pasModiFait.value); basicModalpas.hide()" type="button" mdbBtn color="orange" class="waves-light" aria-label="Modifier"
+                        mdbWavesEffect>Modifier</button>
+                        <button type="button" mdbBtn color="red" class="waves-light" aria-label="Close"
+                        (click)="basicModal3.show()" mdbWavesEffect>Détruire</button>
+                      <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                        (click)="basicModalpas.hide()" mdbWavesEffect>Fermer</button>
                     </div>
                   </div>
+                </div>
+              </div>
+            </form>
+            <!-- Modal Confirmation suppression -->
+            <div mdbModal #basicModal3="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+              aria-labelledby="myBasicModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-sm modal-notify modal-danger" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal3.hide()">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title w-100" id="myModalLabel">Confirmation Suppression Plan d'Action Spécifique</h4>
+                  </div>
+                  <div class="modal-body">
+                    Vous êtes sur le point de détruire le Plan d'Action Spécifique d'id : {{el.id}}
+                  </div>
                   <div class="modal-footer">
-                    <!-- Pagination -->
-                    <button type="submit" mdbBtn color="green" class="waves-light" aria-label="Close"
-                      mdbWavesEffect>Effacer</button>
-                    <button type="submit" mdbBtn color="orange" class="waves-light" aria-label="Close"
-                      mdbWavesEffect>Modifier</button>
-                    <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-                      (click)="basicModal1.hide()" mdbWavesEffect>Fermer</button>
+                    <button type="button" mdbBtn color="primary" class="relative waves-light" aria-label="Close"
+                      (click)="detruirePas1(el.id, el.idDuer); basicModal3.hide()" mdbWavesEffect>Confirmer</button>
+                    <button type="button" mdbBtn color="secondary" class="relative waves-light" mdbWavesEffect
+                      (click)="basicModal3.hide()">Fermer</button>
                   </div>
                 </div>
               </div>
             </div>
-          </form>
+            <!-- Fin Modal Confirmation suppression -->
+          </td>
           <!------------------------------------------------------------->
         </tr>
       </tbody>
