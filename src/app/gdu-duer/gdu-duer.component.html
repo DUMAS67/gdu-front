@@ -31,7 +31,7 @@
 
     <div class="col-2">
       <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-        (click)="rafraichirSelection()">Rafraichir</button>
+        (click)="rafraichirSelection(); ut.reset(''); lieu.reset(''); crit.reset('')">Rafraichir</button>
     </div>
     <div class="col-2">
       <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
@@ -103,8 +103,9 @@
             {{multi(el.gravite_Mo,el.frequence_Mo)}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
             {{el.prevMiseEnOeuvre}}</td>
+
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><button
-              *ngIf="afficherModif()" mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
+              *ngIf="afficherModif() && (el.pas == null)" mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
               class="m-0 relative waves-light" (click)="basicModal.show()">Définir</button>
 
             <!-- Partie modale PAS -->
@@ -155,7 +156,7 @@
                           <input type="text" ngModel id="pasPrev" name="pasPrev" #pasPrev="ngModel" mdbInput
                             class="form-control mb-4" placeholder="">
                         </div>
-                      </div> <!-- debut bug-->
+                      </div>
 
                       <div class="row">
                         <div class="col-2">
@@ -173,7 +174,7 @@
                             class="form-control mb-4" placeholder="">
                         </div>
                       </div>
-                      <!--fin bug-->
+
                       <div class="row">
                         <div class="col-2">
                           Délai :

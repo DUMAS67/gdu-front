@@ -82,24 +82,24 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
 
 
     this.listeLieu$.subscribe((param: LieuVm[]) => {
-      this.listeLieu = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+      this.listeLieu = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
     }
     );
     this.listeUt$.subscribe((param: UtVm[]) => {
-      this.listeUt = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+      this.listeUt = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
     }
     );
 
     this.listeGravite$.subscribe((param: GraviteVm[]) => {
-      this.listeGravite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur));
+      this.listeGravite = param.sort((a, b) => (a.valeur - b.valeur));
     }
     );
     this.listeFrequence$.subscribe((param: FrequenceVm[]) => {
-      this.listeFrequence = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur));
+      this.listeFrequence = param.sort((a, b) => (a.valeur - b.valeur));
     }
     );
     this.listeCriticite$.subscribe((param: number[]) => {
-      this.listeCriticite = param.filter(a => a).sort((a, b) => (a - b));
+      this.listeCriticite = param.sort((a, b) => (a - b));
     }
     );
   }
@@ -155,7 +155,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
 
     this.listeDuerFrontParCriticite$ = this.dataService.afficherListeDuerFrontParCriticite(crit);
     this.listeDuerFrontParCriticite$.subscribe((param: DuerFront[]) => {
-      this.listeDuerFrontParCriticite = param.map(a => a).sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
+      this.listeDuerFrontParCriticite = param.sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
       this.mdbTable.setDataSource(this.listeDuerFrontParCriticite);
       this.elements = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
@@ -169,7 +169,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
 
     this.listeDuerFrontParUt$ = this.dataService.afficherListeDuerFrontParUt(ut);
     this.listeDuerFrontParUt$.subscribe((param: DuerFront[]) => {
-      this.listeDuerFrontParUt = param.map(a => a).sort((a, b) => (a.lieu.charCodeAt(0) - b.lieu.charCodeAt(0)));
+      this.listeDuerFrontParUt = param.sort((a, b) => (a.lieu.charCodeAt(0) - b.lieu.charCodeAt(0)));
       this.mdbTable.setDataSource(this.listeDuerFrontParUt);
       console.log(this.listeDuerFrontParUt[0].id);
       this.elements = this.mdbTable.getDataSource();
@@ -185,7 +185,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
 
     this.listeDuerFrontParLieu$ = this.dataService.afficherListeDuerFrontParLieu(lieu);
     this.listeDuerFrontParLieu$.subscribe((param: DuerFront[]) => {
-      this.listeDuerFrontParLieu = param.map(a => a).sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
+      this.listeDuerFrontParLieu = param.sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
       this.mdbTable.setDataSource(this.listeDuerFrontParLieu);
       console.log(this.listeDuerFrontParLieu[0].id);
       this.elements = this.mdbTable.getDataSource();
@@ -257,7 +257,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
             action: string,
             budget: number,
             qui: string,
-            delai: Date,
+            delai: string,
             ) {
 
     console.log('idDuer : ' + idDuer);
@@ -270,7 +270,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     this.dataService.creerPas(new PasVm(null, idDuer,
       action,
       budget,
-      qui, delai, false));
+      qui, new Date(delai), false));
 
   }
 
