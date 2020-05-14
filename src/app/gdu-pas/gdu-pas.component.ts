@@ -47,7 +47,7 @@ export class GduPasComponent implements OnInit, AfterViewInit {
 
 
   constructor(private dataService: DataService, private _router: Router,
-    private cdRef: ChangeDetectorRef, private _cookieService: CookieService) { }
+              private cdRef: ChangeDetectorRef, private _cookieService: CookieService) { }
 
   listeRisques$ = this.dataService.afficherListeRisqueduPas();
   listeRisques: RisquesVm[];
@@ -111,12 +111,12 @@ export class GduPasComponent implements OnInit, AfterViewInit {
   }*/
 
   modifierPas1(id: number,
-    idDuer: number,
-    action: string,
-    budget: number,
-    qui: string,
-    delai: string,
-    etat: boolean) {
+               idDuer: number,
+               action: string,
+               budget: number,
+               qui: string,
+               delai: string,
+               etat: boolean) {
     this.dataService.modifierPas(new PasVm(id, idDuer, action, budget, qui, new Date(delai), etat));
   }
 
