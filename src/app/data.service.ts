@@ -16,6 +16,7 @@ import { Duer1 } from './domains/Duer1';
 import { DuerFront } from './domains/DuerFront';
 import { tap } from 'rxjs/operators';
 import { Ut } from './environments/Ut';
+import { PasFront } from './domains/PasFront';
 
 @Injectable({
   providedIn: 'root'
@@ -56,14 +57,21 @@ export class DataService {
   listeDuerFrontParLieu: Observable<DuerFront[]>;
 
   subjectActUt: BehaviorSubject<UtVm[]>;
-  listePas: Observable<PasVm[]>;
+  listePas: Observable<PasFront[]>;
+  listeCriticiteMo: Observable<number[]>;
+  listePasFrontParDanger: Observable<PasFront[]>;
+  listeDanger: Observable<DangersVm[]>;
+  listeRisque: Observable<RisquesVm[]>;
+  listeQui: Observable<string[]>;
+  listePasFrontParRisque: Observable<PasFront[]>;
+  listePasFrontParQui: Observable<PasFront[]>;
 
   constructor(private http: HttpClient) {
 
     let tabUtm: UtVm[] = [];
     this.subjectActUt = new BehaviorSubject(tabUtm);
     console.log(this.subjectActUt);
-   }
+  }
 
   listeDuerFrontParCrititiciteMo: Observable<DuerFront[]>;
 
@@ -86,13 +94,13 @@ export class DataService {
 
   afficherListeUt(): Observable<UtVm[]> {
     this.listeUt = this.http.get<UtVm[]>(this.url_gdu + 'uts').
-    pipe(
+      pipe(
         tap(utS => {
-  this.subjectActUt.next(utS);
-  this.subjectActUt.forEach(sub => console.log(sub));
+          this.subjectActUt.next(utS);
+          this.subjectActUt.forEach(sub => console.log(sub));
 
-})
-    );
+        })
+      );
 
     return this.listeUt;
   }
@@ -147,28 +155,31 @@ export class DataService {
 
   afficherListeDuerFrontParCriticite(crit: number): Observable<DuerFront[]> {
     console.log(crit);
-    this.listeDuerFrontParCrititicite = this.http.get<DuerFront[]> (this.url_gdu + 'duercc?crit=' + crit);
+    this.listeDuerFrontParCrititicite = this.http.get<DuerFront[]>(this.url_gdu + 'duercc?crit=' + crit);
     return this.listeDuerFrontParCrititicite;
   }
   afficherListeDuerFrontParCriticiteMo(crit: number): Observable<DuerFront[]> {
     console.log(crit);
-    this.listeDuerFrontParCrititiciteMo = this.http.get<DuerFront[]> (this.url_gdu + 'duercmo?crit=' + crit);
+    this.listeDuerFrontParCrititiciteMo = this.http.get<DuerFront[]>(this.url_gdu + 'duercmo?crit=' + crit);
     return this.listeDuerFrontParCrititiciteMo;
   }
 
 
   afficherListeDuerFrontParUt(ut: number): Observable<DuerFront[]> {
     console.log(ut);
-    this.listeDuerFrontParUt = this.http.get<DuerFront[]> (this.url_gdu + 'duerut?ut=' + ut);
+    this.listeDuerFrontParUt = this.http.get<DuerFront[]>(this.url_gdu + 'duerut?ut=' + ut);
     return this.listeDuerFrontParUt;
   }
 
   afficherListeDuerFrontParLieu(lieu: number): Observable<DuerFront[]> {
     console.log(lieu);
-    this.listeDuerFrontParLieu = this.http.get<DuerFront[]> (this.url_gdu + 'duerlieu?lieu=' + lieu);
+    this.listeDuerFrontParLieu = this.http.get<DuerFront[]>(this.url_gdu + 'duerlieu?lieu=' + lieu);
     console.log(this.listeDuerFrontParLieu);
     return this.listeDuerFrontParLieu;
   }
+
+
+
 
   /* trouve la liste des criticité dans les préventions existantes*/
   afficherListeCriticite(): Observable<number[]> {
@@ -177,17 +188,65 @@ export class DataService {
     return this.listeCriticite;
   }
 
+  /* affiche la liste des Pas avec clef du Duer*/
+  afficherListePas(): Observable<PasFront[]> {
 
-  afficherListePas(): Observable<PasVm[]> {
-
-    this.listePas = this.http.get < PasVm[] > (this.url_gdu + 'pass');
+    this.listePas = this.http.get<PasFront[]>(this.url_gdu + 'passf');
     return this.listePas;
+  }
+
+  /* affiche la liste des Dangers contenu dans le pas*/
+  afficherListeDangerduPas(): Observable<DangersVm[]> {
+    this.listeDanger = this.http.get<DangersVm[]>(this.url_gdu + 'pasldg');
+
+    return this.listeDanger;
+
+  }
+  /* affiche la liste des Risques contenu dans le pas*/
+  afficherListeRisqueduPas(): Observable<RisquesVm[]> {
+    this.listeRisque = this.http.get<RisquesVm[]>(this.url_gdu + 'paslrq');
+
+    return this.listeRisque;
+
+  }
+
+  /* affiche la liste des Qui contenu dans le pas*/
+  afficherListeQuiduPas(): Observable<string[]> {
+    this.listeQui = this.http.get<string[]>(this.url_gdu + 'paslqui');
+
+    return this.listeQui;
+
+  }
+
+  /*  afficher la liste des pas par Danger */
+  afficherListePasFrontParDanger(danger: number): Observable<PasFront[]> {
+    console.log(danger);
+    this.listePasFrontParDanger = this.http.get<PasFront[]>(this.url_gdu + 'passfdg?id=' + danger);
+    console.log(this.listePasFrontParDanger);
+    return this.listePasFrontParDanger;
+  }
+
+  /*  afficher la liste des pas par Risque */
+  afficherListePasFrontParRisque(rq: number): Observable<PasFront[]> {
+    console.log(rq);
+    this.listePasFrontParRisque = this.http.get<PasFront[]>(this.url_gdu + 'passfrq?id=' + rq);
+    console.log(this.listePasFrontParRisque);
+    return this.listePasFrontParRisque;
+  }
+
+  /*  afficher la liste des pas par Qui?*/
+  afficherListePasFrontParQui(qui: string): Observable<PasFront[]> {
+    console.log(qui);
+    this.listePasFrontParQui = this.http.get<PasFront[]>(this.url_gdu + 'passfqui?nom=' + qui);
+    console.log(this.listePasFrontParQui);
+    return this.listePasFrontParQui;
+  }
 
   /* trouve la liste des criticité dans les préventions à Maître en Oeuvre*/
   afficherListeCriticiteMo(): Observable<number[]> {
-    this.listeCriticite = this.http.get<number[]>(this.url_gdu + 'duercmos');
+    this.listeCriticiteMo = this.http.get<number[]>(this.url_gdu + 'duercmos');
 
-    return this.listeCriticite;
+    return this.listeCriticiteMo;
 
   }
 
@@ -195,7 +254,7 @@ export class DataService {
   creerUt(newUt: string): string {
     const urlPostUt = this.url_gdu + 'ut?nom=' + newUt;
 
-    this.http.post(urlPostUt, {responseType: 'text'}).
+    this.http.post(urlPostUt, { responseType: 'text' }).
       subscribe(
         (data: any) => {
           console.log(data);
@@ -386,13 +445,14 @@ export class DataService {
   trouverRisque(id: number): Observable<RisquesVm> {
     const urlGetRis = this.url_gdu + 'risque?id=' + id;
     if (id != null) {
-      this.risque$ = this.http.get<RisquesVm>(urlGetRis); }
+      this.risque$ = this.http.get<RisquesVm>(urlGetRis);
+    }
     return this.risque$;
   }
   trouverGravite(id: number): Observable<GraviteVm> {
     const urlGetGrav = this.url_gdu + 'gravite?id=' + id;
     if (id != null) {
-    this.gravite$ = this.http.get<GraviteVm>(urlGetGrav);
+      this.gravite$ = this.http.get<GraviteVm>(urlGetGrav);
     }
     return this.gravite$;
   }
@@ -400,15 +460,15 @@ export class DataService {
   trouverFrequence(id: number): Observable<FrequenceVm> {
     const urlGetFreq = this.url_gdu + 'frequence?id=' + id;
     if (id != null) {
-    this.frequence$ = this.http.get<FrequenceVm>(urlGetFreq);
+      this.frequence$ = this.http.get<FrequenceVm>(urlGetFreq);
     }
     return this.frequence$;
   }
 
-creerPas(newPas: PasVm){
-const urlPostPas = this.url_gdu + 'pasc';
+  creerPas(newPas: PasVm) {
+    const urlPostPas = this.url_gdu + 'pasc';
 
-this.http.post(urlPostPas, newPas).
+    this.http.post(urlPostPas, newPas).
       subscribe(
         (data: any) => {
           console.log(data.id);
@@ -418,13 +478,29 @@ this.http.post(urlPostPas, newPas).
           console.log('error', error);
           return error;
         });
-return '';
+    return '';
   }
+  modifierPas(newPas: PasVm) {
+    const urlPostPas = this.url_gdu + 'pascm';
+
+    this.http.post(urlPostPas, newPas).
+      subscribe(
+        (data: any) => {
+          console.log(data.id);
+          return data;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        });
+    return '';
+  }
+
 
   trouverPas(id: number): Observable<PasVm> {
     const urlGetPas = this.url_gdu + 'pas?id=' + id;
     if (id != null) {
-    this.pas$ = this.http.get<PasVm>(urlGetPas);
+      this.pas$ = this.http.get<PasVm>(urlGetPas);
     }
     return this.pas$;
   }
@@ -449,16 +525,17 @@ return '';
     const urlPostDuer = this.url_gdu + 'duer';
 
     if (duerCrea != null) {
-    this.http.post(urlPostDuer, duerCrea).
-      subscribe(
-        (data: any) => {
-          console.log(data.id);
-          return data;
-        },
-        (error: HttpErrorResponse) => {
-          console.log('error', error);
-          return error;
-        }); }
+      this.http.post(urlPostDuer, duerCrea).
+        subscribe(
+          (data: any) => {
+            console.log(data.id);
+            return data;
+          },
+          (error: HttpErrorResponse) => {
+            console.log('error', error);
+            return error;
+          });
+    }
     return '';
   }
 
@@ -484,19 +561,40 @@ return '';
 
   detruireEvrp(id: number): string {
 
-const urlGetDEvrp = this.url_gdu + 'duerd?id=' + id;
-console.log(urlGetDEvrp);
-if (id != null) {
-     this.http.post(urlGetDEvrp, { }).subscribe(
-      (data: any) => {
-        console.log(data);
-        return data;
-      },
-      (error: HttpErrorResponse) => {
-        console.log('error', error);
-        return error;
-      });
-     return '';
+    const urlGetDEvrp = this.url_gdu + 'duerd?id=' + id;
+    console.log(urlGetDEvrp);
+    if (id != null) {
+      this.http.post(urlGetDEvrp, {}).subscribe(
+        (data: any) => {
+          console.log(data);
+          return data;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        });
+      return '';
     }
   }
+
+  detruirePas( id: number, iduer: number): string {
+
+    const urlGetDetPas = this.url_gdu + 'pasdet?id=' + id + '&iduer=' + iduer;
+
+    console.log(urlGetDetPas);
+    if ((id != null) && (iduer != null)) {
+      this.http.post(urlGetDetPas, {}).subscribe(
+        (data: any) => {
+          console.log(data);
+          return data;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        });
+      return '';
+    }
+  }
+
 }
+
