@@ -559,6 +559,25 @@ export class DataService {
     return '';
   }
 
+  modifDuerPrev(id: number, graviteMo, frequenceMo, prevMo): string {
+
+    const urlPostDuerM = this.url_gdu + 'duermp?id=' + id + '&grMo=' + graviteMo +
+      '&frMo=' + frequenceMo + '&prevMo=' + prevMo;
+
+    this.http.post(urlPostDuerM, {}).
+      subscribe(
+        (data: any) => {
+          console.log(data);
+          return data;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        });
+    return '';
+  }
+
+
   detruireEvrp(id: number): string {
 
     const urlGetDEvrp = this.url_gdu + 'duerd?id=' + id;
