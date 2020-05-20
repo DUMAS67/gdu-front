@@ -47,11 +47,11 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
   date: Date;
   page: number;
   nbPage: number;
-  ok: boolean;
+
 
 
   constructor(private dataService: DataService, private _router: Router, private _cookieService: CookieService,
-    private cdRef: ChangeDetectorRef, private _authSrv: AuthService) { }
+              private cdRef: ChangeDetectorRef, private _authSrv: AuthService) { }
 
   collaborateurConnecte: Collaborateur;
   listeLieu$ = this.dataService.afficherListeLieuDansDuer();
@@ -77,7 +77,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
 
       this.elements = param.map(c => new DuerFront(
         c.id, c.ut, c.lieu, c.activite, c.danger, c.risque, c.gravite_Ex,
-        c.frequence_Ex, c.prevExistante, c.gravite_Mo, c.frequence_Mo, c.prevMiseEnOeuvre, c.pas))
+        c.frequence_Ex, c.prevExistante, c.gravite_Mo, c.frequence_Mo, c.prevMiseEnOeuvre, c.k))
         .sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
       console.log(this.elements.length);
       this.mdbTable.setDataSource(this.elements);
@@ -122,12 +122,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     this.cdRef.detectChanges();
 
 
-    /* console.log(this.mdbTablePagination.maxVisibleItems);
-     console.log(this.mdbTablePagination.firstItemIndex);
-     console.log(this.mdbTablePagination.lastItemIndex);
-     console.log(this.cdRef.detectChanges());*/
-
-  }
+     }
 
   afficherModif(): boolean {
 
@@ -144,7 +139,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
 
       this.elements = param.map(c => new DuerFront(
         c.id, c.ut, c.lieu, c.activite, c.danger, c.risque, c.gravite_Ex,
-        c.frequence_Ex, c.prevExistante, c.gravite_Mo, c.frequence_Mo, c.prevMiseEnOeuvre, c.pas))
+        c.frequence_Ex, c.prevExistante, c.gravite_Mo, c.frequence_Mo, c.prevMiseEnOeuvre, c.k))
         .sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
 
       console.log(this.elements.length);
@@ -221,7 +216,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
         return criticite;
       })
         // crée un champ supplémentaire et temporaire de l'objet Duer de paramètre
-        // but : ne pas refaire les calculs de criticité à cahque fois. Ce champ
+        // but : ne k refaire les calculs de criticité à cahque fois. Ce champ
         // reste sur l'objet seulement pour la fonction Pareto (mutation temporaire de l'objet)
         .reduce((a, b) => a + b);
       sumCrit = 0.8 * sumCrit;
@@ -267,15 +262,15 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     this.dataService.detruireEvrp(id);
   }
 
-  impression() {
+  impression(entete: string) {
     // tslint:disable-next-line: no-unused-expression
-    this.ok = false;
+
     this.page = 1;
     this.nbPage = (this.elements.length / 17);
     this.date = new Date();
     const doc = new jsPDF('landscape');
     doc.setFontSize(16);
-    doc.text('Duer du "Le Parchemin" ' + this.entetePdf, 10, 10);
+    doc.text(entete + this.entetePdf, 10, 10);
     doc.text(this.date.toLocaleString(), 220, 10);
     doc.setFontSize(6);
 
@@ -306,7 +301,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
         doc.setFontSize(6);
         doc.addPage();
         doc.setFontSize(16);
-        doc.text('Duer du "Le Parchemin" ' + this.entetePdf, 10, 10);
+        doc.text(entete + this.entetePdf, 10, 10);
         doc.text(this.date.toLocaleString(), 220, 10);
         doc.setFontSize(6);
         doc.text(this.headElementsPDF[0], 10, 20);
@@ -325,96 +320,49 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
         doc.text(this.headElementsPDF[13], 231, 20);
       }
       doc.text('_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________', 10, 25 + (10 * (k % 17)));
-      this.imprimerLigne(i, doc, k);
+      doc.text(this.elements[i].id.toString(), 10, 30 + (10 * (k % 17)));
+      doc.text(this.elements[i].ut, 15, 30 + (10 * (k % 17)));
+      doc.text(this.elements[i].lieu.substring(0, 22), 35, 30 + (10 * (k % 17)));
+      doc.text(this.elements[i].activite, 60, 30 + (10 * (k % 17)));
+      doc.text(this.elements[i].danger, 85, 30 + (10 * (k % 17)));
+      doc.text(this.elements[i].risque.substring(0, 29), 110, 30 + (10 * (k % 17)));
+      doc.text(this.elements[i].gravite_Ex.toString(), 140, 30 + (10 * (k % 17)));
+      doc.text(this.elements[i].frequence_Ex.toString(), 145, 30 + (10 * (k % 17)));
+      doc.text((this.elements[i].frequence_Ex * this.elements[i].gravite_Ex).toString(), 150, 30 + (10 * (k % 17)));
+
+      doc.text(this.elements[i].gravite_Mo.toString(), 216, 30 + (10 * (k % 17)));
+      doc.text(this.elements[i].frequence_Mo.toString(), 221, 30 + (10 * (k % 17)));
+      doc.text((this.elements[i].frequence_Mo * this.elements[i].gravite_Mo).toString(), 226, 30 + (10 * (k % 17)));
+      console.log('Id : ' + this.elements[i].id.toString() + '  *  ' + this.elements[i].prevExistante.length);
+      console.log('Round  ' + k + Math.round((this.elements[i].prevExistante.length / 46) + 0.5));
+
+      if ((this.elements[i].prevExistante.length < 46)
+      && (this.elements[i].prevMiseEnOeuvre.length < 46)) {
+      doc.text(this.elements[i].prevExistante.substring(0, 46), 155, 30 + (10 * (k % 17)));
+      doc.text(this.elements[i].prevMiseEnOeuvre.substring(0, 46), 231, 30 + (10 * (k % 17)));
+    }
+
+      if ((this.elements[i].prevExistante.length > 46)
+      || (this.elements[i].prevMiseEnOeuvre.length > 46)) {
+      doc.text(this.elements[i].prevExistante.substring(0, 46), 155, 30 + (10 * (k % 17)));
+      doc.text(this.elements[i].prevMiseEnOeuvre.substring(0, 46), 231, 30 + (10 * (k % 17)));
+
+      doc.text(this.elements[i].prevExistante.substring(46, 92), 155, 30 + (10 * (k % 17)) + 2);
+      doc.text(this.elements[i].prevMiseEnOeuvre.substring(46, 92), 231, 30 + (10 * (k % 17)) + 2);
+
+      if ((this.elements[i].prevExistante.length > 92) || (this.elements[i].prevMiseEnOeuvre.length > 92)) {
+        doc.text(this.elements[i].prevExistante.substring(92, 146), 155, 30 + (10 * (k % 17)) + 4);
+        doc.text(this.elements[i].prevMiseEnOeuvre.substring(92, 146), 231, 30 + (10 * (k % 17)) + 4);
+      }
+    }
 
       doc.setFontSize(8);
       doc.text('Page :' + this.page + '/' + Math.round(this.nbPage + 0.5), 240, 200);
       doc.setFontSize(6);
-      doc.save('duer.pdf');
-      this.entetePdf = '';
-    }
-  }
-
-  imprimerLigne(index: number, doc1: jsPDF, pas: number) {
-    doc1.text(this.elements[index].id.toString(), 10, 30 + (10 * (pas % 17)));
-    doc1.text(this.elements[index].ut, 15, 30 + (10 * (pas % 17)));
-    doc1.text(this.elements[index].lieu.substring(0, 22), 35, 30 + (10 * (pas % 17)));
-    doc1.text(this.elements[index].activite, 60, 30 + (10 * (pas % 17)));
-    doc1.text(this.elements[index].danger, 85, 30 + (10 * (pas % 17)));
-    doc1.text(this.elements[index].risque.substring(0, 29), 110, 30 + (10 * (pas % 17)));
-    doc1.text(this.elements[index].gravite_Ex.toString(), 140, 30 + (10 * (pas % 17)));
-    doc1.text(this.elements[index].frequence_Ex.toString(), 145, 30 + (10 * (pas % 17)));
-    doc1.text((this.elements[index].frequence_Ex * this.elements[index].gravite_Ex).toString(), 150, 30 + (10 * (pas % 17)));
-
-    doc1.text(this.elements[index].gravite_Mo.toString(), 216, 30 + (10 * (pas % 17)));
-    doc1.text(this.elements[index].frequence_Mo.toString(), 221, 30 + (10 * (pas % 17)));
-    doc1.text((this.elements[index].frequence_Mo * this.elements[index].gravite_Mo).toString(), 226, 30 + (10 * (pas % 17)));
-    console.log('Id : ' + this.elements[index].id.toString() + '  *  ' + this.elements[index].prevExistante.length);
-    console.log('Round  ' + pas + Math.round((this.elements[index].prevExistante.length / 46) + 0.5));
-
-    if ((this.elements[index].prevExistante.length < 46)
-      && (this.elements[index].prevMiseEnOeuvre.length < 46)) {
-      doc1.text(this.elements[index].prevExistante.substring(0, 46), 155, 30 + (10 * (pas % 17)));
-      doc1.text(this.elements[index].prevMiseEnOeuvre.substring(0, 46), 231, 30 + (10 * (pas % 17)));
-    }
-
-    if ((this.elements[index].prevExistante.length > 46)
-      || (this.elements[index].prevMiseEnOeuvre.length > 46)) {
-      doc1.text(this.elements[index].prevExistante.substring(0, 46), 155, 30 + (10 * (pas % 17)));
-      doc1.text(this.elements[index].prevMiseEnOeuvre.substring(0, 46), 231, 30 + (10 * (pas % 17)));
-
-      doc1.text(this.elements[index].prevExistante.substring(46, 92), 155, 30 + (10 * (pas % 17)) + 2);
-      doc1.text(this.elements[index].prevMiseEnOeuvre.substring(46, 92), 231, 30 + (10 * (pas % 17)) + 2);
-
-      if ((this.elements[index].prevExistante.length > 92) || (this.elements[index].prevMiseEnOeuvre.length > 92)) {
-        doc1.text(this.elements[index].prevExistante.substring(92, 146), 155, 30 + (10 * (pas % 17)) + 4);
-        doc1.text(this.elements[index].prevMiseEnOeuvre.substring(92, 146), 231, 30 + (10 * (pas % 17)) + 4);
-      }
-    }
-
-  }
-  /*let doc = new jsPDF();
-  c.id, c.ut, c.lieu, c.activite, c.danger, c.risque, c.gravite_Ex,
-      c.frequence_Ex, c.prevExistante, c.gravite_Mo, c.frequence_Mo, c.prevMiseEnOeuvre, c.pas
-  let specialElementHandlers = {
-
-    '#editor': function(element, renderer) {
-      return true;
-    }
-  }
-  let content = this.content.nativeElement;
-
-  doc.fromHTML(content.innerHTML, 15, 15, {
-    'width': 190,
-    'elementHandlers': specialElementHandlers
-  });
-
-  doc.save('duer.pdf');*/
-
-
-
-  /*let printContents;
-    let popupWin;
-    printContents = document.getElementById('tableEl');
-
-    window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
-    window.print();*/
-  /*let elment = document.getElementById('tableEl');
-
-  html2canvas(elment).then((canvas) => {
-    console.log(canvas);
-
-
-    let imgData = canvas.toDataURL('image/png');
-
-    let doc = new jsPDF();
-
-    doc.addImage(imgData(0, 0, 208, 500));
-
+     }
     doc.save('duer.pdf');
-
-   });*/
-
+    this.entetePdf = '';
+  }
 
 
   creerPas1(
