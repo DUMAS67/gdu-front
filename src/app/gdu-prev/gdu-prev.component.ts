@@ -12,6 +12,7 @@ import { DataService } from '../data.service';
 import { AuthService } from '../auth.service';
 import { DuerFront } from '../domains/DuerFront';
 import { PasVm } from '../domains/PasVm';
+import * as jsPDF from 'jspdf';
 
 
 @Component({
@@ -28,6 +29,8 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
   headElements1 = ['ID', 'UT', 'Lieu', 'Activité', 'Danger', 'Risque',
     'G', 'F', 'C', 'Prévention à mettre en place'];
   headElements2 = ['Plan Actions', 'Modification'];
+  headElementsPDF = ['ID', 'UT', 'Lieu', 'Activité', 'Danger', 'Risque',
+    'G', 'F', 'C', 'Prévention à Maître en Oeuvre'];
   collaborateurConnecte: Collaborateur;
   listeLieu$ = this.dataService.afficherListeLieuDansDuer();
   listeLieu: LieuVm[];
@@ -49,6 +52,10 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
   listeDuerFrontParCriticite: DuerFront[];
   listeDuerFrontParCriticiteMo: DuerFront[];
   criticite: number;
+  entetePdf = '';
+  date: Date;
+  page: number;
+  nbPage: number;
 
   constructor(private dataService: DataService, private _router: Router, private _cookieService: CookieService,
     private cdRef: ChangeDetectorRef, private _authSrv: AuthService) { }
@@ -157,6 +164,7 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
+    this.entetePdf = 'par Pareto';
     this.cdRef.detectChanges();
 
   }
@@ -172,6 +180,7 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
       this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
       this.mdbTablePagination.calculateFirstItemIndex();
       this.mdbTablePagination.calculateLastItemIndex();
+      this.entetePdf = 'par Unité de Travail : ' + this.listeDuerFrontParUt[0].ut;
       this.cdRef.detectChanges();
     });
   }
@@ -187,6 +196,7 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
       this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
       this.mdbTablePagination.calculateFirstItemIndex();
       this.mdbTablePagination.calculateLastItemIndex();
+      this.entetePdf = 'par Criticité : ' + crit;
       this.cdRef.detectChanges();
     });
   }
@@ -202,6 +212,7 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
       this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
       this.mdbTablePagination.calculateFirstItemIndex();
       this.mdbTablePagination.calculateLastItemIndex();
+      this.entetePdf = 'par Lieu : ' + this.listeDuerFrontParLieu[0].lieu;
       this.cdRef.detectChanges();
     });
   }
@@ -251,9 +262,87 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
   }
 
   detruireEvrp1(id: number) {
-    console.log('id a détrure : ' + id);
+    console.log('id a détruire : ' + id);
     this.dataService.detruireEvrp(id);
   }
+
+  impression(entete: string) {
+    // tslint:disable-next-line: no-unused-expression
+
+    this.page = 1;
+    this.nbPage = (this.elements1.length / 17);
+    this.date = new Date();
+    const doc = new jsPDF('landscape');
+    doc.setFontSize(16);
+    doc.text(entete + this.entetePdf, 10, 10);
+    doc.text(this.date.toLocaleString(), 220, 10);
+    doc.setFontSize(6);
+    this.imprimerLigneEntete(doc);
+    doc.text('_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________', 10, 25);
+
+    console.log(this.elements1.length);
+
+    for (let i = 0, k = 0; i < this.elements1.length; i++, k++) {
+
+      if ((k % 17 === 0) && (k !== 0)) {
+        doc.setFontSize(8);
+        doc.text('Page :' + this.page + '/' + Math.round(this.nbPage + 0.5), 240, 200);
+        this.page += 1;
+        doc.setFontSize(6);
+        doc.addPage();
+        doc.setFontSize(16);
+        doc.text(entete + this.entetePdf, 10, 10);
+        doc.text(this.date.toLocaleString(), 220, 10);
+        doc.setFontSize(6);
+        this.imprimerLigneEntete(doc);
+      }
+      doc.text('_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________', 10, 25 + (10 * (k % 17)));
+      this.imprimerLigne(i, doc, k);
+
+    }
+    doc.setFontSize(8);
+    doc.text('Page :' + this.page + '/' + Math.round(this.nbPage + 0.5), 240, 200);
+    doc.setFontSize(6);
+    doc.save('duer.pdf');
+    this.entetePdf = '';
+  }
+
+  imprimerLigne(index: number, doc1: jsPDF, pas: number) {
+    doc1.text(this.elements1[index].id.toString(), 10, 30 + (10 * (pas % 17)));
+    doc1.text(this.elements1[index].ut, 15, 30 + (10 * (pas % 17)));
+    doc1.text(this.elements1[index].lieu.substring(0, 22), 35, 30 + (10 * (pas % 17)));
+    doc1.text(this.elements1[index].activite, 60, 30 + (10 * (pas % 17)));
+    doc1.text(this.elements1[index].danger, 85, 30 + (10 * (pas % 17)));
+    doc1.text(this.elements1[index].risque.substring(0, 39), 110, 30 + (10 * (pas % 17)));
+    doc1.text((this.elements1[index].gravite_Mo).toString(), 150, 30 + (10 * (pas % 17)));
+
+    doc1.text(this.elements1[index].frequence_Mo.toString(), 155, 30 + (10 * (pas % 17)));
+    doc1.text((this.elements1[index].frequence_Mo * this.elements1[index].gravite_Mo).toString(), 160, 30 + (10 * (pas % 17)));
+    console.log('Id : ' + this.elements1[index].id.toString() + '  *  ' + this.elements1[index].prevExistante.length);
+    console.log('Round  ' + pas + Math.round((this.elements1[index].prevExistante.length / 46) + 0.5));
+
+    if (this.elements1[index].prevExistante.length < 100) {
+      doc1.text(this.elements1[index].prevMiseEnOeuvre.substring(0, 99), 165, 30 + (10 * (pas % 17)));
+    }
+
+    if (this.elements1[index].prevExistante.length > 100) {
+      doc1.text(this.elements1[index].prevMiseEnOeuvre.substring(0, 99), 165, 30 + (10 * (pas % 17)));
+      doc1.text(this.elements1[index].prevMiseEnOeuvre.substring(99, 199), 165, 30 + (10 * (pas % 17)) + 2);
+    }
+  }
+
+imprimerLigneEntete(doc2: jsPDF) {
+  doc2.text(this.headElementsPDF[0], 10, 20);
+  doc2.text(this.headElementsPDF[1], 15, 20);
+  doc2.text(this.headElementsPDF[2], 35, 20);
+  doc2.text(this.headElementsPDF[3], 60, 20);
+  doc2.text(this.headElementsPDF[4], 85, 20);
+  doc2.text(this.headElementsPDF[5], 110, 20);
+  doc2.text(this.headElementsPDF[6], 150, 20);
+  doc2.text(this.headElementsPDF[7], 155, 20);
+  doc2.text(this.headElementsPDF[8], 160, 20);
+  doc2.text(this.headElementsPDF[9], 165, 20);
+}
 }
 
 

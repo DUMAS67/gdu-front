@@ -236,6 +236,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
+    this.entetePdf = 'par Pareto :  ';
     this.cdRef.detectChanges();
 
   }
@@ -258,7 +259,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
   }
 
   detruireEvrp1(id: number) {
-    console.log('id a détrure : ' + id);
+    console.log('id a détruire : ' + id);
     this.dataService.detruireEvrp(id);
   }
 
