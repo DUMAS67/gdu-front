@@ -1,6 +1,6 @@
 
-import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstrap-md';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { MdbTableDirective, MdbTablePaginationComponent, TableModule } from 'angular-bootstrap-md';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { CookieService } from 'ngx-cookie-service';
@@ -13,6 +13,8 @@ import { GraviteVm } from '../domains/Gravite';
 import { FrequenceVm } from '../domains/FrequenceVm';
 import { DuerFront } from '../domains/DuerFront';
 import { PasVm } from '../domains/PasVm';
+import html2canvas from 'html2canvas';
+import * as jsPDF from 'jspdf';
 
 
 @Component({
@@ -24,10 +26,14 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
 
+  content: ElementRef;
+
   elements: any = [];
   previous: any = [];
   headElements = ['ID', 'UT', 'Lieu', 'Activité', 'Danger', 'Risque',
     'G', 'F', 'C', 'Prévention', 'G', 'F', 'C', 'Prévention'];
+  headElementsPDF = ['ID', 'UT', 'Lieu', 'Activité', 'Danger', 'Risque',
+    'G', 'F', 'C', 'Prévention Existante', 'G', 'F', 'C', 'Prévention à Maître en Oeuvre'];
   headElements1 = ['Plan Actions', 'Modification'];
   collaborateurConnexion: any;
   listeDuerFrontParCriticite$: Observable<DuerFront[]>;
@@ -37,10 +43,15 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
   listeDuerFrontParLieu$: Observable<DuerFront[]>;
   listeDuerFrontParLieu: DuerFront[];
   criticite: number;
+  entetePdf = '';
+  date: Date;
+  page: number;
+  nbPage: number;
+
 
 
   constructor(private dataService: DataService, private _router: Router, private _cookieService: CookieService,
-              private cdRef: ChangeDetectorRef, private _authSrv: AuthService) { }
+    private cdRef: ChangeDetectorRef, private _authSrv: AuthService) { }
 
   collaborateurConnecte: Collaborateur;
   listeLieu$ = this.dataService.afficherListeLieuDansDuer();
@@ -111,11 +122,6 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     this.cdRef.detectChanges();
 
 
-    /* console.log(this.mdbTablePagination.maxVisibleItems);
-     console.log(this.mdbTablePagination.firstItemIndex);
-     console.log(this.mdbTablePagination.lastItemIndex);
-     console.log(this.cdRef.detectChanges());*/
-
   }
 
   afficherModif(): boolean {
@@ -163,6 +169,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
       this.mdbTablePagination.calculateFirstItemIndex();
       this.mdbTablePagination.calculateLastItemIndex();
       this.cdRef.detectChanges();
+      this.entetePdf = 'par Criticité :  ' + crit;
     });
   }
   afficheListeDuerParUt(ut: number) {
@@ -178,6 +185,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
       this.mdbTablePagination.calculateFirstItemIndex();
       this.mdbTablePagination.calculateLastItemIndex();
       this.cdRef.detectChanges();
+      this.entetePdf = 'par Unité de Travail :  ' + this.listeDuerFrontParUt[0].ut;
     });
   }
 
@@ -194,12 +202,14 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
       this.mdbTablePagination.calculateFirstItemIndex();
       this.mdbTablePagination.calculateLastItemIndex();
       this.cdRef.detectChanges();
+      this.entetePdf = 'par Lieu :  ' + this.listeDuerFrontParLieu[0].lieu;
     });
   }
   affichePareto() {
 
 
     this.listeDuerFront$.subscribe((param: DuerFront[]) => {
+      this.entetePdf = 'par Pareto';
       let sumCrit: number = param.map(a => {
         const criticite = a.gravite_Ex * a.frequence_Ex;
         a['criticite_Ex'] = criticite;
@@ -226,6 +236,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
+    this.entetePdf = 'par Pareto :  ';
     this.cdRef.detectChanges();
 
   }
@@ -248,17 +259,114 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
   }
 
   detruireEvrp1(id: number) {
-    console.log('id a détrure : ' + id);
+    console.log('id a détruire : ' + id);
     this.dataService.detruireEvrp(id);
   }
 
+  impression(entete: string) {
+    // tslint:disable-next-line: no-unused-expression
+
+    this.page = 1;
+    this.nbPage = (this.elements.length / 17);
+    this.date = new Date();
+    const doc = new jsPDF('landscape');
+    doc.setFontSize(16);
+    doc.text(entete + this.entetePdf, 10, 10);
+    doc.text(this.date.toLocaleString(), 220, 10);
+    doc.setFontSize(6);
+    this.imprimerLigneEntete(doc);
+    doc.text('_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________', 10, 25);
+
+    console.log(this.elements.length);
+
+    for (let i = 0, k = 0; i < this.elements.length; i++, k++) {
+
+      if ((k % 17 === 0) && (k !== 0)) {
+        doc.setFontSize(8);
+        doc.text('Page :' + this.page + '/' + Math.round(this.nbPage + 0.5), 240, 200);
+        this.page += 1;
+        doc.setFontSize(6);
+        doc.addPage();
+        doc.setFontSize(16);
+        doc.text(entete + this.entetePdf, 10, 10);
+        doc.text(this.date.toLocaleString(), 220, 10);
+        doc.setFontSize(6);
+        this.imprimerLigneEntete(doc);
+      }
+      doc.text('_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________', 10, 25 + (10 * (k % 17)));
+      this.imprimerLigne(i, doc, k);
+
+    }
+    doc.setFontSize(8);
+    doc.text('Page :' + this.page + '/' + Math.round(this.nbPage + 0.5), 240, 200);
+    doc.setFontSize(6);
+    doc.save('duer.pdf');
+    this.entetePdf = '';
+  }
+
+  imprimerLigne(index: number, doc1: jsPDF, pas: number) {
+    doc1.text(this.elements[index].id.toString(), 10, 30 + (10 * (pas % 17)));
+    doc1.text(this.elements[index].ut, 15, 30 + (10 * (pas % 17)));
+    doc1.text(this.elements[index].lieu.substring(0, 22), 35, 30 + (10 * (pas % 17)));
+    doc1.text(this.elements[index].activite, 60, 30 + (10 * (pas % 17)));
+    doc1.text(this.elements[index].danger, 85, 30 + (10 * (pas % 17)));
+    doc1.text(this.elements[index].risque.substring(0, 29), 110, 30 + (10 * (pas % 17)));
+    doc1.text(this.elements[index].gravite_Ex.toString(), 140, 30 + (10 * (pas % 17)));
+    doc1.text(this.elements[index].frequence_Ex.toString(), 145, 30 + (10 * (pas % 17)));
+    doc1.text((this.elements[index].frequence_Ex * this.elements[index].gravite_Ex).toString(), 150, 30 + (10 * (pas % 17)));
+
+    doc1.text(this.elements[index].gravite_Mo.toString(), 216, 30 + (10 * (pas % 17)));
+    doc1.text(this.elements[index].frequence_Mo.toString(), 221, 30 + (10 * (pas % 17)));
+    doc1.text((this.elements[index].frequence_Mo * this.elements[index].gravite_Mo).toString(), 226, 30 + (10 * (pas % 17)));
+    console.log('Id : ' + this.elements[index].id.toString() + '  *  ' + this.elements[index].prevExistante.length);
+    console.log('Round  ' + pas + Math.round((this.elements[index].prevExistante.length / 46) + 0.5));
+
+    if ((this.elements[index].prevExistante.length < 46)
+      && (this.elements[index].prevMiseEnOeuvre.length < 46)) {
+      doc1.text(this.elements[index].prevExistante.substring(0, 46), 155, 30 + (10 * (pas % 17)));
+      doc1.text(this.elements[index].prevMiseEnOeuvre.substring(0, 46), 231, 30 + (10 * (pas % 17)));
+    }
+
+    if ((this.elements[index].prevExistante.length > 46)
+      || (this.elements[index].prevMiseEnOeuvre.length > 46)) {
+      doc1.text(this.elements[index].prevExistante.substring(0, 46), 155, 30 + (10 * (pas % 17)));
+      doc1.text(this.elements[index].prevMiseEnOeuvre.substring(0, 46), 231, 30 + (10 * (pas % 17)));
+
+      doc1.text(this.elements[index].prevExistante.substring(46, 92), 155, 30 + (10 * (pas % 17)) + 2);
+      doc1.text(this.elements[index].prevMiseEnOeuvre.substring(46, 92), 231, 30 + (10 * (pas % 17)) + 2);
+
+      if ((this.elements[index].prevExistante.length > 92) || (this.elements[index].prevMiseEnOeuvre.length > 92)) {
+        doc1.text(this.elements[index].prevExistante.substring(92, 146), 155, 30 + (10 * (pas % 17)) + 4);
+        doc1.text(this.elements[index].prevMiseEnOeuvre.substring(92, 146), 231, 30 + (10 * (pas % 17)) + 4);
+      }
+    }
+
+  }
+  imprimerLigneEntete(doc2: jsPDF) {
+    doc2.text(this.headElementsPDF[0], 10, 20);
+    doc2.text(this.headElementsPDF[1], 15, 20);
+    doc2.text(this.headElementsPDF[2], 35, 20);
+    doc2.text(this.headElementsPDF[3], 60, 20);
+    doc2.text(this.headElementsPDF[4], 85, 20);
+    doc2.text(this.headElementsPDF[5], 110, 20);
+    doc2.text(this.headElementsPDF[6], 140, 20);
+    doc2.text(this.headElementsPDF[7], 145, 20);
+    doc2.text(this.headElementsPDF[8], 150, 20);
+    doc2.text(this.headElementsPDF[9], 155, 20);
+    doc2.text(this.headElementsPDF[10], 216, 20);
+    doc2.text(this.headElementsPDF[11], 221, 20);
+    doc2.text(this.headElementsPDF[12], 226, 20);
+    doc2.text(this.headElementsPDF[13], 231, 20);
+
+  };
+
   creerPas1(
-            idDuer: number,
-            action: string,
-            budget: number,
-            qui: string,
-            delai: string,
-            ) {
+    idDuer: number,
+    action: string,
+    budget: number,
+    qui: string,
+    delai: string,
+  ) {
 
     console.log('idDuer : ' + idDuer);
     console.log('action :' + action);

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { RisquesVm } from './domains/RisquesVm';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { DangersVm } from './domains/DangersVm';
@@ -56,7 +56,6 @@ export class DataService {
   listeDuerFrontParUt: Observable<DuerFront[]>;
   listeDuerFrontParLieu: Observable<DuerFront[]>;
 
-  subjectActUt: BehaviorSubject<UtVm[]>;
   listePas: Observable<PasFront[]>;
   listeCriticiteMo: Observable<number[]>;
   listePasFrontParDanger: Observable<PasFront[]>;
@@ -66,11 +65,12 @@ export class DataService {
   listePasFrontParRisque: Observable<PasFront[]>;
   listePasFrontParQui: Observable<PasFront[]>;
 
+  subjectActUt = new Subject<UtVm[]>(); // Déclaration du Subject typé valeurs à traiter
+
   constructor(private http: HttpClient) {
 
-    let tabUtm: UtVm[] = [];
-    this.subjectActUt = new BehaviorSubject(tabUtm);
-    console.log(this.subjectActUt);
+
+
   }
 
   listeDuerFrontParCrititiciteMo: Observable<DuerFront[]>;
@@ -93,15 +93,24 @@ export class DataService {
   }
 
   afficherListeUt(): Observable<UtVm[]> {
-    this.listeUt = this.http.get<UtVm[]>(this.url_gdu + 'uts').
+    console.log('AfficherListe Ut : avant requete http');
+    this.http.get<UtVm[]>(this.url_gdu + 'uts').subscribe(
+      list => {
+        this.subjectActUt.next(list);// implémente la liste de la base dans le subject -> subject est réinitialisé
+        this.listeUt = of(list); //transforme un objet en observable
+      });
+
+
+    /*
+
       pipe(
         tap(utS => {
+          console.log(' AfficherListe Ut : Mise à jour du Subject');
           this.subjectActUt.next(utS);
-          this.subjectActUt.forEach(sub => console.log(sub));
-
-        })
+          utS.forEach(sub => console.log('//' + sub.toString));
+          })
       );
-
+      console.log('AfficherListe Ut : après requete http');*/
     return this.listeUt;
   }
 
@@ -254,31 +263,39 @@ export class DataService {
   creerUt(newUt: string): string {
     const urlPostUt = this.url_gdu + 'ut?nom=' + newUt;
 
-    this.http.post(urlPostUt, { responseType: 'text' }).
+    this.http.post(urlPostUt, {}, { responseType: 'text' }).
+      // toujours post(adresse, {body}, {type de réponse})
+
       subscribe(
-        (data: any) => {
-          console.log(data);
-          this.afficherListeUt().subscribe((listeUt: UtVm[]) => {
-            this.subjectActUt.next(listeUt);
-          });
-          // indique au subject qu'une nouvelle donnée est créée
+        (data: string) => {
+          console.log(' Retour Http Création' + data);
+          this.afficherListeUt(); // rafraichi la liste après création de l'UT
           return data;
         },
         (error: HttpErrorResponse) => {
           console.log('error', error);
+
           return error;
         });
     return '';
+
+    /*pipe(
+     tap(text => {
+       console.log(text);
+       this.afficherListeUt();
+     })
+     );*/
   }
 
   modifUt(idav: number, nomap: string): string {
 
     const urlPostUt = this.url_gdu + 'utm?id=' + idav + '&nomap=' + nomap;
 
-    this.http.post(urlPostUt, {}).
+    this.http.post(urlPostUt, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
           console.log(data);
+          this.afficherListeUt(); // rafraichi la liste après création de l'UT
           return data;
         },
         (error: HttpErrorResponse) => {
@@ -596,7 +613,7 @@ export class DataService {
     }
   }
 
-  detruirePas( id: number, iduer: number): string {
+  detruirePas(id: number, iduer: number): string {
 
     const urlGetDetPas = this.url_gdu + 'pasdet?id=' + id + '&iduer=' + iduer;
 

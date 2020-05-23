@@ -1,4 +1,4 @@
-<div class="container">
+<div id=content #content class="container">
   <p></p>
 
 
@@ -38,7 +38,7 @@
         (click)="affichePareto()">Pareto</button>
     </div>
     <div class="col-2">
-      <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect>Impression</button>
+      <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect (click)="impression('Duer du Le Parchemin')">Impression</button>
     </div>
   </div>
   <div class="row">
@@ -105,8 +105,8 @@
             {{el.prevMiseEnOeuvre}}</td>
 
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><button
-              *ngIf="afficherModif() && (el.pas == null)" mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
-              class="m-0 relative waves-light" (click)="basicModal.show()">Définir</button>
+              *ngIf="afficherModif() && (el.pas == null)" mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect
+              type="button" class="m-0 relative waves-light" (click)="basicModal.show()">Définir</button>
 
             <!-- Partie modale PAS -->
             <form>
@@ -163,7 +163,7 @@
                           Budget :
                         </div>
                         <div class="col-4">
-                          <input type="number" ngModel id="pasBudget" name="pasBudget"  #pasBudget="ngModel" mdbInput
+                          <input type="number" ngModel id="pasBudget" name="pasBudget" #pasBudget="ngModel" mdbInput
                             class="form-control mb-4" placeholder="">
                         </div>
 
@@ -198,14 +198,14 @@
                     </div>
                     <div class="modal-footer">
                       <!-- Pagination -->
-<!--
+                      <!--
                       <button type="button" mdbBtn color="green" class="waves-light" aria-label="Effacer"
                         mdbWavesEffect>Effacer</button> -->
 
                       <button type="submit" mdbBtn color="red" class="waves-light" aria-label="Creer" mdbWavesEffect
                         (click)="creerPas1(el.id, pasPrev.value, pasBudget.value,pasQui.value, pasDelai.value); basicModal.hide()">
                         Créer</button>
-<!--
+                      <!--
                       <button type="button" mdbBtn color="orange" class="waves-light" aria-label="Modifier"
                         mdbWavesEffect>Modifier</button>
 -->
@@ -407,5 +407,6 @@
         </tr>
       </tfoot>
     </table>
+
   </div>
 </div>
