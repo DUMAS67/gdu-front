@@ -44,7 +44,7 @@ export class GduEvrpComponent implements OnInit {
 
 
   constructor(private dataService: DataService, private _router: Router,
-              private _cookieService: CookieService, private route:ActivatedRoute ) { }
+              private _cookieService: CookieService, private route: ActivatedRoute) { }
   recupId: number;
   recupNom: string;
   nomUt: string;
@@ -58,8 +58,10 @@ export class GduEvrpComponent implements OnInit {
   listeLieu: LieuVm[];
   listeCriticite$ = this.dataService.afficherListeCriticite();
   listeCriticite: CriticiteVm[];
-  listeUt$ = this.dataService.afficherListeUt();
+
+  //listeUt$ = this.dataService.afficherListeUt();
   listeUt: UtVm[];
+
   listeGravite$ = this.dataService.afficherListeGravite();
   listeGravite: GraviteVm[];
   listeFrequence$ = this.dataService.afficherListeFrequence();
@@ -109,44 +111,66 @@ export class GduEvrpComponent implements OnInit {
   messageValid = '';
   confirmeDonneesRisque1 = false;
   confirmeDonneesRisque2 = false;
+
   ngOnInit() {
 
 
     this.listeLieu$.subscribe((param: LieuVm[]) => {
-      this.listeLieu = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
-    }
-    );
-    this.listeUt$.subscribe((param: UtVm[]) => {
-      this.listeUt = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+      this.listeLieu = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
     }
     );
 
 
     this.listeGravite$.subscribe((param: GraviteVm[]) => {
-      this.listeGravite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur));
+      this.listeGravite = param.sort((a, b) => (a.valeur - b.valeur));
     }
     );
 
     this.listeActivite$.subscribe((param: ActivitesVm[]) => {
-      this.listeActivite = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+      this.listeActivite = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
     }
     );
 
     this.listeDanger$.subscribe((param: DangersVm[]) => {
-      this.listeDanger = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+      this.listeDanger = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
     }
     );
     this.listeRisque$.subscribe((param: RisquesVm[]) => {
-      this.listeRisque = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+      this.listeRisque = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
     }
     );
     this.listeFrequence$.subscribe((param: FrequenceVm[]) => {
-      this.listeFrequence = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur));
+      this.listeFrequence = param.sort((a, b) => (a.valeur - b.valeur));
     }
     );
+    /* Abonnement
+    this.listeUt$.subscribe((param: UtVm[]) => {
+      this.listeUt = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+    }
+    );*/
 
+    // Abonnement
+
+    console.log('Trace Avant Subject');
+    // !la listeUt reçoit les dernières données du Subject
+    // Connexion de listeUt sur subject par souscription
+    this.dataService.subjectActUt.subscribe((param: UtVm[]) => {
+      console.log('Trace Déclenchement de l\' observateur');
+      this.listeUt = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+
+    }
+   );
+    this.dataService.afficherListeUt(); // Initialise le subject à la liste Ut de la Base
+    console.log('Trace afficherListeUt dans NgOnit');
+
+
+  }// Fin NgOnInit
+
+  rafraichirListeUt() {
+    this.dataService.afficherListeUt();
+
+   // window.location.reload();
   }
-
 
   recupItem(utId: number, utValeur: string) {
 
@@ -285,14 +309,14 @@ export class GduEvrpComponent implements OnInit {
       this.confirmeDonneesRisque1 = false;
       this.confirmeDonneesRisque2 = false;
     } else {
-    this.creaEvrp1Ok = false;
-    this.confirmeDonneesRisque1 = false;
-    this.messageValid = 'Erreur dans les données';
+      this.creaEvrp1Ok = false;
+      this.confirmeDonneesRisque1 = false;
+      this.messageValid = 'Erreur dans les données';
     }
 
     if (this.creaEvrp1Ok) {
       this.dataService.creerDuer1(this.creaEvrp1);
-       }
+    }
     console.log(JSON.stringify(this.creaEvrp1));
 
 
@@ -335,14 +359,14 @@ export class GduEvrpComponent implements OnInit {
       this.messageValid = 'Validé';
       this.confirmeDonneesRisque2 = false;
     } else {
-    this.creaEvrp2Ok = false;
-    this.confirmeDonneesRisque2 = false;
-    this.messageValid = 'Erreur dans les données';
+      this.creaEvrp2Ok = false;
+      this.confirmeDonneesRisque2 = false;
+      this.messageValid = 'Erreur dans les données';
     }
 
     if (this.creaEvrp2Ok) {
       this.dataService.creerDuer1(this.creaEvrp2);
-       }
+    }
     console.log(JSON.stringify(this.creaEvrp2));
 
 
