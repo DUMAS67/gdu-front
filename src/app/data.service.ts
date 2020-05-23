@@ -66,6 +66,9 @@ export class DataService {
   listePasFrontParQui: Observable<PasFront[]>;
 
   subjectActUt = new Subject<UtVm[]>(); // Déclaration du Subject typé valeurs à traiter
+  subjectActLieu = new Subject<LieuVm[]>(); // Déclaration du Subject typé valeurs à traiter
+  subjectActDanger = new Subject<DangersVm[]>(); // Déclaration du Subject typé valeurs à traiter
+  subjectActActivite = new Subject<ActivitesVm[]>(); // Déclaration du Subject typé valeurs à traiter
 
   constructor(private http: HttpClient) {
 
@@ -86,8 +89,14 @@ export class DataService {
   }
 
   afficherListeDanger(): Observable<DangersVm[]> {
-    this.listeD = this.http.get<DangersVm[]>(this.url_gdu + 'dangers');
 
+    console.log('AfficherListe Dangers : avant requete http');
+    this.http.get<DangersVm[]>(this.url_gdu + 'dangers')
+    .subscribe(
+      list3 => {
+        this.subjectActDanger.next(list3);// implémente la liste de la base dans le subject -> subject est réinitialisé
+        this.listeD = of(list3); //transforme un objet en observable
+      });
     return this.listeD;
 
   }
@@ -100,21 +109,29 @@ export class DataService {
         this.listeUt = of(list); //transforme un objet en observable
       });
 
-
-    /*
-
-      pipe(
-        tap(utS => {
-          console.log(' AfficherListe Ut : Mise à jour du Subject');
-          this.subjectActUt.next(utS);
-          utS.forEach(sub => console.log('//' + sub.toString));
-          })
-      );
-      console.log('AfficherListe Ut : après requete http');*/
     return this.listeUt;
   }
 
+  afficherListeLieu(): Observable<LieuVm[]> {
+    console.log('AfficherListe Lieu : avant requete http');
+    this.http.get<LieuVm[]>(this.url_gdu + 'lieus').subscribe(
+      list1 => {
+        this.subjectActLieu.next(list1); // implémente la liste de la base dans le subject -> subject est réinitialisé
+        this.listeLieu = of(list1); // transforme un objet en observable
+      });
+    return this.listeLieu;
+  }
 
+  afficherListeActivite(): Observable<ActivitesVm[]> {
+    console.log('AfficherListe Activité : avant requete http');
+    this.http.get<ActivitesVm[]>(this.url_gdu + 'activites').subscribe(
+    list4 => {
+      this.subjectActActivite.next(list4); // implémente la liste de la base dans le subject -> subject est réinitialisé
+      this.listeActivite = of(list4); // transforme un objet en observable
+    });
+    return this.listeActivite;
+
+  }
   afficherListeUtduDuer(): Observable<UtVm[]> {
     this.listeUt = this.http.get<UtVm[]>(this.url_gdu + 'duerlut');
 
@@ -122,12 +139,7 @@ export class DataService {
 
   }
 
-  afficherListeLieu(): Observable<LieuVm[]> {
-    this.listeLieu = this.http.get<LieuVm[]>(this.url_gdu + 'lieus');
 
-    return this.listeLieu;
-
-  }
 
   afficherListeLieuDansDuer(): Observable<LieuVm[]> {
     this.listeLieu = this.http.get<LieuVm[]>(this.url_gdu + 'duerllieu');
@@ -149,12 +161,7 @@ export class DataService {
 
   }
 
-  afficherListeActivite(): Observable<ActivitesVm[]> {
-    this.listeActivite = this.http.get<ActivitesVm[]>(this.url_gdu + 'activites');
 
-    return this.listeActivite;
-
-  }
 
   afficherListeDuerFront(): Observable<DuerFront[]> {
     this.listeDuerFront = this.http.get<DuerFront[]>(this.url_gdu + 'duerf');
@@ -279,12 +286,6 @@ export class DataService {
         });
     return '';
 
-    /*pipe(
-     tap(text => {
-       console.log(text);
-       this.afficherListeUt();
-     })
-     );*/
   }
 
   modifUt(idav: number, nomap: string): string {
@@ -308,11 +309,12 @@ export class DataService {
   creerLieu(newLieu: string): string {
     const urlPostLieu = this.url_gdu + 'lieu?nom=' + newLieu;
     console.log(urlPostLieu);
-    console.log(newLieu);
-    this.http.post(urlPostLieu, {}).
+    console.log('nouveau Lieu ' + newLieu);
+    this.http.post(urlPostLieu, {},{ responseType: 'text' }).
       subscribe(
         (data: string) => {
           console.log(data);
+          this.afficherListeLieu();
           return data;
         },
         (error: string) => {
@@ -326,10 +328,11 @@ export class DataService {
 
     const urlPostLieu = this.url_gdu + 'lieum?id=' + idav + '&nomap=' + nomap;
 
-    this.http.post(urlPostLieu, {}).
+    this.http.post(urlPostLieu, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
           console.log(data);
+          this.afficherListeLieu();
           return data;
         },
         (error: HttpErrorResponse) => {
@@ -343,10 +346,11 @@ export class DataService {
     const urlPostActivite = this.url_gdu + 'activite?nom=' + newActivite;
 
 
-    this.http.post(urlPostActivite, {}).
+    this.http.post(urlPostActivite, {},{ responseType: 'text' }).
       subscribe(
         (data: any) => {
           console.log(data);
+          this.afficherListeActivite();
           return data;
         },
         (error: HttpErrorResponse) => {
@@ -360,10 +364,11 @@ export class DataService {
 
     const urlPostActivite = this.url_gdu + 'activitem?id=' + idav + '&nomap=' + nomap;
 
-    this.http.post(urlPostActivite, {}).
+    this.http.post(urlPostActivite, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
           console.log(data);
+          this.afficherListeActivite();
           return data;
         },
         (error: HttpErrorResponse) => {
@@ -378,10 +383,11 @@ export class DataService {
     const urlPostDg = this.url_gdu + 'danger?nom=' + nouveauNomDanger;
 
 
-    this.http.post(urlPostDg, {}).
+    this.http.post(urlPostDg, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
           console.log(data);
+          this.afficherListeDanger();
           return data;
         },
         (error: HttpErrorResponse) => {
@@ -395,10 +401,11 @@ export class DataService {
 
     const urlPostDg = this.url_gdu + 'dangerm?id=' + idav + '&nomap=' + nomap;
 
-    this.http.post(urlPostDg, {}).
+    this.http.post(urlPostDg, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
           console.log(data);
+          this.afficherListeDanger();
           return data;
         },
         (error: HttpErrorResponse) => {
@@ -485,7 +492,7 @@ export class DataService {
   creerPas(newPas: PasVm) {
     const urlPostPas = this.url_gdu + 'pasc';
 
-    this.http.post(urlPostPas, newPas).
+    this.http.post(urlPostPas, newPas,{ responseType: 'text' }).
       subscribe(
         (data: any) => {
           console.log(data.id);
@@ -500,7 +507,7 @@ export class DataService {
   modifierPas(newPas: PasVm) {
     const urlPostPas = this.url_gdu + 'pascm';
 
-    this.http.post(urlPostPas, newPas).
+    this.http.post(urlPostPas, newPas, { responseType: 'text' }).
       subscribe(
         (data: any) => {
           console.log(data.id);
@@ -526,7 +533,7 @@ export class DataService {
     const urlPostDuer = this.url_gdu + 'duer';
 
 
-    this.http.post(urlPostDuer, duerCrea).
+    this.http.post(urlPostDuer, duerCrea, { responseType: 'text' }).
       subscribe(
         (data: any) => {
           console.log(data.id);
@@ -542,7 +549,7 @@ export class DataService {
     const urlPostDuer = this.url_gdu + 'duer';
 
     if (duerCrea != null) {
-      this.http.post(urlPostDuer, duerCrea).
+      this.http.post(urlPostDuer, duerCrea, { responseType: 'text' }).
         subscribe(
           (data: any) => {
             console.log(data.id);
@@ -563,7 +570,7 @@ export class DataService {
       '&frEx=' + frequence_Ex + '&prev=' + prevEx + '&grMo=' + graviteMo +
       '&frMo=' + frequenceMo + '&prevMo=' + prevMo;
 
-    this.http.post(urlPostDuerM, {}).
+    this.http.post(urlPostDuerM, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
           console.log(data);
@@ -581,7 +588,7 @@ export class DataService {
     const urlPostDuerM = this.url_gdu + 'duermp?id=' + id + '&grMo=' + graviteMo +
       '&frMo=' + frequenceMo + '&prevMo=' + prevMo;
 
-    this.http.post(urlPostDuerM, {}).
+    this.http.post(urlPostDuerM, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
           console.log(data);
@@ -600,7 +607,8 @@ export class DataService {
     const urlGetDEvrp = this.url_gdu + 'duerd?id=' + id;
     console.log(urlGetDEvrp);
     if (id != null) {
-      this.http.post(urlGetDEvrp, {}).subscribe(
+      this.http.post(urlGetDEvrp, {}, { responseType: 'text' }).
+      subscribe(
         (data: any) => {
           console.log(data);
           return data;
@@ -619,7 +627,8 @@ export class DataService {
 
     console.log(urlGetDetPas);
     if ((id != null) && (iduer != null)) {
-      this.http.post(urlGetDetPas, {}).subscribe(
+      this.http.post(urlGetDetPas, {}, { responseType: 'text' }).
+      subscribe(
         (data: any) => {
           console.log(data);
           return data;

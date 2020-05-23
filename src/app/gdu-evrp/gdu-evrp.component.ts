@@ -54,21 +54,21 @@ export class GduEvrpComponent implements OnInit {
   headElementsDg = ['Danger', 'Sélection'];
   headElementsAct = ['Activité', 'Sélection'];
 
-  listeLieu$ = this.dataService.afficherListeLieu();
+  // listeLieu$ = this.dataService.afficherListeLieu();
   listeLieu: LieuVm[];
   listeCriticite$ = this.dataService.afficherListeCriticite();
   listeCriticite: CriticiteVm[];
 
-  //listeUt$ = this.dataService.afficherListeUt();
+  // listeUt$ = this.dataService.afficherListeUt();
   listeUt: UtVm[];
 
   listeGravite$ = this.dataService.afficherListeGravite();
   listeGravite: GraviteVm[];
   listeFrequence$ = this.dataService.afficherListeFrequence();
   listeFrequence: FrequenceVm[];
-  listeActivite$ = this.dataService.afficherListeActivite();
+  // listeActivite$ = this.dataService.afficherListeActivite();
   listeActivite: ActivitesVm[];
-  listeDanger$ = this.dataService.afficherListeDanger();
+ // listeDanger$ = this.dataService.afficherListeDanger();
   listeDanger: DangersVm[];
   listeRisque$ = this.dataService.afficherListeRisque();
   listeRisque: RisquesVm[];
@@ -115,26 +115,13 @@ export class GduEvrpComponent implements OnInit {
   ngOnInit() {
 
 
-    this.listeLieu$.subscribe((param: LieuVm[]) => {
-      this.listeLieu = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
-    }
-    );
-
 
     this.listeGravite$.subscribe((param: GraviteVm[]) => {
       this.listeGravite = param.sort((a, b) => (a.valeur - b.valeur));
     }
     );
 
-    this.listeActivite$.subscribe((param: ActivitesVm[]) => {
-      this.listeActivite = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
-    }
-    );
 
-    this.listeDanger$.subscribe((param: DangersVm[]) => {
-      this.listeDanger = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
-    }
-    );
     this.listeRisque$.subscribe((param: RisquesVm[]) => {
       this.listeRisque = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
     }
@@ -143,13 +130,8 @@ export class GduEvrpComponent implements OnInit {
       this.listeFrequence = param.sort((a, b) => (a.valeur - b.valeur));
     }
     );
-    /* Abonnement
-    this.listeUt$.subscribe((param: UtVm[]) => {
-      this.listeUt = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
-    }
-    );*/
 
-    // Abonnement
+    // Abonnement Ut
 
     console.log('Trace Avant Subject');
     // !la listeUt reçoit les dernières données du Subject
@@ -159,9 +141,54 @@ export class GduEvrpComponent implements OnInit {
       this.listeUt = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
 
     }
-   );
+    );
+
+
+    // Abonnement Lieu
+    console.log('Trace Avant Subject');
+    // !la listeLieu reçoit les dernières données du Subject
+    // Connexion de listeLieu sur subject par souscription
+    this.dataService.subjectActLieu.subscribe((param: LieuVm[]) => {
+      console.log('Trace Déclenchement de l\' observateur');
+      this.listeLieu = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+
+    }
+    );
+
+// Abonnement Activite
+    console.log('Trace Avant Subject');
+// !la liste Danger reçoit les dernières données du Subject
+// Connexion de listeLieu sur subject par souscription
+    this.dataService.subjectActActivite.subscribe((param: ActivitesVm[]) => {
+  console.log('Trace Déclenchement de l\' observateur Activite');
+  this.listeActivite = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+
+}
+);
+
+    // Abonnement Danger
+    console.log('Trace Avant Subject');
+    // !la liste Danger reçoit les dernières données du Subject
+    // Connexion de listeLieu sur subject par souscription
+    this.dataService.subjectActDanger.subscribe((param: DangersVm[]) => {
+      console.log('Trace Déclenchement de l\' observateur Danger');
+      this.listeDanger = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+
+    }
+    );
+
     this.dataService.afficherListeUt(); // Initialise le subject à la liste Ut de la Base
     console.log('Trace afficherListeUt dans NgOnit');
+
+    this.dataService.afficherListeLieu(); // Initialise le subject à la liste Lieu de la Base
+    console.log('Trace afficherListeLieu dans NgOnit');
+
+    this.dataService.afficherListeActivite(); // Initialise le subject à la liste Lieu de la Base
+    console.log('Trace afficherListe Activite dans NgOnit');
+
+    this.dataService.afficherListeDanger(); // Initialise le subject à la liste Lieu de la Base
+    console.log('Trace afficherListe Danger dans NgOnit');
+
 
 
   }// Fin NgOnInit
@@ -169,7 +196,7 @@ export class GduEvrpComponent implements OnInit {
   rafraichirListeUt() {
     this.dataService.afficherListeUt();
 
-   // window.location.reload();
+    // window.location.reload();
   }
 
   recupItem(utId: number, utValeur: string) {
