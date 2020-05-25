@@ -69,6 +69,9 @@ export class DataService {
   subjectActLieu = new Subject<LieuVm[]>(); // Déclaration du Subject typé valeurs à traiter
   subjectActDanger = new Subject<DangersVm[]>(); // Déclaration du Subject typé valeurs à traiter
   subjectActActivite = new Subject<ActivitesVm[]>(); // Déclaration du Subject typé valeurs à traiter
+  subjectActDuerFront = new Subject<DuerFront[]>();
+  subjectActPas = new Subject<PasVm[]>();
+  listeDuerFrontParPareto: Observable<DuerFront[]>;
 
   constructor(private http: HttpClient) {
 
@@ -92,11 +95,11 @@ export class DataService {
 
     console.log('AfficherListe Dangers : avant requete http');
     this.http.get<DangersVm[]>(this.url_gdu + 'dangers')
-    .subscribe(
-      list3 => {
-        this.subjectActDanger.next(list3);// implémente la liste de la base dans le subject -> subject est réinitialisé
-        this.listeD = of(list3); //transforme un objet en observable
-      });
+      .subscribe(
+        list3 => {
+          this.subjectActDanger.next(list3);// implémente la liste de la base dans le subject -> subject est réinitialisé
+          this.listeD = of(list3); //transforme un objet en observable
+        });
     return this.listeD;
 
   }
@@ -125,10 +128,10 @@ export class DataService {
   afficherListeActivite(): Observable<ActivitesVm[]> {
     console.log('AfficherListe Activité : avant requete http');
     this.http.get<ActivitesVm[]>(this.url_gdu + 'activites').subscribe(
-    list4 => {
-      this.subjectActActivite.next(list4); // implémente la liste de la base dans le subject -> subject est réinitialisé
-      this.listeActivite = of(list4); // transforme un objet en observable
-    });
+      list4 => {
+        this.subjectActActivite.next(list4); // implémente la liste de la base dans le subject -> subject est réinitialisé
+        this.listeActivite = of(list4); // transforme un objet en observable
+      });
     return this.listeActivite;
 
   }
@@ -138,8 +141,6 @@ export class DataService {
     return this.listeUt;
 
   }
-
-
 
   afficherListeLieuDansDuer(): Observable<LieuVm[]> {
     this.listeLieu = this.http.get<LieuVm[]>(this.url_gdu + 'duerllieu');
@@ -164,10 +165,20 @@ export class DataService {
 
 
   afficherListeDuerFront(): Observable<DuerFront[]> {
-    this.listeDuerFront = this.http.get<DuerFront[]>(this.url_gdu + 'duerf');
+    this.http.get<DuerFront[]>(this.url_gdu + 'duerf').subscribe(
+    list5 => {
+      this.subjectActDuerFront.next(list5); // implémente la liste de la base dans le subject -> subject est réinitialisé
+      this.listeDuerFront = of(list5); // transforme un objet en observable
+    });
 
     return this.listeDuerFront;
   }
+
+afficherListeDuerPareto(): Observable<DuerFront[]> {
+
+  this.listeDuerFrontParPareto = this.http.get<DuerFront[]>(this.url_gdu + 'duerf');
+  return this.listeDuerFrontParPareto;
+}
 
   afficherListeDuerFrontParCriticite(crit: number): Observable<DuerFront[]> {
     console.log(crit);
@@ -207,7 +218,11 @@ export class DataService {
   /* affiche la liste des Pas avec clef du Duer*/
   afficherListePas(): Observable<PasFront[]> {
 
-    this.listePas = this.http.get<PasFront[]>(this.url_gdu + 'passf');
+    this.http.get<PasFront[]>(this.url_gdu + 'passf').subscribe(
+      list6 => {
+        this.subjectActPas.next(list6); // implémente la liste de la base dans le subject -> subject est réinitialisé
+        this.listePas = of(list6); // transforme un objet en observable
+      });
     return this.listePas;
   }
 
@@ -310,7 +325,7 @@ export class DataService {
     const urlPostLieu = this.url_gdu + 'lieu?nom=' + newLieu;
     console.log(urlPostLieu);
     console.log('nouveau Lieu ' + newLieu);
-    this.http.post(urlPostLieu, {},{ responseType: 'text' }).
+    this.http.post(urlPostLieu, {}, { responseType: 'text' }).
       subscribe(
         (data: string) => {
           console.log(data);
@@ -346,7 +361,7 @@ export class DataService {
     const urlPostActivite = this.url_gdu + 'activite?nom=' + newActivite;
 
 
-    this.http.post(urlPostActivite, {},{ responseType: 'text' }).
+    this.http.post(urlPostActivite, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
           console.log(data);
@@ -426,20 +441,6 @@ export class DataService {
 
   }
 
-  /*trouverUt(id: number): string {
-    const urlGetUt = this.url_gdu + 'ut?id=' + id;
-
-    if (id != null) {
-    this.http.get<UtVm>(urlGetUt).subscribe
-      ((param: UtVm) => {
-        this.ut = new UtVm(param.id, param.nom);
-        console.log('1' + this.ut.nom);
-      });
-    console.log('2' + this.ut.nom);
-    return this.ut.nom; }
-
-  }*/
-
   trouverLieu(id: number): Observable<LieuVm> {
     const urlGetLieu = this.url_gdu + 'lieu?id=' + id;
     if (id != null) {
@@ -492,10 +493,11 @@ export class DataService {
   creerPas(newPas: PasVm) {
     const urlPostPas = this.url_gdu + 'pasc';
 
-    this.http.post(urlPostPas, newPas,{ responseType: 'text' }).
+    this.http.post(urlPostPas, newPas, { responseType: 'text' }).
       subscribe(
         (data: any) => {
           console.log(data.id);
+          this.afficherListeDuerFront();
           return data;
         },
         (error: HttpErrorResponse) => {
@@ -511,6 +513,7 @@ export class DataService {
       subscribe(
         (data: any) => {
           console.log(data.id);
+          this.afficherListeDuerFront();
           return data;
         },
         (error: HttpErrorResponse) => {
@@ -537,6 +540,7 @@ export class DataService {
       subscribe(
         (data: any) => {
           console.log(data.id);
+          this.afficherListeDuerFront();
           return data;
         },
         (error: HttpErrorResponse) => {
@@ -553,6 +557,7 @@ export class DataService {
         subscribe(
           (data: any) => {
             console.log(data.id);
+            this.afficherListeDuerFront();
             return data;
           },
           (error: HttpErrorResponse) => {
@@ -574,6 +579,7 @@ export class DataService {
       subscribe(
         (data: any) => {
           console.log(data);
+          this.afficherListeDuerFront();
           return data;
         },
         (error: HttpErrorResponse) => {
@@ -602,21 +608,22 @@ export class DataService {
   }
 
 
-  detruireEvrp(id: number): string {
+  detruireEvrp(id: number, idPas: number): string {
 
-    const urlGetDEvrp = this.url_gdu + 'duerd?id=' + id;
+    const urlGetDEvrp = this.url_gdu + 'duerd?id=' + id + '&idpas=' + idPas;
     console.log(urlGetDEvrp);
     if (id != null) {
       this.http.post(urlGetDEvrp, {}, { responseType: 'text' }).
-      subscribe(
-        (data: any) => {
-          console.log(data);
-          return data;
-        },
-        (error: HttpErrorResponse) => {
-          console.log('error', error);
-          return error;
-        });
+        subscribe(
+          (data: any) => {
+            console.log(data);
+            this.afficherListeDuerFront();
+            return data;
+          },
+          (error: HttpErrorResponse) => {
+            console.log('error', error);
+            return error;
+          });
       return '';
     }
   }
@@ -628,15 +635,16 @@ export class DataService {
     console.log(urlGetDetPas);
     if ((id != null) && (iduer != null)) {
       this.http.post(urlGetDetPas, {}, { responseType: 'text' }).
-      subscribe(
-        (data: any) => {
-          console.log(data);
-          return data;
-        },
-        (error: HttpErrorResponse) => {
-          console.log('error', error);
-          return error;
-        });
+        subscribe(
+          (data: any) => {
+            console.log(data);
+            this.afficherListeDuerFront();
+            return data;
+          },
+          (error: HttpErrorResponse) => {
+            console.log('error', error);
+            return error;
+          });
       return '';
     }
   }

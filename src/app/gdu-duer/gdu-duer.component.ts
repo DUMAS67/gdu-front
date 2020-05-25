@@ -47,6 +47,8 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
   date: Date;
   page: number;
   nbPage: number;
+  listePareto: DuerFront[];
+
 
 
 
@@ -66,6 +68,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
   listeDuerBack: DuerFront[];
   listeCriticite$ = this.dataService.afficherListeCriticite();
   listeCriticite: number[];
+  listePareto$ = this.dataService.afficherListeDuerPareto();
   p: number;
   a: string[] = ['a'];
   listeDuerFront: DuerFront[];
@@ -73,19 +76,17 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    this.listeDuerFront$.subscribe((param: DuerFront[]) => {
+    // Abonnement subject
+    this.dataService.subjectActDuerFront.subscribe((param: DuerFront[]) => {
 
       this.elements = param.map(c => new DuerFront(
         c.id, c.ut, c.lieu, c.activite, c.danger, c.risque, c.gravite_Ex,
         c.frequence_Ex, c.prevExistante, c.gravite_Mo, c.frequence_Mo, c.prevMiseEnOeuvre, c.pas))
         .sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
-      console.log(this.elements.length);
       this.mdbTable.setDataSource(this.elements);
-      console.log('1 ' + this.elements.length);
       this.elements = this.mdbTable.getDataSource();
-      console.log('2 ' + this.elements.length);
       this.previous = this.mdbTable.getDataSource();
-      console.log('3 ' + this.elements.length);
+
     }
     );
 
@@ -113,6 +114,8 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
       this.listeCriticite = param.sort((a, b) => (a - b));
     }
     );
+
+    this.dataService.afficherListeDuerFront(); //initialisation subject
   }
 
   ngAfterViewInit() {
@@ -135,7 +138,9 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
   }
 
   rafraichirSelection() {
-    this.listeDuerFront$.subscribe((param: DuerFront[]) => {
+
+    this.dataService.afficherListeDuerFront();
+    /*this.listeDuerFront$.subscribe((param: DuerFront[]) => {
 
       this.elements = param.map(c => new DuerFront(
         c.id, c.ut, c.lieu, c.activite, c.danger, c.risque, c.gravite_Ex,
@@ -153,7 +158,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
       this.cdRef.detectChanges();
     }
     );
-
+*/
   }
 
   afficheListeDuerParCriticite(crit: number) {
@@ -169,7 +174,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
       this.mdbTablePagination.calculateFirstItemIndex();
       this.mdbTablePagination.calculateLastItemIndex();
       this.cdRef.detectChanges();
-      this.entetePdf = 'par Criticité :  ' + crit;
+      this.entetePdf = ' par Criticité :  ' + crit;
     });
   }
   afficheListeDuerParUt(ut: number) {
@@ -185,7 +190,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
       this.mdbTablePagination.calculateFirstItemIndex();
       this.mdbTablePagination.calculateLastItemIndex();
       this.cdRef.detectChanges();
-      this.entetePdf = 'par Unité de Travail :  ' + this.listeDuerFrontParUt[0].ut;
+      this.entetePdf = ' par Unité de Travail :  ' + this.listeDuerFrontParUt[0].ut;
     });
   }
 
@@ -202,14 +207,14 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
       this.mdbTablePagination.calculateFirstItemIndex();
       this.mdbTablePagination.calculateLastItemIndex();
       this.cdRef.detectChanges();
-      this.entetePdf = 'par Lieu :  ' + this.listeDuerFrontParLieu[0].lieu;
+      this.entetePdf = ' par Lieu :  ' + this.listeDuerFrontParLieu[0].lieu;
     });
   }
   affichePareto() {
 
-
-    this.listeDuerFront$.subscribe((param: DuerFront[]) => {
-      this.entetePdf = 'par Pareto';
+    this.dataService.afficherListeDuerFront();
+    this.listePareto$.subscribe((param: DuerFront[]) => {
+      this.entetePdf = ' par Pareto';
       let sumCrit: number = param.map(a => {
         const criticite = a.gravite_Ex * a.frequence_Ex;
         a['criticite_Ex'] = criticite;
@@ -231,12 +236,14 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
           return sommeCumul <= sumCrit;
         });
     });
+    this.mdbTable.setDataSource(this.elements);
     this.elements = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
     this.mdbTablePagination.calculateFirstItemIndex();
+    console.log('MaxVisible :' + this.maxVisibleItems);
     this.mdbTablePagination.calculateLastItemIndex();
-    this.entetePdf = 'par Pareto :  ';
+    this.entetePdf = ' par Pareto :  ';
     this.cdRef.detectChanges();
 
   }
@@ -258,9 +265,11 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     this.dataService.modifDuer(id, gr, fr, prev, grMo, frMo, prevMo);
   }
 
-  detruireEvrp1(id: number) {
+  detruireEvrp1(id: number, idPas: number) {
     console.log('id a détruire : ' + id);
-    this.dataService.detruireEvrp(id);
+    console.log('idPas : ' + idPas);
+    if (idPas != null) { this.dataService.detruireEvrp(id, idPas); } else
+    { this.dataService.detruireEvrp(id, -1); }
   }
 
   impression(entete: string) {
