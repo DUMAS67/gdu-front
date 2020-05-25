@@ -598,6 +598,7 @@ afficherListeDuerPareto(): Observable<DuerFront[]> {
       subscribe(
         (data: any) => {
           console.log(data);
+          this.afficherListeDuerFront();
           return data;
         },
         (error: HttpErrorResponse) => {

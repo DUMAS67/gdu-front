@@ -13,6 +13,7 @@ import { AuthService } from '../auth.service';
 import { DuerFront } from '../domains/DuerFront';
 import { PasVm } from '../domains/PasVm';
 import * as jsPDF from 'jspdf';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -56,6 +57,7 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
   date: Date;
   page: number;
   nbPage: number;
+  listePareto$ = this.dataService.afficherListeDuerPareto();
 
   constructor(private dataService: DataService, private _router: Router, private _cookieService: CookieService,
     private cdRef: ChangeDetectorRef, private _authSrv: AuthService) { }
@@ -63,7 +65,7 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    this.listeDuerFront$.subscribe((param: DuerFront[]) => {
+    this.dataService.subjectActDuerFront.subscribe((param: DuerFront[]) => {
 
       this.elements1 = param.map(c => new DuerFront(
         c.id, c.ut, c.lieu, c.activite, c.danger, c.risque, c.gravite_Ex,
@@ -74,6 +76,9 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
       this.previous = this.mdbTable.getDataSource();
     }
     );
+
+    this.dataService.afficherListeDuerFront(); //initialisation subject
+
   }
 
   ngAfterViewInit() {
@@ -117,27 +122,14 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
   }
 
   rafraichirSelection() {
-    this.listeDuerFront$.subscribe((param: DuerFront[]) => {
-
-      this.elements1 = param.map(c => new DuerFront(
-        c.id, c.ut, c.lieu, c.activite, c.danger, c.risque, c.gravite_Ex,
-        c.frequence_Ex, c.prevExistante, c.gravite_Mo, c.frequence_Mo, c.prevMiseEnOeuvre, c.pas))
-        .sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
-      this.mdbTable.setDataSource(this.elements1);
-      this.elements1 = this.mdbTable.getDataSource();
-      this.previous = this.mdbTable.getDataSource();
-      this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
-      this.mdbTablePagination.calculateFirstItemIndex();
-      this.mdbTablePagination.calculateLastItemIndex();
-      this.cdRef.detectChanges();
-    }
-    );
+    this.dataService.afficherListeDuerFront(); //initialisation subject
 
   }
   affichePareto() {
 
-
-    this.listeDuerFront$.subscribe((param: DuerFront[]) => {
+    this.dataService.afficherListeDuerFront();
+    this.listePareto$.subscribe((param: DuerFront[]) => {
+      this.entetePdf = ' par Pareto';
       let sumCrit: number = param.map(a => {
         const criticite = a.gravite_Mo * a.frequence_Mo;
         a['criticite_Mo'] = criticite;
@@ -159,12 +151,13 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
           return sommeCumul <= sumCrit;
         });
     });
+    this.mdbTable.setDataSource(this.elements1);
     this.elements1 = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
-    this.entetePdf = 'par Pareto';
+    this.entetePdf = ' par Pareto';
     this.cdRef.detectChanges();
 
   }
@@ -261,9 +254,11 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
     this.dataService.modifDuerPrev(id, grMo, frMo, prevMo);
   }
 
-  detruireEvrp1(id: number) {
+  detruireEvrp1(id: number, idPas: number) {
     console.log('id a détruire : ' + id);
-    this.dataService.detruireEvrp(id);
+    console.log('idPas : ' + idPas);
+    if (idPas != null) { this.dataService.detruireEvrp(id, idPas); } else
+    { this.dataService.detruireEvrp(id, -1); }
   }
 
   impression(entete: string) {
