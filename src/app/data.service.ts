@@ -513,6 +513,7 @@ afficherListeDuerPareto(): Observable<DuerFront[]> {
       subscribe(
         (data: any) => {
           console.log(data.id);
+          this.afficherListePas();
           this.afficherListeDuerFront();
           return data;
         },
@@ -639,6 +640,7 @@ afficherListeDuerPareto(): Observable<DuerFront[]> {
         subscribe(
           (data: any) => {
             console.log(data);
+            this.afficherListePas();
             this.afficherListeDuerFront();
             return data;
           },

@@ -63,7 +63,7 @@ export class GduPasComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    this.listePas$.subscribe((param: PasFront[]) => {
+    this.dataService.subjectActPas.subscribe((param: PasFront[]) => {
       this.elements = param.map(c => new PasFront(
         c.id, c.idDuer, c.danger, c.risque, c.action, c.budget, c.qui, c.delai, c.etat))
         .sort((a, b) => (a.action.charCodeAt(0) - b.action.charCodeAt(0)));
@@ -93,7 +93,7 @@ export class GduPasComponent implements OnInit, AfterViewInit {
       this.listeQui = param.sort((a, b) => (a.charCodeAt(0) - b.charCodeAt(0)));
     }
     );
-
+    this.dataService.afficherListePas(); //initialisation subject
   }
 
   ngAfterViewInit() {
@@ -173,21 +173,7 @@ export class GduPasComponent implements OnInit, AfterViewInit {
   }
 
   raffraichirPas() {
-    this.listePas$.subscribe((param: PasFront[]) => {
-      this.elements = param.map(c => new PasFront(
-        c.id, c.idDuer, c.danger, c.risque, c.action, c.budget, c.qui, c.delai, c.etat))
-        .sort((a, b) => (a.action.charCodeAt(0) - b.action.charCodeAt(0)));
-      this.mdbTable.setDataSource(this.elements);
-      console.log(this.elements[0]);
-      this.elements = this.mdbTable.getDataSource();
-      this.previous = this.mdbTable.getDataSource();
-      this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.MaxVisibleItemsNumber);
-      this.mdbTablePagination.calculateFirstItemIndex();
-      this.mdbTablePagination.calculateLastItemIndex();
-
-      this.cdRef.detectChanges();
-    }
-    );
+   this.dataService.afficherListePas();
   }
 
   detruirePas1(id: number, iduer: number) {

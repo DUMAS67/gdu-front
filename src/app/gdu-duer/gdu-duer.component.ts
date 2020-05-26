@@ -140,25 +140,8 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
   rafraichirSelection() {
 
     this.dataService.afficherListeDuerFront();
-    /*this.listeDuerFront$.subscribe((param: DuerFront[]) => {
 
-      this.elements = param.map(c => new DuerFront(
-        c.id, c.ut, c.lieu, c.activite, c.danger, c.risque, c.gravite_Ex,
-        c.frequence_Ex, c.prevExistante, c.gravite_Mo, c.frequence_Mo, c.prevMiseEnOeuvre, c.pas))
-        .sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
 
-      console.log(this.elements.length);
-
-      this.mdbTable.setDataSource(this.elements);
-      this.elements = this.mdbTable.getDataSource();
-      this.previous = this.mdbTable.getDataSource();
-      this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
-      this.mdbTablePagination.calculateFirstItemIndex();
-      this.mdbTablePagination.calculateLastItemIndex();
-      this.cdRef.detectChanges();
-    }
-    );
-*/
   }
 
   afficheListeDuerParCriticite(crit: number) {
