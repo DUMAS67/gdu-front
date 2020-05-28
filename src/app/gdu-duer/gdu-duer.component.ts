@@ -13,7 +13,7 @@ import { GraviteVm } from '../domains/Gravite';
 import { FrequenceVm } from '../domains/FrequenceVm';
 import { DuerFront } from '../domains/DuerFront';
 import { PasVm } from '../domains/PasVm';
-import html2canvas from 'html2canvas';
+
 import * as jsPDF from 'jspdf';
 
 

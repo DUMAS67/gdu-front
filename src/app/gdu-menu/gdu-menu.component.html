@@ -20,22 +20,26 @@
 
     <!-- Links -->
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
+      <li *ngIf="!statutConnexion" class="nav-item">
         <a routerLinkActive="active" routerLink="/gdu/evrp" class="nav-link waves-light" mdbWavesEffect><b>EVRP</b><span
             class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
+      <li *ngIf="!statutConnexion" class="nav-item">
         <a routerLinkActive="active" routerLink="/gdu/duer" class="nav-link waves-light" mdbWavesEffect><b>DUER</b></a>
       </li>
-      <li class="nav-item">
+      <li *ngIf="!statutConnexion" class="nav-item">
         <a routerLinkActive="active" routerLink="/gdu/prev" class="nav-link waves-light" mdbWavesEffect><b>Plan de
             Prévention</b></a>
       </li>
-      <li class="nav-item">
+      <li *ngIf="!statutConnexion" class="nav-item">
         <a routerLinkActive="active" routerLink="/gdu/pas" class="nav-link waves-light" mdbWavesEffect><b>Plan
             d'Action</b></a>
       </li>
 
+      <li *ngIf="!statutConnexion" class="nav-item">
+        <a routerLinkActive="active" routerLink="/gdu/cot" class="nav-link waves-light" mdbWavesEffect><b>
+            Cotation</b></a>
+      </li>
 
       <!-- Dropdown -->
       <li class="nav-item dropdown" dropdown>
@@ -44,10 +48,11 @@
         <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
           <a class="dropdown-item waves-light" routerLinkActive="active" routerLink="/gdu/def" mdbWavesEffect
             href="#">Définitions</a>
-          <a class="dropdown-item waves-light" routerLinkActive="active" routerLink="/gdu/cot" mdbWavesEffect
-            href="#">Grille de Cotation</a>
-        </div>
+                  </div>
       </li>
+<!-- Dropdown -->
+
+
       <!-- Dropdown -->
       <li class="nav-item dropdown" dropdown>
         <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
@@ -65,7 +70,7 @@
       <li *ngIf="statutConnexion">
         <div class="nav-item">
           <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-            mdbWavesEffect (click)="frame.show()" size="sm">Connexion</button>
+            mdbWavesEffect (click)="frame.show(); deconectCol()" size="sm">Connexion</button>
         </div>
       </li>
       <!-- Modal depour l'identification -->
@@ -88,11 +93,11 @@
                 <label for="defaultForm-email">Email</label>
                 <mdb-error
                   *ngIf="loginFormModalEmail.invalid && (loginFormModalEmail.dirty || loginFormModalEmail.touched)">
-                  Input invalid
+                  Données invalides
                 </mdb-error>
                 <mdb-success
-                  *ngIf="loginFormModalEmail.valid && (loginFormModalEmail.dirty || loginFormModalEmail.touched)">Input
-                  valid
+                  *ngIf="loginFormModalEmail.valid && (loginFormModalEmail.dirty || loginFormModalEmail.touched)">
+                  Données invalides
                 </mdb-success>
               </div>
 
@@ -103,11 +108,11 @@
                 <label for="defaultForm-pass">Mot de Passe</label>
                 <mdb-error
                   *ngIf="loginFormModalPassword.invalid && (loginFormModalPassword.dirty || loginFormModalPassword.touched)">
-                  Input invalid
+                  Données invalides
                 </mdb-error>
                 <mdb-success *ngIf="loginFormModalPassword.valid && (loginFormModalPassword.dirty ||
                   loginFormModalPassword.touched)">
-                  Input valid
+                  Données invalides
                 </mdb-success>
               </div>
 
@@ -140,8 +145,40 @@
       <li *ngIf="!statutConnexion">
         <div class="nav-item">
           <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-            mdbWavesEffect (click)="seDeconnecter()" size="sm">Deconnexion</button>
+            mdbWavesEffect class="texteenblanc" (click)="seDeconnecter()" size="sm">Deconnexion</button>
         </div>
+      </li>
+      <li *ngIf="!statutConnexion">
+        <div class="nav-item" >
+          <button type="button" class ="texteenblanc" mdbBtn color="green" rounded="true" data-toggle="modal" data-target="#basicExample"
+            mdbWavesEffect (click)="basicModalDuer.show()" size="sm">Duer?</button>
+        </div>
+
+        <!-- Début Modal Renseignement Duer -->
+        <div mdbModal #basicModalDuer="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+          aria-labelledby="myBasicModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-side modal-top-right" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModalDuer.hide()">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">Renseignement Duer</h4>
+              </div>
+              <div class="modal-body">
+                <p>Date de Création du DUER :{{listeCrea[0].date}}</p>
+                <p>Date de l'avant-dernière modification du DUER : {{listeCrea[1].date}}</p>
+                <p>Date de dernière modification du DUER : {{listeCrea[2].date}}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                  (click)="basicModalDuer.hide()" mdbWavesEffect>Fermer</button>
+                    </div>
+            </div>
+          </div>
+        </div>
+        <!-- Fin Modal Renseignement Duer -->
+
       </li>
     </ul>
 

@@ -9,6 +9,7 @@ import { CriticiteVm } from './domains/CriticiteVm';
 import { GraviteVm } from './domains/Gravite';
 import { FrequenceVm } from './domains/FrequenceVm';
 import { ActivitesVm } from './domains/ActivitesVm';
+import { CreationVm } from './domains/CreationVm';
 import { DuerVM } from './domains/DuerVM';
 import { PasVm } from './domains/PasVm';
 import { Duer } from './domains/Duer';
@@ -17,6 +18,7 @@ import { DuerFront } from './domains/DuerFront';
 import { tap } from 'rxjs/operators';
 import { Ut } from './environments/Ut';
 import { PasFront } from './domains/PasFront';
+import { FnParam } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'
@@ -72,6 +74,10 @@ export class DataService {
   subjectActDuerFront = new Subject<DuerFront[]>();
   subjectActPas = new Subject<PasVm[]>();
   listeDuerFrontParPareto: Observable<DuerFront[]>;
+  date3: string;
+  dateR: string;
+  dateString: string;
+  crea: CreationVm;
 
   constructor(private http: HttpClient) {
 
@@ -97,7 +103,7 @@ export class DataService {
     this.http.get<DangersVm[]>(this.url_gdu + 'dangers')
       .subscribe(
         list3 => {
-          this.subjectActDanger.next(list3);// implémente la liste de la base dans le subject -> subject est réinitialisé
+          this.subjectActDanger.next(list3); // implémente la liste de la base dans le subject -> subject est réinitialisé
           this.listeD = of(list3); //transforme un objet en observable
         });
     return this.listeD;
@@ -108,7 +114,7 @@ export class DataService {
     console.log('AfficherListe Ut : avant requete http');
     this.http.get<UtVm[]>(this.url_gdu + 'uts').subscribe(
       list => {
-        this.subjectActUt.next(list);// implémente la liste de la base dans le subject -> subject est réinitialisé
+        this.subjectActUt.next(list); // implémente la liste de la base dans le subject -> subject est réinitialisé
         this.listeUt = of(list); //transforme un objet en observable
       });
 
@@ -166,19 +172,19 @@ export class DataService {
 
   afficherListeDuerFront(): Observable<DuerFront[]> {
     this.http.get<DuerFront[]>(this.url_gdu + 'duerf').subscribe(
-    list5 => {
-      this.subjectActDuerFront.next(list5); // implémente la liste de la base dans le subject -> subject est réinitialisé
-      this.listeDuerFront = of(list5); // transforme un objet en observable
-    });
+      list5 => {
+        this.subjectActDuerFront.next(list5); // implémente la liste de la base dans le subject -> subject est réinitialisé
+        this.listeDuerFront = of(list5); // transforme un objet en observable
+      });
 
     return this.listeDuerFront;
   }
 
-afficherListeDuerPareto(): Observable<DuerFront[]> {
+  afficherListeDuerPareto(): Observable<DuerFront[]> {
 
-  this.listeDuerFrontParPareto = this.http.get<DuerFront[]>(this.url_gdu + 'duerf');
-  return this.listeDuerFrontParPareto;
-}
+    this.listeDuerFrontParPareto = this.http.get<DuerFront[]>(this.url_gdu + 'duerf');
+    return this.listeDuerFrontParPareto;
+  }
 
   afficherListeDuerFrontParCriticite(crit: number): Observable<DuerFront[]> {
     console.log(crit);
@@ -281,6 +287,10 @@ afficherListeDuerPareto(): Observable<DuerFront[]> {
 
   }
 
+  /*  afficher la liste des créations */
+  afficherListeCrea(): Observable<CreationVm[]> {
+    return this.http.get<CreationVm[]>(this.url_gdu + 'creas');
+  }
 
   creerUt(newUt: string): string {
     const urlPostUt = this.url_gdu + 'ut?nom=' + newUt;
@@ -651,6 +661,61 @@ afficherListeDuerPareto(): Observable<DuerFront[]> {
       return '';
     }
   }
+
+
+
+  modifDateDuer2(date2: string): string {
+
+    const urlGetModifDateDuer2 = this.url_gdu + 'creatp?id=2&date=' + date2;
+
+    this.http.post(urlGetModifDateDuer2, {}, { responseType: 'text' }).
+      subscribe(
+        (data: any) => {
+          console.log(data);
+          return data;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        });
+    return '';
+  }
+
+  modifDateDuer3(date3: string): string {
+
+    const urlGetModifDateDuer3 = this.url_gdu + 'creatp?id=3&date=' + date3;
+
+    this.http.post(urlGetModifDateDuer3, {}, { responseType: 'text' }).
+      subscribe(
+        (data: any) => {
+          console.log(data);
+          return data;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          return error;
+        });
+    return '';
+
+  }
+
+  trouverDateAnterieure(): Observable<CreationVm> {
+    const urlGetTrouveDateDuer = this.url_gdu + 'creat?id=3';
+    return this.http.get<CreationVm>(urlGetTrouveDateDuer);
+   }
+
+  modifDateDuer1(date3: string) {
+   this.trouverDateAnterieure()
+    .subscribe((a: CreationVm) => {
+    this.dateR = a.date;
+    console.log('ffff ' +this.dateR)
+    this.modifDateDuer2(this.dateR);
+    this.modifDateDuer3(date3);
+    });
+   console.log('rrr' + this.dateR);
+
+  }
+
 
 }
 

@@ -515,23 +515,4 @@ export class GduEvrpComponent implements OnInit {
     this.creaEvrp2Ok = false;
   }
 }
-/* this.ut1 = new UtVm(this.creaEvrp1.id_UT, this.trouverUt1(this.creaEvrp1.id_UT));
-     console.log(this.ut1.nom);
-     this.lieu1 = new LieuVm(this.creaEvrp1.id_lieu, this.trouverLieu1(this.creaEvrp1.id_lieu));
-     this.activite1 = new ActivitesVm(this.creaEvrp1.id_activite, this.trouverActivite1(this.creaEvrp1.id_activite));
-     this.danger1 = new DangersVm(this.creaEvrp1.id_danger, this.trouverDanger1(this.creaEvrp1.id_danger));
-     this.risque1 = new RisquesVm(this.creaEvrp1.id_risque, this.trouverRisque1(this.creaEvrp1.id_risque));
-     this.gr1 = new GraviteVm(this.creaEvrp1.id_gravEx, this.trouverGravite1(this.creaEvrp1.id_gravEx));
-     this.fr1 = new FrequenceVm(this.creaEvrp1.id_FreqEx, this.trouverFrequence1(this.creaEvrp1.id_FreqEx));
-     this.cr1 = new CriticiteVm(this.creaEvrp1.id_CritEx, this.trouverCriticite1(this.creaEvrp1.id_CritEx));
-     this.prev1 = this.creaEvrp1.prevEx;
-     this.gr1o = new GraviteVm(this.creaEvrp1.id_gravMo, this.trouverGravite1(this.creaEvrp1.id_gravMo));
-     this.fr1o = new FrequenceVm(this.creaEvrp1.id_FreqMo, this.trouverFrequence1(this.creaEvrp1.id_FreqMo));
-     this.cr1o = new CriticiteVm(this.creaEvrp1.id_CritMo, this.trouverCriticite1(this.creaEvrp1.id_CritMo));
-     this.prev1o = this.creaEvrp1.prevMo;*/
-/*this.duerB1 = new Duer(null, this.ut1, this.lieu1, this.activite1, this.danger1,
-this.risque1, this.gr1, this.fr1, this.cr1, this.prev1, this.gr1o,
-this.fr1o, this.cr1o, this.prev1o, null);
-console.log(this.duerB1);
 
-this.dataService.creerDuer(this.duerB1);*/

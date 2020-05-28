@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Collaborateur } from '../auth.domains';
 import { CookieService } from 'ngx-cookie-service';
+import { CreationVm } from '../domains/CreationVm';
+import { DataService } from '../data.service';
 
 
 
@@ -18,13 +20,17 @@ export class GduMenuComponent implements OnInit {
   collaborateurConnexion: Collaborateur;
   collaborateur: Collaborateur = new Collaborateur({});
   err: boolean;
-
+  dateDuer: Date;
   connexionBaseAdmin: boolean;
   connexionBaseUser: boolean;
   statutConnexion: boolean;
   profil: string;
+  listeCrea$ = this.dataService.afficherListeCrea();
+  listeCrea: CreationVm[];
 
-  constructor(private _authSrv: AuthService, private _router: Router, private _cookieService: CookieService) { }
+
+  constructor(private _authSrv: AuthService, private dataService: DataService,
+    private _router: Router, private _cookieService: CookieService) { }
 
   ngOnInit() {
     this.connexionBaseAdmin = false;
@@ -33,6 +39,8 @@ export class GduMenuComponent implements OnInit {
     /*this.collaborateurConnexion = JSON.parse(this._cookieService.get('col'));
     if (this.collaborateurConnexion === null) {this.statutConnexion = true; }
     else {this.statutConnexion = false; }*/
+
+
 
     this.validatingForm = new FormGroup({
       loginFormModalEmail: new FormControl('', Validators.email),
@@ -69,14 +77,16 @@ export class GduMenuComponent implements OnInit {
           //console.log('profil : ' + this.profil);
         console.log('collaborateurConnexion : ' + this.collaborateurConnexion);
         console.log('collaborateurConnexion.roles : ' + this.collaborateurConnexion.roles);
-
         console.log('connexionBaseAdmin : ' + this.connexionBaseAdmin);
         console.log('connexionBaseUser : ' + this.connexionBaseUser);
-
         this._router.navigate(['/gdu']);
-
+        this.listeCrea$.subscribe((param: CreationVm[]) => {
+          this.listeCrea = param.map(a => a);
+        }
+        );
+        this.dateDuer = new Date();
+        this.dataService.modifDateDuer1(this.dateDuer.toLocaleString());
         },
-
         // en cas d'erreur, affichage d'un message d'erreur
         err => { this.err = true; }
       );
@@ -87,27 +97,27 @@ export class GduMenuComponent implements OnInit {
     //console.log('profil : ' + this.profil);
     console.log('collaborateurConnexion : ' + this.collaborateurConnexion);
     console.log('collaborateurConnexion.roles : ' + this.collaborateurConnexion.roles);
-
     console.log('connexionBaseAdmin : ' + this.connexionBaseAdmin);
     console.log('connexionBaseUser : ' + this.connexionBaseUser);
+
+
   }
-
-
-  /*seConnecter() {
-    console.log(this.loginFormModalEmail.value);
-    console.log(this.loginFormModalPassword.value);
-
-
-  }*/
+deconectCol() {
+  this._authSrv.seDeconnecter();
+  this.collaborateurConnexion = null;
+}
 
   seDeconnecter() {
+
     console.log('111' + this.collaborateurConnexion.nom);
     this._authSrv.seDeconnecter();
     console.log('222' + this.collaborateurConnexion.nom);
     this.statutConnexion = true;
     console.log('*Deconnexion&');
     this.collaborateurConnexion = null;
-    this._router.navigate(['/gdu']);
+    this._router.navigate(['/gdu/deconnexion']);
+    this.connexionBaseAdmin = false;
+    this.connexionBaseUser = false;
 
   }
 }
