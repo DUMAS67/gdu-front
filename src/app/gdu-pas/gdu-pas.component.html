@@ -40,16 +40,16 @@
 
     <div *ngIf="dg.dirty" class="col-2">
       <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-        (click)="afficheListePasParDanger(dg.value) ">Selectionner Danger</button>
+        (click)="afficheListePasParDanger(dg.value); dg.reset('') ">Selectionner Danger</button>
     </div>
     <div *ngIf="rq.dirty" class="col-2">
       <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-        (click)="afficheListePasParRisque(rq.value)">Selectionner Risque</button>
+        (click)="afficheListePasParRisque(rq.value); rq.reset('')">Selectionner Risque</button>
     </div>
 
     <div *ngIf="qui.dirty" class="col-2">
       <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-        (click)="afficheListePasParQui(qui.value)">Selectionner Qui?</button>
+        (click)="afficheListePasParQui(qui.value); qui.reset('')">Selectionner Qui?</button>
     </div>
     <!-- Fin Sélection -->
 
@@ -83,9 +83,9 @@
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
               {{el.delai | date :"dd/MM/yyyy"}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-              <form>
-                <mdb-checkbox [checked]=el.etat [default]="true"></mdb-checkbox>
-              </form>
+
+                <i *ngIf="el.etat" class="fas fa-check"></i>
+
             </td>
 
             <!-- Material unchecked -->

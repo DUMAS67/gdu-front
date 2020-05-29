@@ -174,6 +174,19 @@ export class GduPasComponent implements OnInit, AfterViewInit {
 
   raffraichirPas() {
    this.dataService.afficherListePas();
+   this.listeRisques$.subscribe((param: RisquesVm[]) => {
+    this.listeRisques = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+  }
+  );
+
+   this.listeDanger$.subscribe((param: DangersVm[]) => {
+    this.listeDanger = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+  }
+  );
+   this.listeQui$.subscribe((param: string[]) => {
+    this.listeQui = param.sort((a, b) => (a.charCodeAt(0) - b.charCodeAt(0)));
+  }
+  );
   }
 
   detruirePas1(id: number, iduer: number) {

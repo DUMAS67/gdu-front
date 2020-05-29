@@ -45,15 +45,15 @@
     <div class="col-1"></div>
     <div *ngIf="ut.dirty" class="col-2">
       <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-        (click)="afficheListeDuerParUt(ut.value)">Selectionner UT</button>
+        (click)="afficheListeDuerParUt(ut.value); ut.reset('')">Selectionner UT</button>
     </div>
     <div *ngIf="lieu.dirty" class="col-2">
       <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-        (click)="afficheListeDuerParLieu(lieu.value)">Selectionner Lieu</button>
+        (click)="afficheListeDuerParLieu(lieu.value); lieu.reset('')">Selectionner Lieu</button>
     </div>
     <div *ngIf="crit.dirty" class="col-2">
       <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-        (click)="afficheListeDuerParCriticite(crit.value)">Selectionner Criticite</button>
+        (click)="afficheListeDuerParCriticite(crit.value); crit.reset('')">Selectionner Criticite</button>
     </div>
   </div>
   <!-- Fin Sélection -->

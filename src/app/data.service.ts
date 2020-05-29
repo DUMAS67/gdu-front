@@ -31,6 +31,7 @@ export class DataService {
   url_gdu = 'http://localhost:8080/';
   listeR: Observable<RisquesVm[]>;
   listeD: Observable<DangersVm[]>;
+  listeUts: Observable<UtVm[]>;
   listeUt: Observable<UtVm[]>;
   listeLieu: Observable<LieuVm[]>;
   listeCriticite: Observable<number[]>;
@@ -115,10 +116,10 @@ export class DataService {
     this.http.get<UtVm[]>(this.url_gdu + 'uts').subscribe(
       list => {
         this.subjectActUt.next(list); // implémente la liste de la base dans le subject -> subject est réinitialisé
-        this.listeUt = of(list); //transforme un objet en observable
+        this.listeUts = of(list); //transforme un objet en observable
       });
 
-    return this.listeUt;
+    return this.listeUts;
   }
 
   afficherListeLieu(): Observable<LieuVm[]> {

@@ -13,7 +13,6 @@ import { GraviteVm } from '../domains/Gravite';
 import { FrequenceVm } from '../domains/FrequenceVm';
 import { DuerFront } from '../domains/DuerFront';
 import { PasVm } from '../domains/PasVm';
-
 import * as jsPDF from 'jspdf';
 
 
@@ -53,7 +52,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
 
 
   constructor(private dataService: DataService, private _router: Router, private _cookieService: CookieService,
-    private cdRef: ChangeDetectorRef, private _authSrv: AuthService) { }
+              private cdRef: ChangeDetectorRef, private _authSrv: AuthService) { }
 
   collaborateurConnecte: Collaborateur;
   listeLieu$ = this.dataService.afficherListeLieuDansDuer();
@@ -90,13 +89,11 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     }
     );
 
-
-
-
     this.listeLieu$.subscribe((param: LieuVm[]) => {
       this.listeLieu = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
     }
     );
+
     this.listeUt$.subscribe((param: UtVm[]) => {
       this.listeUt = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
     }
@@ -116,6 +113,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     );
 
     this.dataService.afficherListeDuerFront(); //initialisation subject
+
   }
 
   ngAfterViewInit() {
@@ -126,7 +124,8 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
 
 
   }
-
+/* fonction qui n'affiche que les bouttons de
+modifications dans le cas d'un administrateur */
   afficherModif(): boolean {
 
     this.collaborateurConnecte = JSON.parse(this._cookieService.get('col'));
@@ -141,7 +140,19 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
 
     this.dataService.afficherListeDuerFront();
 
+    this.listeUt$.subscribe((param: UtVm[]) => {
+      this.listeUt = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+    }
+    );
 
+    this.listeLieu$.subscribe((param: LieuVm[]) => {
+      this.listeLieu = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+    }
+    );
+    this.listeCriticite$.subscribe((param: number[]) => {
+      this.listeCriticite = param.sort((a, b) => (a - b));
+    }
+    );
   }
 
   afficheListeDuerParCriticite(crit: number) {
@@ -251,8 +262,11 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
   detruireEvrp1(id: number, idPas: number) {
     console.log('id a détruire : ' + id);
     console.log('idPas : ' + idPas);
-    if (idPas != null) { this.dataService.detruireEvrp(id, idPas); } else
-    { this.dataService.detruireEvrp(id, -1); }
+    if (idPas != null) { this.dataService.detruireEvrp(id, idPas);
+                          } else
+    { this.dataService.detruireEvrp(id, -1);
+      }
+
   }
 
   impression(entete: string) {

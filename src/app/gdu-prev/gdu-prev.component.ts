@@ -123,6 +123,18 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
 
   rafraichirSelection() {
     this.dataService.afficherListeDuerFront(); //initialisation subject
+    this.listeLieu$.subscribe((param: LieuVm[]) => {
+      this.listeLieu = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+    }
+    );
+    this.listeUt$.subscribe((param: UtVm[]) => {
+      this.listeUt = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+    }
+    );
+    this.listeCriticite$.subscribe((param: number[]) => {
+      this.listeCriticite = param.filter(a => a).sort((a, b) => (a - b));
+    }
+    );
 
   }
   affichePareto() {
