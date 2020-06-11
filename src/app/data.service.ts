@@ -19,7 +19,7 @@ import { tap } from 'rxjs/operators';
 import { Ut } from './environments/Ut';
 import { PasFront } from './domains/PasFront';
 import { FnParam } from '@angular/compiler/src/output/output_ast';
-
+import {environment} from './environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -28,7 +28,7 @@ import { FnParam } from '@angular/compiler/src/output/output_ast';
 
 export class DataService {
 
-  url_gdu = 'http://localhost:8080/';
+  url_gdu = environment.baseUrl;
   listeR: Observable<RisquesVm[]>;
   listeD: Observable<DangersVm[]>;
   listeUts: Observable<UtVm[]>;
