@@ -5,8 +5,8 @@ import { config } from './common';
 
 export const environment = Object.assign({
   production: false,
-  baseUrl: 'http://localhost:8080/'
-}, config);
+  baseUrl: 'http://localhost:8080/' // mettre ici quand serveur l'adresse du serveur
+}, config); //  mettre le chemin réel ex : http:/192... ou http:// DESKTOPN5-EX3
 
 /*
  * In development mode, to ignore zone related error stack frames such as

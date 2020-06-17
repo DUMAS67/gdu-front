@@ -20,6 +20,7 @@ import { Ut } from './environments/Ut';
 import { PasFront } from './domains/PasFront';
 import { FnParam } from '@angular/compiler/src/output/output_ast';
 import {environment} from './environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,7 +29,7 @@ import {environment} from './environments/environment';
 
 export class DataService {
 
-  url_gdu = environment.baseUrl;
+  url_gdu = environment.baseUrl; // pour un serveur, mettre le chemin réel ex : http:/192... ou http:// DESKTOPN5-EX3
   listeR: Observable<RisquesVm[]>;
   listeD: Observable<DangersVm[]>;
   listeUts: Observable<UtVm[]>;
@@ -290,6 +291,8 @@ export class DataService {
 
   /*  afficher la liste des créations */
   afficherListeCrea(): Observable<CreationVm[]> {
+    console.log('url_gdu = ' + this.url_gdu);
+    console.log ('environment.baseUrl = ' + environment.baseUrl);
     return this.http.get<CreationVm[]>(this.url_gdu + 'creas');
   }
 

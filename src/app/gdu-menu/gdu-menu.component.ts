@@ -56,6 +56,7 @@ export class GduMenuComponent implements OnInit {
     return this.validatingForm.get('loginFormModalPassword');
   }
 
+
   afficherCotation() {
 
     this._router.navigate(['/gdu/cot']);
@@ -63,7 +64,7 @@ export class GduMenuComponent implements OnInit {
 
   connecter() {
 
-    console.log(this.loginFormModalEmail.value + '');
+    console.log('loginFormModalEmail.value = ' + this.loginFormModalEmail.value + '');
 
     this._authSrv.connecter(this.loginFormModalEmail.value + '', this.loginFormModalPassword.value + '')
       .subscribe(
@@ -118,7 +119,9 @@ deconectCol() {
     this._router.navigate(['/gdu/deconnexion']);
     this.connexionBaseAdmin = false;
     this.connexionBaseUser = false;
-
+    this.loginFormModalEmail.setValue('');
+    this.loginFormModalPassword.setValue('');
+    console.log('Deconnect loginFormModalEmail.value = ' + this.loginFormModalEmail.value + '');
   }
 }
 
