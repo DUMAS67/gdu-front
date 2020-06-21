@@ -8,6 +8,11 @@ import { FrequenceVm } from './FrequenceVm';
 import { CriticiteVm } from './CriticiteVm';
 import { PasVm } from './PasVm';
 
+/* Description d'une classe Duer
+qui renseigne, modifie, récupère les données Evrp
+(format tableau d'objets)
+de la base de données gdu-bd*/
+
 export class Duer {
 
 

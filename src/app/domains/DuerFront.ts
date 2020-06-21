@@ -1,6 +1,9 @@
+/* Description d'une classe Duer
+qui renseigne, modifie, récupère les données Evrp
+(format présentation pour interface utilisateur)
+de la base de données gdu-bd*/
+
 export class DuerFront {
-
-
 
   constructor(
               public id: number,

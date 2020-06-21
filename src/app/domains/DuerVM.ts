@@ -1,3 +1,8 @@
+  /* Description d'une classe DuerVM
+qui renseigne, modifie, récupère les données Evrp
+(format tableau d'identifiants)vde la base de données gdu-bd*/
+
+
 export class DuerVM {
 
 

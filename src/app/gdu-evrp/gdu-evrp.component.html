@@ -5,12 +5,10 @@
     <div class="row">
       <p></p>
     </div>
-    <!-- Default form contact -->
+
     <form #userForm='ngForm' class="">
 
-      <!-- Name -->
-
-      <!-- Unité de Travail -->
+       <!-- Unité de Travail -->
       <div class="row">
         <div class="col-2">Unité de Travail</div>
 
@@ -444,25 +442,25 @@
                       <td align="center" bgcolor="yellow">Conséquences</td>
                     </tr>
                     <tr>
-                      <td align="center">1</td>
+                      <td align="center">{{listeGravite[0].valeur}}</td>
                       <td align="center">Mineure</td>
                       <td>Lésions sans AT</td>
                       <td>Pas ou peu de dommages</td>
                     </tr>
                     <tr>
-                      <td align="center">3</td>
+                      <td align="center">{{listeGravite[1].valeur}}</td>
                       <td align="center">Significative</td>
                       <td>Lésions avec AT sans séquelles</td>
                       <td>Dommages sans arrêt de travail</td>
                     </tr>
                     <tr>
-                      <td align="center">5</td>
+                      <td align="center">{{listeGravite[2].valeur}}</td>
                       <td align="center">Critique</td>
                       <td>Lésions avec AT avec séquelles</td>
                       <td>Dommages réversibles, entraînant des arrêts de travail</td>
                     </tr>
                     <tr>
-                      <td align="center">15</td>
+                      <td align="center">{{listeGravite[3].valeur}}</td>
                       <td align="center">Vitale</td>
                       <td>Lésions pouvant entrainer la mort</td>
                       <td>Dommages irréversibles (incapacité totale ou partielle voire décès)</td>
@@ -476,22 +474,22 @@
                       <td align="center" bgcolor="yellow">Durée</td>
                     </tr>
                     <tr>
-                      <td align="center">1</td>
+                      <td align="center">{{listeFrequence[0].valeur}}</td>
                       <td align="center">Occasionnelle</td>
                       <td>Quelques heures par an</td>
                     </tr>
                     <tr>
-                      <td align="center">2</td>
+                      <td align="center">{{listeFrequence[1].valeur}}</td>
                       <td align="center">Intermittente</td>
                       <td>Quelques heures par mois</td>
                     </tr>
                     <tr>
-                      <td align="center">3</td>
+                      <td align="center">{{listeFrequence[2].valeur}}</td>
                       <td align="center">Fréquente</td>
                       <td>Quelques heures par semaine</td>
                     </tr>
                     <tr>
-                      <td align="center">4</td>
+                      <td align="center">{{listeFrequence[3].valeur}}</td>
                       <td align="center">Continue</td>
                       <td>Quelques heures par jour</td>
                     </tr>
@@ -499,7 +497,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
-                    (click)="basicModal.hide()" mdbWavesEffect>Close</button>
+                    (click)="basicModal.hide()" mdbWavesEffect>Fermer</button>
                 </div>
               </div>
             </div>
@@ -583,10 +581,7 @@
         </div>
         <div *ngIf="creaEvrp1Ok" class="alert danger-color" role="alert">
           {{messageValid}}</div>
-        <!--div *ngIf="creaEvrp1Ok">
-          <button size="sm" mdbBtn color="info" class="align-center" type="button"
-            (click)="reinitialiser()">Réinitialiser</button>
-        </!--div>-->
+
 
       </div>
 
@@ -717,9 +712,10 @@
         <div class="col-md-4"></div>
       </div>
     </form>
-    <!-- Default form contact -->
+
   </div>
 </div>
+<!-- Affichage message quand on est en mode utilisateur -->
 <div *ngIf="!afficherModif()">
   <div class="container">
     <div class=row>

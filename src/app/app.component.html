@@ -4,10 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css">
+
 </head>
 <body>
 <app-gdu-menu></app-gdu-menu>
 <router-outlet></router-outlet>
+<router-outlet name="print"></router-outlet>
 </body>
 <footer>
   <div class="row">
@@ -15,7 +19,7 @@
   </div>
 <div class="row">
   <div class="col-md-10"></div>
-  <button mdbBtn type="button" color="dark-green" mdbWavesEffect (click)="choixSortir()">Sortir</button>
+  <button mdbBtn type="button" color="dark-green" mdbWavesEffect size="sm" (click)="choixSortir()">Accueil</button>
 </div></footer>
 
 </html>

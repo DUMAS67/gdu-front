@@ -2,12 +2,7 @@
   <p></p>
 
 
-  <!-- Default form contact -->
-
-
-  <!-- Name -->
-
-  <!-- Sélection-->
+  <!-- Duer filtré par sélection de critère  : UT, Lieu, Criticité -->
   <div class="row">
     <div class="col-1"><b>DUER</b></div>
     <div class="col-2"><label></label>
@@ -45,18 +40,18 @@
     <div class="col-1"></div>
     <div *ngIf="ut.dirty" class="col-2">
       <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-        (click)="afficheListeDuerParUt(ut.value)">Selectionner UT</button>
+        (click)="afficheListeDuerParUt(ut.value); ut.reset('')">Selectionner UT</button>
     </div>
     <div *ngIf="lieu.dirty" class="col-2">
       <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-        (click)="afficheListeDuerParLieu(lieu.value)">Selectionner Lieu</button>
+        (click)="afficheListeDuerParLieu(lieu.value); lieu.reset('')">Selectionner Lieu</button>
     </div>
     <div *ngIf="crit.dirty" class="col-2">
       <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
-        (click)="afficheListeDuerParCriticite(crit.value)">Selectionner Criticite</button>
+        (click)="afficheListeDuerParCriticite(crit.value); crit.reset('')">Selectionner Criticite</button>
     </div>
   </div>
-  <!-- Fin Sélection -->
+  <!-- Fin Duer filtré par sélection de critère  : UT, Lieu, Criticité -->
   <div class="container">
     <table small="true" mdbTable #tableEl="mdbTable" class="z-depth-1">
       <thead>
@@ -129,8 +124,8 @@
                         <div class="col-2">{{el.id}}</div>
                         <div class="col-1"></div>
                         <div class="col-2">Danger : </div>
-                        <div class="col-1">{{el.danger}}</div>
-                        <div class="col-3"></div>
+                        <div class="col-3">{{el.danger}}</div>
+                        <div class="col-1"></div>
                       </div>
                       <div class="row">
                         <p></p>
@@ -183,32 +178,15 @@
                           <input type="date" ngModel id="pasDelai" name="pasDelai" #pasDelai="ngModel" mdbInput
                             class="form-control mb-4" placeholder="">
                         </div>
-                        <!-- modif de fait ?-->
-                        <!-- div class="col-2">Fait ? :
-                        </div> -->
 
-                        <!-- Default indeterminate -->
-                        <!-- Default unchecked -->
-                        <!--
-                        <div class="col-4">
-                          <input type="checkbox" id="pasEtat" name="pasEtat" ngModel #pasEtat="ngModel">
-
-                        </div> -->
                       </div>
                     </div>
                     <div class="modal-footer">
-                      <!-- Pagination -->
-                      <!--
-                      <button type="button" mdbBtn color="green" class="waves-light" aria-label="Effacer"
-                        mdbWavesEffect>Effacer</button> -->
 
                       <button type="submit" mdbBtn color="red" class="waves-light" aria-label="Creer" mdbWavesEffect
                         (click)="creerPas1(el.id, pasPrev.value, pasBudget.value,pasQui.value, pasDelai.value); basicModal.hide()">
                         Créer</button>
-                      <!--
-                      <button type="button" mdbBtn color="orange" class="waves-light" aria-label="Modifier"
-                        mdbWavesEffect>Modifier</button>
--->
+
                       <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                         (click)="basicModal.hide()" mdbWavesEffect>Fermer</button>
                     </div>
@@ -224,7 +202,7 @@
               *ngIf="afficherModif()" mdbBtn color="orange" outline="true" size="sm" mdbWavesEffect type="button"
               class="m-0 relative waves-light" (click)="basicModal1.show()">Modifier</button>
 
-            <!-- Partie modale Duer-->
+            <!-- Partie modale modification Duer-->
             <form>
               <div mdbModal #basicModal1="mdbModal" class="modal fade" tabindex="-1" role="dialog"
                 aria-labelledby="myBasicModalLabel" aria-hidden="true">
@@ -271,7 +249,7 @@
                       </div>
 
                       <div class="row">
-                        <div class="col-3">Cotation révaluée</div>
+                        <div class="col-3">Cotation réévaluée</div>
                         <div class="col-2">
                           <select ngModel id="newGr" name="newGr" #newGr="ngModel"
                             class="browser-default custom-select mb-4">
@@ -387,7 +365,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" mdbBtn color="primary" class="relative waves-light" aria-label="Close"
-                      (click)="detruireEvrp1(el.id); basicModal2.hide()" mdbWavesEffect>Confirmer</button>
+                      (click)="detruireEvrp1(el.id,el.pas); basicModal2.hide()" mdbWavesEffect>Confirmer</button>
                     <button type="button" mdbBtn color="secondary" class="relative waves-light" mdbWavesEffect
                       (click)="basicModal2.hide()">Fermer</button>
                   </div>

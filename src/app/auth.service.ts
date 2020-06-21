@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
  * @type {Collaborateur}
  */
 const COLLABORATEUR_ANONYME = new Collaborateur({});
-
+const chemin = 'http://DESKTOP-CVAP572:8080/';
 /**
  * Service de gestion de l'authentification.
  */
@@ -119,11 +119,13 @@ export class AuthService {
     };
 
     console.log(`${environment.baseUrl}${environment.apiLogout}`);
-    this._http.post(`${environment.baseUrl}${environment.apiLogout}`, {}).subscribe(
-     () => {this.cookieService.deleteAll(); }
+    this._http.post(`${environment.baseUrl}${environment.apiLogout}`, {}, config).
+    subscribe(
+     () => {this.cookieService.deleteAll();
+            this.cookieService.deleteAll('/gdu'); }
     );
 
-
+    }
 
 
 
@@ -144,5 +146,5 @@ export class AuthService {
                   })
       );
   }*/
-}
+
 }

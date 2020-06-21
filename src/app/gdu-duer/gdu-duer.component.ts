@@ -13,7 +13,6 @@ import { GraviteVm } from '../domains/Gravite';
 import { FrequenceVm } from '../domains/FrequenceVm';
 import { DuerFront } from '../domains/DuerFront';
 import { PasVm } from '../domains/PasVm';
-import html2canvas from 'html2canvas';
 import * as jsPDF from 'jspdf';
 
 
@@ -47,11 +46,13 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
   date: Date;
   page: number;
   nbPage: number;
+  listePareto: DuerFront[];
+
 
 
 
   constructor(private dataService: DataService, private _router: Router, private _cookieService: CookieService,
-    private cdRef: ChangeDetectorRef, private _authSrv: AuthService) { }
+              private cdRef: ChangeDetectorRef, private _authSrv: AuthService) { }
 
   collaborateurConnecte: Collaborateur;
   listeLieu$ = this.dataService.afficherListeLieuDansDuer();
@@ -66,36 +67,40 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
   listeDuerBack: DuerFront[];
   listeCriticite$ = this.dataService.afficherListeCriticite();
   listeCriticite: number[];
+  listePareto$ = this.dataService.afficherListeDuerPareto();
   p: number;
   a: string[] = ['a'];
   listeDuerFront: DuerFront[];
   maxVisibleItems = 10;
 
   ngOnInit() {
+/* Initialisation des listes de données pour le module :
+Duer pour présentation
+Lieu pour sélection
+Unité pour sélection
+Gravité, Fréquence,
+Criticité pour sélection
+*/
 
-    this.listeDuerFront$.subscribe((param: DuerFront[]) => {
+    // Abonnement subject
+    this.dataService.subjectActDuerFront.subscribe((param: DuerFront[]) => {
 
       this.elements = param.map(c => new DuerFront(
         c.id, c.ut, c.lieu, c.activite, c.danger, c.risque, c.gravite_Ex,
         c.frequence_Ex, c.prevExistante, c.gravite_Mo, c.frequence_Mo, c.prevMiseEnOeuvre, c.pas))
         .sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
-      console.log(this.elements.length);
       this.mdbTable.setDataSource(this.elements);
-      console.log('1 ' + this.elements.length);
       this.elements = this.mdbTable.getDataSource();
-      console.log('2 ' + this.elements.length);
       this.previous = this.mdbTable.getDataSource();
-      console.log('3 ' + this.elements.length);
+
     }
     );
-
-
-
 
     this.listeLieu$.subscribe((param: LieuVm[]) => {
       this.listeLieu = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
     }
     );
+
     this.listeUt$.subscribe((param: UtVm[]) => {
       this.listeUt = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
     }
@@ -113,17 +118,19 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
       this.listeCriticite = param.sort((a, b) => (a - b));
     }
     );
+
+    this.dataService.afficherListeDuerFront(); //initialisation subject
+
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit() { // Pagination du tableau de présentation
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
-
-
   }
-
+/* fonction qui n'affiche que les bouttons de
+modifications dans le cas d'un administrateur */
   afficherModif(): boolean {
 
     this.collaborateurConnecte = JSON.parse(this._cookieService.get('col'));
@@ -134,28 +141,30 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     return a * b;
   }
 
+  /* Raffraichit les données des listes
+  Unité de travail
+  Lieu
+  Criticité */
   rafraichirSelection() {
-    this.listeDuerFront$.subscribe((param: DuerFront[]) => {
 
-      this.elements = param.map(c => new DuerFront(
-        c.id, c.ut, c.lieu, c.activite, c.danger, c.risque, c.gravite_Ex,
-        c.frequence_Ex, c.prevExistante, c.gravite_Mo, c.frequence_Mo, c.prevMiseEnOeuvre, c.pas))
-        .sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
+    this.dataService.afficherListeDuerFront();
 
-      console.log(this.elements.length);
-
-      this.mdbTable.setDataSource(this.elements);
-      this.elements = this.mdbTable.getDataSource();
-      this.previous = this.mdbTable.getDataSource();
-      this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
-      this.mdbTablePagination.calculateFirstItemIndex();
-      this.mdbTablePagination.calculateLastItemIndex();
-      this.cdRef.detectChanges();
+    this.listeUt$.subscribe((param: UtVm[]) => {
+      this.listeUt = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
     }
     );
 
+    this.listeLieu$.subscribe((param: LieuVm[]) => {
+      this.listeLieu = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+    }
+    );
+    this.listeCriticite$.subscribe((param: number[]) => {
+      this.listeCriticite = param.sort((a, b) => (a - b));
+    }
+    );
   }
-
+/* Affiche le Duer sélectionné par une valeur de criticité */
+// crit = valeur de critère de sélection
   afficheListeDuerParCriticite(crit: number) {
 
 
@@ -169,9 +178,11 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
       this.mdbTablePagination.calculateFirstItemIndex();
       this.mdbTablePagination.calculateLastItemIndex();
       this.cdRef.detectChanges();
-      this.entetePdf = 'par Criticité :  ' + crit;
+      this.entetePdf = ' par Criticité :  ' + crit;
     });
   }
+  /* Affiche le Duer sélectionné par une valeur d'Unité de Travail */
+  // ut = valeur ut de sélection
   afficheListeDuerParUt(ut: number) {
 
     this.listeDuerFrontParUt$ = this.dataService.afficherListeDuerFrontParUt(ut);
@@ -185,10 +196,11 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
       this.mdbTablePagination.calculateFirstItemIndex();
       this.mdbTablePagination.calculateLastItemIndex();
       this.cdRef.detectChanges();
-      this.entetePdf = 'par Unité de Travail :  ' + this.listeDuerFrontParUt[0].ut;
+      this.entetePdf = ' par Unité de Travail :  ' + this.listeDuerFrontParUt[0].ut;
     });
   }
-
+/* Affiche le Duer sélectionné par une valeur de Lieu*/
+// lieu = valeur de lieu de sélection
   afficheListeDuerParLieu(lieu: number) {
 
     this.listeDuerFrontParLieu$ = this.dataService.afficherListeDuerFrontParLieu(lieu);
@@ -202,14 +214,16 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
       this.mdbTablePagination.calculateFirstItemIndex();
       this.mdbTablePagination.calculateLastItemIndex();
       this.cdRef.detectChanges();
-      this.entetePdf = 'par Lieu :  ' + this.listeDuerFrontParLieu[0].lieu;
+      this.entetePdf = ' par Lieu :  ' + this.listeDuerFrontParLieu[0].lieu;
     });
   }
+
+  /* Affiche le Duer sélectionné par un Pareto */
   affichePareto() {
 
-
-    this.listeDuerFront$.subscribe((param: DuerFront[]) => {
-      this.entetePdf = 'par Pareto';
+    this.dataService.afficherListeDuerFront();
+    this.listePareto$.subscribe((param: DuerFront[]) => {
+      this.entetePdf = ' par Pareto';
       let sumCrit: number = param.map(a => {
         const criticite = a.gravite_Ex * a.frequence_Ex;
         a['criticite_Ex'] = criticite;
@@ -231,19 +245,23 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
           return sommeCumul <= sumCrit;
         });
     });
+    this.mdbTable.setDataSource(this.elements);
     this.elements = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
     this.mdbTablePagination.calculateFirstItemIndex();
+    console.log('MaxVisible :' + this.maxVisibleItems);
     this.mdbTablePagination.calculateLastItemIndex();
-    this.entetePdf = 'par Pareto :  ';
+    this.entetePdf = ' par Pareto :  ';
     this.cdRef.detectChanges();
-
   }
+
   critValeur(valeur1: number, valeur2: number): number {
     return valeur1 * valeur2;
   }
-
+// Calcule la valeur de criticite
+// valeur1 = rang de la liste de sélection de Gravité
+// valeur2 = rang de la liste de sélection des Fréquences
   critIndice(valeur1: number, valeur2: number): number {
 
     console.log('Valeur de la Gravité  :' + this.listeGravite[valeur1 - 1].valeur);
@@ -253,18 +271,33 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     return this.criticite;
   }
 
+  // Modifie le contenu des Evrp
+  // id = numéro d'id du Duer à modifier
+  // gr = valeur de gravité à modifer dans l'Evrp pour la prévention existante
+  // fr = valeur de fréquence à modifier dans l'Evrp
+  // prev = nouvelle prévention pour l'EVrp
+  // gro = valeur de gravité à modifer dans l'Evrp pour la prévention à mettre en oeuvre
+  // fr = valeur de fréquence à modifier dans l'Evrp pour la prévention à mettre en oeuvre
+   // prevMo = nouvelle prévention à mettre en oeuvre pour l'EVrp
   modifierDuer1(id: number, gr: number, fr: number, prev: string, grMo: number, frMo: number, prevMo: string) {
 
     this.dataService.modifDuer(id, gr, fr, prev, grMo, frMo, prevMo);
   }
-
-  detruireEvrp1(id: number) {
+// Détruit une ligne d'Evrp
+// id = numéro d'identification de l'Evrp dans le DUER
+// idPas = numéro d'identification du Plan d'Acrion Spécifique pour l' id de l'Evrp dans le DUER
+  detruireEvrp1(id: number, idPas: number) {
     console.log('id a détruire : ' + id);
-    this.dataService.detruireEvrp(id);
-  }
+    console.log('idPas : ' + idPas);
+    if (idPas != null) { this.dataService.detruireEvrp(id, idPas);
+                          } else
+    { this.dataService.detruireEvrp(id, -1);
+      }
 
+  }
+// Imprime le haut et bas de Page du Duer
+// entete = valeur définissant le type de Duer à afficher selon les sélections
   impression(entete: string) {
-    // tslint:disable-next-line: no-unused-expression
 
     this.page = 1;
     this.nbPage = (this.elements.length / 17);
@@ -303,7 +336,10 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     doc.save('duer.pdf');
     this.entetePdf = '';
   }
-
+// Imprime le contenu du Duer
+// index = indice du tableau de données
+// doc1 = fichier PDF qui reçoit les données
+// pas = saut de ligne
   imprimerLigne(index: number, doc1: jsPDF, pas: number) {
     doc1.text(this.elements[index].id.toString(), 10, 30 + (10 * (pas % 17)));
     doc1.text(this.elements[index].ut, 15, 30 + (10 * (pas % 17)));
@@ -342,6 +378,9 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
     }
 
   }
+
+  // Imprime les titres du tableau du Duer
+  // doc2 = fichier PDF qui reçoit les données
   imprimerLigneEntete(doc2: jsPDF) {
     doc2.text(this.headElementsPDF[0], 10, 20);
     doc2.text(this.headElementsPDF[1], 15, 20);
@@ -360,6 +399,7 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
 
   };
 
+  // Crée un Plan d'action Spécifique
   creerPas1(
     idDuer: number,
     action: string,

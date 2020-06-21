@@ -5,6 +5,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './gdu-def.component.html',
   styleUrls: []
 })
+
+// Affiche des définitions utiles pour la compréhension du Duer
+
 export class GduDefComponent implements OnInit {
 
   constructor() { }

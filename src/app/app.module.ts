@@ -24,6 +24,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 
 
+
 const ROUTES: Routes = [
   { path: 'gdu', component: GduPanneauComponent },
 
@@ -37,6 +38,7 @@ const ROUTES: Routes = [
   { path: 'gdu/prev-reg', component: GduPrevRegComponent },
   { path: 'gdu/pch-reg', component: GduPchRegComponent },
   { path: 'gdu/def', component: GduDefComponent },
+
   { path: '', redirectTo: '/gdu', pathMatch: 'full' }
 ];
 
@@ -56,7 +58,6 @@ const ROUTES: Routes = [
     GduDefComponent,
     GduPrevRegComponent,
     GduPchRegComponent
-
   ],
   imports: [
     BrowserModule,

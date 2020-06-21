@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 export class AppComponent implements OnInit {
 
-  constructor(private _router: Router, private routeActive: ActivatedRoute) { }
+  constructor(private _router: Router, private authService: AuthService, private routeActive: ActivatedRoute) { }
 
   ngOnInit(): void {
   }
@@ -25,7 +26,11 @@ export class AppComponent implements OnInit {
 
   choixSortir() {
 
-    this._router.navigate(['/gdu/deconnexion']);
+    // Dirige vers la page de connexion
+    this._router.navigate(['/gdu']);
+
+
+
   }
 }
 

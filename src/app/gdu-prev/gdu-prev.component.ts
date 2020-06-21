@@ -13,8 +13,9 @@ import { AuthService } from '../auth.service';
 import { DuerFront } from '../domains/DuerFront';
 import { PasVm } from '../domains/PasVm';
 import * as jsPDF from 'jspdf';
+import { Observable } from 'rxjs';
 
-
+// Composant affichant les données de Prévention du Duer
 @Component({
   selector: 'app-gdu-prev',
   templateUrl: './gdu-prev.component.html',
@@ -56,6 +57,7 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
   date: Date;
   page: number;
   nbPage: number;
+  listePareto$ = this.dataService.afficherListeDuerPareto();
 
   constructor(private dataService: DataService, private _router: Router, private _cookieService: CookieService,
     private cdRef: ChangeDetectorRef, private _authSrv: AuthService) { }
@@ -63,7 +65,8 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    this.listeDuerFront$.subscribe((param: DuerFront[]) => {
+    // Construit la liste générale des Evrp
+    this.dataService.subjectActDuerFront.subscribe((param: DuerFront[]) => {
 
       this.elements1 = param.map(c => new DuerFront(
         c.id, c.ut, c.lieu, c.activite, c.danger, c.risque, c.gravite_Ex,
@@ -74,15 +77,59 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
       this.previous = this.mdbTable.getDataSource();
     }
     );
+
+    this.dataService.afficherListeDuerFront(); //initialisation subject
+
+    // Charge la liste des Lieu contenu dans le Plan de Prévention
+    this.listeLieu$.subscribe((param: LieuVm[]) => {
+      this.listeLieu = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+    }
+    );
+     // Charge la liste des UT contenu dans le Plan de Prévention
+    this.listeUt$.subscribe((param: UtVm[]) => {
+      this.listeUt = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+    }
+    );
+     // Charge la liste des Criticités contenu dans le Plan de Prévention
+    this.listeCriticite$.subscribe((param: number[]) => {
+      this.listeCriticite = param.filter(a => a).sort((a, b) => (a - b));
+    }
+    );
+    // Charge la liste des Gravités
+    this.listeGravite$.subscribe((param: GraviteVm[]) => {
+      this.listeGravite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur));
+    }
+    );
+    // Charge la liste des Fréquences
+    this.listeFrequence$.subscribe((param: FrequenceVm[]) => {
+      this.listeFrequence = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur));
+    }
+    );
   }
 
   ngAfterViewInit() {
+    // Initialisation des critères pour la pagination
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
 
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
 
+
+  }
+  multi(a, b): number {
+    return a * b;
+  }
+
+  // Permet d'afficher les modifications si Administrateur
+  afficherModif(): boolean {
+
+    this.collaborateurConnecte = JSON.parse(this._cookieService.get('col'));
+    return (this.collaborateurConnecte.roles[0] === this.collaborateurConnecte.ADMIN);
+  }
+  // Raffraichie la ligne de sélection et reinitialise les listes de Lieu, UT et Criticité
+  rafraichirSelection() {
+    this.dataService.afficherListeDuerFront(); //initialisation subject
     this.listeLieu$.subscribe((param: LieuVm[]) => {
       this.listeLieu = param.filter(a => a).sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
     }
@@ -96,48 +143,15 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
     }
     );
 
-    this.listeGravite$.subscribe((param: GraviteVm[]) => {
-      this.listeGravite = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur));
-    }
-    );
-    this.listeFrequence$.subscribe((param: FrequenceVm[]) => {
-      this.listeFrequence = param.filter(a => a).sort((a, b) => (a.valeur - b.valeur));
-    }
-    );
-  }
-  multi(a, b): number {
-    return a * b;
   }
 
+  // Affiche le Plan de Prévention en mode Pareto
 
-  afficherModif(): boolean {
-
-    this.collaborateurConnecte = JSON.parse(this._cookieService.get('col'));
-    return (this.collaborateurConnecte.roles[0] === this.collaborateurConnecte.ADMIN);
-  }
-
-  rafraichirSelection() {
-    this.listeDuerFront$.subscribe((param: DuerFront[]) => {
-
-      this.elements1 = param.map(c => new DuerFront(
-        c.id, c.ut, c.lieu, c.activite, c.danger, c.risque, c.gravite_Ex,
-        c.frequence_Ex, c.prevExistante, c.gravite_Mo, c.frequence_Mo, c.prevMiseEnOeuvre, c.pas))
-        .sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
-      this.mdbTable.setDataSource(this.elements1);
-      this.elements1 = this.mdbTable.getDataSource();
-      this.previous = this.mdbTable.getDataSource();
-      this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
-      this.mdbTablePagination.calculateFirstItemIndex();
-      this.mdbTablePagination.calculateLastItemIndex();
-      this.cdRef.detectChanges();
-    }
-    );
-
-  }
   affichePareto() {
 
-
-    this.listeDuerFront$.subscribe((param: DuerFront[]) => {
+    this.dataService.afficherListeDuerFront();
+    this.listePareto$.subscribe((param: DuerFront[]) => {
+      this.entetePdf = ' par Pareto';
       let sumCrit: number = param.map(a => {
         const criticite = a.gravite_Mo * a.frequence_Mo;
         a['criticite_Mo'] = criticite;
@@ -159,16 +173,18 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
           return sommeCumul <= sumCrit;
         });
     });
+    // Initialise les valeurs pour l'affichage de la table
+    this.mdbTable.setDataSource(this.elements1);
     this.elements1 = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
-    this.entetePdf = 'par Pareto';
+    this.entetePdf = ' par Pareto';
     this.cdRef.detectChanges();
 
   }
-
+  // Affiche la liste des Preventions  par le critère UT (ut=indice de la table des UT)
   afficheListeDuerParUt(ut: number) {
 
     this.listeDuerFrontParUt$ = this.dataService.afficherListeDuerFrontParUt(ut);
@@ -184,8 +200,9 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
       this.cdRef.detectChanges();
     });
   }
-  afficheListeDuerParCriticiteMo(crit: number) {
 
+  // Affiche la liste des Preventions  par la criticité (cri=indice de la table Criticité)
+  afficheListeDuerParCriticiteMo(crit: number) {
 
     this.listeDuerFrontParCriticite$ = this.dataService.afficherListeDuerFrontParCriticiteMo(crit);
     this.listeDuerFrontParCriticite$.subscribe((param: DuerFront[]) => {
@@ -200,6 +217,8 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
       this.cdRef.detectChanges();
     });
   }
+
+  // Affiche la liste des Preventions  par le critère Lieu (lieu =indice de la table des Lieux)
   afficheListeDuerParLieu(lieu: number) {
 
     this.listeDuerFrontParLieu$ = this.dataService.afficherListeDuerFrontParLieu(lieu);
@@ -216,6 +235,14 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
       this.cdRef.detectChanges();
     });
   }
+
+  // Crée un P.A.S sur la Prévention
+// idDuer = identifiant Du Duer pour lequel le P.A.S est rattaché
+// action = définie l'action à entreprendre
+// budget = définie le budget
+// qui = définie la personne en charge du P.A.S
+// delai = date à laquelle le P.A.S doit être fait
+// etat= décrit si le P.A.S est terminé - ici à l'état non terminé
 
   creerPas1(
     idDuer: number,
@@ -242,6 +269,9 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
     return valeur1 * valeur2;
   }
 
+// Calcule les valeurs de criticité
+// valeur1 = rang de la liste de sélection de Gravité
+// valeur2 = rang de la liste de sélection des Fréquences
   critIndice(valeur1: number, valeur2: number): number {
 
     console.log('Valeur de la Gravité  :' + this.listeGravite[valeur1 - 1].valeur);
@@ -250,24 +280,31 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
     console.log('valeurx = ' + this.criticite);
     return this.criticite;
   }
-
-  modifierDuer1(id: number, gr: number, fr: number, prev: string, grMo: number, frMo: number, prevMo: string) {
-
-    this.dataService.modifDuer(id, gr, fr, prev, grMo, frMo, prevMo);
-  }
+// Modifie la prévention à mettre en oeuvre sur une EVRP
+// id = numéro d'id du Duer à modifier
+  // grMo = valeur de gravité à modifer dans l'Evrp pour la prévention à mettre en oeuvre
+  // frMo = valeur de fréquence à modifier dans l'Evrp pour la prévention à mettre en oeuvre
+  // prevMo = nouvelle prévention à mettre en oeuvre pour l'EVrp
 
   modifierDuerPrev1(id: number, grMo: number, frMo: number, prevMo: string) {
 
     this.dataService.modifDuerPrev(id, grMo, frMo, prevMo);
   }
 
-  detruireEvrp1(id: number) {
+  // Détruit une Evrp
+  // id = identifiant de l'Evrp
+  // idPas = identifiant du P.A.S associé
+  detruireEvrp1(id: number, idPas: number) {
     console.log('id a détruire : ' + id);
-    this.dataService.detruireEvrp(id);
+    console.log('idPas : ' + idPas);
+    if (idPas != null) { this.dataService.detruireEvrp(id, idPas); } else
+    { this.dataService.detruireEvrp(id, -1); }
   }
 
+  // Impression haut et bas de page
+  // entete = valeur définissant le type de Duer à afficher selon les sélections
   impression(entete: string) {
-    // tslint:disable-next-line: no-unused-expression
+
 
     this.page = 1;
     this.nbPage = (this.elements1.length / 17);
@@ -306,7 +343,10 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
     doc.save('duer.pdf');
     this.entetePdf = '';
   }
-
+// Imprime une ligne de données de prévention
+// index = indice du tableau de données
+// doc1 = fichier PDF qui reçoit les données
+// pas = saut de ligne
   imprimerLigne(index: number, doc1: jsPDF, pas: number) {
     doc1.text(this.elements1[index].id.toString(), 10, 30 + (10 * (pas % 17)));
     doc1.text(this.elements1[index].ut, 15, 30 + (10 * (pas % 17)));
@@ -331,6 +371,8 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // Imprime les titres du tableau de présentation
+    // doc2 = fichier PDF qui reçoit les données
 imprimerLigneEntete(doc2: jsPDF) {
   doc2.text(this.headElementsPDF[0], 10, 20);
   doc2.text(this.headElementsPDF[1], 15, 20);

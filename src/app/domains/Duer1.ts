@@ -1,5 +1,9 @@
 export class Duer1 {
 
+  /* Description d'une classe Duer1
+qui renseigne, modifie, récupère les données Evrp
+(format tableau d'identifiants) sans identifiant du Plan d'action spécifique
+de la base de données gdu-bd*/
 
 
   constructor(

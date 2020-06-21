@@ -5,6 +5,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './gdu-deconnexion.component.html',
   styleUrls: []
 })
+
+// Affiche un panneau spécifique d'aurevoir quand on se déconnecte
+
 export class GduDeconnexionComponent implements OnInit {
 
   constructor() { }
