@@ -1,3 +1,8 @@
+/* Description d'une classe PasVm
+qui récupère, modifie les données Plan d'Action Spécifique
+de la base de données gdu-bd*/
+
+
 export class PasVm {
 
   constructor(

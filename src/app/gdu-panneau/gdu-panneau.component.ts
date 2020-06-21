@@ -10,6 +10,8 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: []
 })
 
+/* Présentation des données du Parchemin ainsi que la présentation
+de la construction d'un DUER */
 
 export class GduPanneauComponent implements OnInit {
 

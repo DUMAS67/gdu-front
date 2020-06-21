@@ -5,6 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './gdu-pch-reg.component.html',
   styleUrls: []
 })
+
+// Composant affichant les aspetcs réglementaires sur l'Evaluation des Risques professionnels
 export class GduPchRegComponent implements OnInit {
 
   constructor() { }

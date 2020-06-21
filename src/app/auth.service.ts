@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
  * @type {Collaborateur}
  */
 const COLLABORATEUR_ANONYME = new Collaborateur({});
-
+const chemin = 'http://DESKTOP-CVAP572:8080/';
 /**
  * Service de gestion de l'authentification.
  */

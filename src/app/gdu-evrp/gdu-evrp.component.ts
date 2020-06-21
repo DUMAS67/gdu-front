@@ -11,7 +11,7 @@ import { UtVm } from '../domains/UtVm';
 import { LieuVm } from '../domains/LieuVm';
 import { ActivitesVm } from '../domains/ActivitesVm';
 import { DangersVm } from '../domains/DangersVm';
-import { Ut } from '../environments/Ut';
+import { Ut } from '../domains/Ut';
 import { DuerVM } from '../domains/DuerVM';
 import { PasVm } from '../domains/PasVm';
 import { Duer } from '../domains/Duer';
@@ -22,7 +22,9 @@ import { Observable } from 'rxjs';
 import { FnParam } from '@angular/compiler/src/output/output_ast';
 import { NgForm } from '@angular/forms';
 
-
+/* Module qui affiche l'interface utilisateur qui créé des Evrp, des UT, des Lieux, des Activités,
+des Dangers
+*/
 @Component({
   selector: 'app-gdu-evrp',
   templateUrl: './gdu-evrp.component.html',
@@ -44,7 +46,7 @@ export class GduEvrpComponent implements OnInit {
 
 
   constructor(private dataService: DataService, private _router: Router,
-              private _cookieService: CookieService, private route: ActivatedRoute) { }
+    private _cookieService: CookieService, private route: ActivatedRoute) { }
   recupId: number;
   recupNom: string;
   nomUt: string;
@@ -54,21 +56,21 @@ export class GduEvrpComponent implements OnInit {
   headElementsDg = ['Danger', 'Sélection'];
   headElementsAct = ['Activité', 'Sélection'];
 
-  // listeLieu$ = this.dataService.afficherListeLieu();
+
   listeLieu: LieuVm[];
   listeCriticite$ = this.dataService.afficherListeCriticite();
   listeCriticite: CriticiteVm[];
 
-  // listeUt$ = this.dataService.afficherListeUt();
+
   listeUt: UtVm[];
 
   listeGravite$ = this.dataService.afficherListeGravite();
   listeGravite: GraviteVm[];
   listeFrequence$ = this.dataService.afficherListeFrequence();
   listeFrequence: FrequenceVm[];
-  // listeActivite$ = this.dataService.afficherListeActivite();
+
   listeActivite: ActivitesVm[];
- // listeDanger$ = this.dataService.afficherListeDanger();
+
   listeDanger: DangersVm[];
   listeRisque$ = this.dataService.afficherListeRisque();
   listeRisque: RisquesVm[];
@@ -113,14 +115,19 @@ export class GduEvrpComponent implements OnInit {
   confirmeDonneesRisque2 = false;
 
   ngOnInit() {
-
-
+    /* Initialise les listes de choix des items pour la création des Evrp
+    Gravité
+    Risques
+    Freuence
+    Lieu
+    Activité
+    Dangers
+   */
 
     this.listeGravite$.subscribe((param: GraviteVm[]) => {
       this.listeGravite = param.sort((a, b) => (a.valeur - b.valeur));
     }
     );
-
 
     this.listeRisque$.subscribe((param: RisquesVm[]) => {
       this.listeRisque = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
@@ -155,16 +162,16 @@ export class GduEvrpComponent implements OnInit {
     }
     );
 
-// Abonnement Activite
+    // Abonnement Activite
     console.log('Trace Avant Subject');
-// !la liste Danger reçoit les dernières données du Subject
-// Connexion de listeLieu sur subject par souscription
+    // !la liste Danger reçoit les dernières données du Subject
+    // Connexion de listeLieu sur subject par souscription
     this.dataService.subjectActActivite.subscribe((param: ActivitesVm[]) => {
-  console.log('Trace Déclenchement de l\' observateur Activite');
-  this.listeActivite = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
+      console.log('Trace Déclenchement de l\' observateur Activite');
+      this.listeActivite = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
 
-}
-);
+    }
+    );
 
     // Abonnement Danger
     console.log('Trace Avant Subject');
@@ -189,69 +196,83 @@ export class GduEvrpComponent implements OnInit {
     this.dataService.afficherListeDanger(); // Initialise le subject à la liste Lieu de la Base
     console.log('Trace afficherListe Danger dans NgOnit');
 
-
-
   }// Fin NgOnInit
 
+  // Rafraichie la liste Ut
   rafraichirListeUt() {
     this.dataService.afficherListeUt();
 
-    // window.location.reload();
   }
+  // Récupère la valeur d'un item d'une liste
+  // id = valeur de l'indice d'une valeur à modifié dans sa liste
+  // valeur = valeur de l'id
+  recupItem(id: number, valeur: string) {
 
-  recupItem(utId: number, utValeur: string) {
-
-    this.recupNom = utValeur;
-    this.recupId = utId;
-    this.recupNomAModifier = utValeur;
+    this.recupNom = valeur;
+    this.recupId = id;
+    this.recupNomAModifier = valeur;
     console.log(this.recupId);
     console.log(this.recupNom);
-    return this.recupNom;
   }
 
+  // Donne l'autorisation  pour être en mode affichage Administrateur ou Utilisateur
   afficherModif(): boolean {
     this.collaborateurConnecte = JSON.parse(this._cookieService.get('col'));
     return (this.collaborateurConnecte.roles[0] === this.collaborateurConnecte.ADMIN);
   }
-
+  // Crée une Unité de Travail
   creerUt1(nouveauNomUt: string) {
     this.dataService.creerUt(nouveauNomUt);
   }
-
+  // Modifie une Unité de Travail
+  // idav = id de L'UT à modifiéer dans la liste des UT
+  // nomap = nouveau nom de l'UT
   modifUt1(idav: number, nomap: string) {
     this.dataService.modifUt(idav, nomap);
   }
-
+  // Crée un Lieu
   creerLieu1(nouveauNomLieu: string) {
     this.dataService.creerLieu(nouveauNomLieu);
   }
-
+  // Modifie un Lieu
+  // idav = id du Lieu à modifiéer dans la liste des Lieu
+  // nomap = nouveau nom de Lieu
   modifLieu1(idav: number, nomap: string) {
     this.dataService.modifLieu(idav, nomap);
   }
+
+  // Crée une Activité
   creerActivite1(nouveauNomActivite: string) {
     console.log(nouveauNomActivite);
     this.dataService.creerActivite(nouveauNomActivite);
   }
+  // Modifie une Activité
+  // idav = id de Activité à modifier dans la liste des Activités
+  // nomap = nouveau nom de Activité
 
   modifActivite1(idav: number, nomap: string) {
     this.dataService.modifActivite(idav, nomap);
   }
-
+  // Crée un Danger
   creerDanger1(nouveauNomActivite: string) {
 
     this.dataService.creerDanger(nouveauNomActivite);
   }
+  // Modifie un Danger
+  // idav = id de Danger à modifiéer dans la liste des Dangers
+  // nomap = nouveau nom de Danger
 
   modifDanger1(idav: number, nomap: string) {
     this.dataService.modifDanger(idav, nomap);
   }
+  // Trouver une Unité de Travail par son identifiant
+
   trouverUt1(id: number): Observable<UtVm> {
 
     return this.dataService.trouverUt(id);
 
   }
-
+  // Trouver un Lieu dans la SGBD par son identifiant
   trouverLieu1(id: number): string {
 
     this.dataService.trouverLieu(id).subscribe(
@@ -261,6 +282,8 @@ export class GduEvrpComponent implements OnInit {
     );
     return this.nomLieu;
   }
+
+  // Trouver une activité dans la SGBD par son identifiant
   trouverActivite1(id: number): string {
 
     this.dataService.trouverActivite(id).subscribe(
@@ -270,6 +293,8 @@ export class GduEvrpComponent implements OnInit {
     );
     return this.nomLieu;
   }
+
+  // Trouver un Danger dans la SGBD par son identifiant
   trouverDanger1(id: number): string {
 
     this.dataService.trouverDanger(id).subscribe(
@@ -279,6 +304,8 @@ export class GduEvrpComponent implements OnInit {
     );
     return this.nomDanger;
   }
+
+  // Trouver un Risque dans la SGBD par son identifiant
   trouverRisque1(id: number): string {
 
     this.dataService.trouverRisque(id).subscribe(
@@ -289,7 +316,7 @@ export class GduEvrpComponent implements OnInit {
     return this.nomRisque;
   }
 
-
+  // Trouver une Fréquence de la liste des fréquences par son identifiant
   trouverFrequence1(id: number): number {
 
     this.dataService.trouverFrequence(id).subscribe(
@@ -299,6 +326,8 @@ export class GduEvrpComponent implements OnInit {
     );
     return this.valeurFrequence;
   }
+  // Trouver une Gravité de la liste des fréquences par son identifiant
+
   trouverGravite1(id: number): number {
 
     this.dataService.trouverGravite(id).subscribe(
@@ -309,6 +338,19 @@ export class GduEvrpComponent implements OnInit {
     return this.valeurGravite;
   }
 
+  // Crée un Evrp de Risque 1
+
+  // utNom = indice de la liste UT pour l'Unité de travail qui définie l'Evrp
+  // lieuNom = indice de la liste Lieu pour le Lieu qui définie l'Evrp
+  // activiteNom = indice de la liste Activité pour l'Activité qui définie l'Evrp
+  // dangerNom = indice de la liste Danger pour le Danger qui définie l'Evrp
+  // risqueNom = indice de la liste Risque pour le Risque qui définie l'Evrp
+  // gr1Nom = indice de la liste Gravité pour la Gravité qui définie l'Evrp (prev. existante)
+  // frq1Nom = indice de la liste Fréquence pour la Fréquence qui définie l'Evrp (prev. existante)
+  // prev1Ex = caractérisation de la prévention existante pour l'EVrp
+  // gros1Nom = indice de la liste Gravité pour la Gravité qui définie l'Evrp (prev. à mettre en oeuvre)
+  // frq1oNom = indice de la liste Fréquence pour la Fréquence qui définie l'Evrp (prev. à mettre en oeuvre)
+  // prev1Mo = caractérisation de la prévention à mettre en oeuvre pour l'EVrp
 
   creerDuer11(
     utNom: number,
@@ -345,8 +387,6 @@ export class GduEvrpComponent implements OnInit {
       this.dataService.creerDuer1(this.creaEvrp1);
     }
     console.log(JSON.stringify(this.creaEvrp1));
-
-
     console.log('***************Risque1***************');
     console.log('UT : ' + this.creaEvrp1.id_ut);
     console.log('Lieu : ' + this.creaEvrp1.id_lieu);
@@ -361,6 +401,20 @@ export class GduEvrpComponent implements OnInit {
     console.log('Prévention 1 MO: ' + this.creaEvrp1.prevMo);
     console.log(this.messageValid);
   }
+
+  // Crée un evrp de risque 2
+
+  // utNom = indice de la liste UT pour l'Unité de travail qui définie l'Evrp
+  // lieuNom = indice de la liste Lieu pour le Lieu qui définie l'Evrp
+  // activiteNom = indice de la liste Activité pour l'Activité qui définie l'Evrp
+  // dangerNom = indice de la liste Danger pour le Danger qui définie l'Evrp
+  // risqueNom = indice de la liste Risque pour le Risque qui définie l'Evrp
+  // gr1Nom = indice de la liste Gravité pour la Gravité qui définie l'Evrp (prev. existante)
+  // frq1Nom = indice de la liste Fréquence pour la Fréquence qui définie l'Evrp (prev. existante)
+  // prev1Ex = caractérisation de la prévention existante pour l'EVrp
+  // gros1Nom = indice de la liste Gravité pour la Gravité qui définie l'Evrp (prev. à mettre en oeuvre)
+  // frq1oNom = indice de la liste Fréquence pour la Fréquence qui définie l'Evrp (prev. à mettre en oeuvre)
+  // prev1Mo = caractérisation de la prévention à mettre en oeuvre pour l'EVrp
   creerDuer12(
     utNom: number,
     lieuNom: number, activiteNom: number, dangerNom: number,
@@ -396,105 +450,24 @@ export class GduEvrpComponent implements OnInit {
     }
     console.log(JSON.stringify(this.creaEvrp2));
 
-
   }
-
+  // Indique que les données de Evrp pour risque 1 sont valides
   confirmerDonneesRisque1() { this.confirmeDonneesRisque1 = true; }
+  // Indique que les données de Evrp pour risque 2 sont valides
   confirmerDonneesRisque2() { this.confirmeDonneesRisque2 = true; }
+
   reinitialiser() { this.creaEvrp1Ok = false; }
 
-  creerDuer1(
-    utsNom: number,
-    lieusNom: number, activitesNom: number, dangersNom: number,
-    risques1Nom: number, gr1sNom: number, frq1sNom: number,
-    prev1Ex: string, gros1Nom: number, frq1osNom: number,
-    prev1Mo: string, rsq2sNom: number, gr2sNom: number, frq2sNom: number,
-    prev2Ex: string, gr2osNom: number, frq2osNom: number,
-    prev2Mo: string): string {
-    if ((utsNom !== null) && (lieusNom !== null) && (activitesNom !== null) &&
-      (dangersNom !== null) && (risques1Nom !== null) && (gr1sNom !== null) &&
-      (frq1sNom !== null) && (prev1Ex !== null) && (gros1Nom !== null) && (frq1osNom !== null) &&
-      (prev1Mo !== null)) {
-      this.creaEvrp1Ok = true;
-      this.creaEvrp1.id_ut = utsNom;
-      this.creaEvrp1.id_lieu = lieusNom;
-      this.creaEvrp1.id_activite = activitesNom;
-      this.creaEvrp1.id_danger = dangersNom;
-      this.creaEvrp1.id_risque = risques1Nom;
-      this.creaEvrp1.id_gravEx = gr1sNom;
-      this.creaEvrp1.id_FreqEx = frq1sNom;
-      this.creaEvrp1.prevEx = prev1Ex;
-      this.creaEvrp1.id_gravMo = gros1Nom;
-      this.creaEvrp1.id_FreqMo = frq1osNom;
-      this.creaEvrp1.prevMo = prev1Mo;
-    } else { this.creaEvrp1Ok = false; }
-    if ((rsq2sNom !== null) && (gr2sNom !== null) && (frq2sNom !== null) &&
-      (prev2Ex !== null) && (gr2osNom !== null) && (frq2osNom !== null) &&
-      (prev2Mo !== null)) {
-      this.creaEvrp2Ok = true;
-      this.creaEvrp2.id_ut = utsNom;
-      this.creaEvrp2.id_lieu = lieusNom;
-      this.creaEvrp2.id_activite = activitesNom;
-      this.creaEvrp2.id_danger = dangersNom;
-      this.creaEvrp2.id_risque = rsq2sNom;
-      this.creaEvrp2.id_gravEx = gr2sNom;
-      this.creaEvrp2.id_FreqEx = frq2sNom;
-      this.creaEvrp2.prevEx = prev2Ex;
-      this.creaEvrp2.id_gravMo = gr2osNom;
-      this.creaEvrp2.id_FreqMo = frq2osNom;
-      this.creaEvrp2.prevMo = prev2Mo;
-    } else { this.creaEvrp2Ok = false; }
-    console.log('***************Risque1***************');
-    console.log('UT : ' + this.creaEvrp1.id_ut);
-    console.log('Lieu : ' + this.creaEvrp1.id_lieu);
-    console.log('Activite :' + this.creaEvrp1.id_activite);
-    console.log('Danger :' + this.creaEvrp1.id_danger);
-    console.log('Risque 1 :' + this.creaEvrp1.id_risque);
-    console.log('Gravité 1 Existante : ' + this.creaEvrp1.id_gravEx);
-    console.log('Fréquence 1 Existante : ' + this.creaEvrp1.id_FreqEx);
-
-    console.log('Prévention 1 Existante : ' + this.creaEvrp1.prevEx);
-    console.log('Gravité 1 MO : ' + this.creaEvrp1.id_gravMo);
-    console.log('Fréquence 1 MO : ' + this.creaEvrp1.id_FreqMo);
-
-    console.log('Prévention 1 MO: ' + this.creaEvrp1.prevMo);
-    console.log('***************Risque2**********************');
-    console.log('UT : ' + this.creaEvrp2.id_ut);
-    console.log('Lieu : ' + this.creaEvrp2.id_lieu);
-    console.log('Activite :' + this.creaEvrp2.id_activite);
-    console.log('Danger :' + this.creaEvrp2.id_danger);
-    console.log('Risque 2 :' + this.creaEvrp2.id_risque);
-    console.log('Gravité 2 Existante : ' + this.creaEvrp2.id_gravEx);
-    console.log('Fréquence 2 Existante : ' + this.creaEvrp2.id_FreqEx);
-
-    console.log('Prévention 2 Existante : ' + this.creaEvrp2.prevEx);
-    console.log('Gravité 2 MO : ' + this.creaEvrp2.id_gravMo);
-    console.log('Fréquence 2 MO : ' + this.creaEvrp2.id_FreqMo);
-
-    console.log('Prévention 2 MO: ' + this.creaEvrp2.prevMo);
-
-    console.log('AA' + this.creaEvrp1.id_ut);
 
 
-
-    if ((this.creaEvrp1Ok) && (this.creaEvrp2Ok)) {
-
-      this.dataService.creerDuer1(this.creaEvrp1);
-      this.dataService.creerDuer1(this.creaEvrp2);
-    }
-    console.log(JSON.stringify(this.creaEvrp1));
-
-    if (!this.creaEvrp1Ok) {
-      return 'un des champs est mal ou pas renseigné pour le risque 1';
-    }
-    if (!this.creaEvrp2Ok) {
-      return 'un des champs est mal ou pas renseigné pour le risque 2';
-    }
-  }
+  // Sort de la page Evrp
   fermerEvrp() {
     this._router.navigate(['/gdu']);
   }
 
+  // Calcule la valeur de criticité
+  // valeur1 = rang de la liste de sélection de Gravité
+  // valeur2 = rang de la liste de sélection des Fréquences
   crit(valeur1: number, valeur2: number): number {
 
     console.log('Valeur de la Gravité  :' + this.listeGravite[valeur1 - 1].valeur);
@@ -504,9 +477,8 @@ export class GduEvrpComponent implements OnInit {
     return this.criticite;
   }
 
-  coherenceDonnee(utsNom: number): boolean {
-    if (utsNom != null) { return true; } else { return false; }
-  }
+
+  // Rafraichie la page en entier de saisie de l'Evrp
   rafPageEvrp() {
     this.finValid = true;
     this.confirmeDonneesRisque1 = false;

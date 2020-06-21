@@ -5,6 +5,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './gdu-duer-reg.component.html',
   styleUrls: []
 })
+
+// Affichage de la réglementation du Duer
+
 export class GduDuerRegComponent implements OnInit {
 
   constructor() { }

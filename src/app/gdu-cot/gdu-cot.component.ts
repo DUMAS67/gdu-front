@@ -18,13 +18,12 @@ export class GduCotComponent implements OnInit {
   listeFrequence$ = this.dataService.afficherListeFrequence();
   listeFrequence: FrequenceVm[];
 
-  ngOnInit() {
+  ngOnInit() { // Récupère les données criticités de gravité, fréquence de gdu-bd
 
     this.listeGravite$.subscribe((param: GraviteVm[]) => {
       this.listeGravite = param.sort((a, b) => (a.valeur - b.valeur));
     }
     );
-
 
     this.listeFrequence$.subscribe((param: FrequenceVm[]) => {
       this.listeFrequence = param.sort((a, b) => (a.valeur - b.valeur));
@@ -32,6 +31,10 @@ export class GduCotComponent implements OnInit {
     );
 
   }
+
+// Calcule la criticité = frequence x gravité
+// Valeur 1 = indice du tableau des gravité
+// Valeur 2 = indice du tableau des fréquences
   crit(valeur1: number, valeur2: number): number {
 
     console.log('Valeur de la Gravité  :' + this.listeGravite[valeur1 - 1].valeur);

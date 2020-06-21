@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
 
   choixSortir() {
 
-    //this.authService.seDeconnecter();
+    // Dirige vers la page de connexion
     this._router.navigate(['/gdu']);
 
 

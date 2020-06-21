@@ -74,6 +74,13 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
   maxVisibleItems = 10;
 
   ngOnInit() {
+/* Initialisation des listes de données pour le module :
+Duer pour présentation
+Lieu pour sélection
+Unité pour sélection
+Gravité, Fréquence,
+Criticité pour sélection
+*/
 
     // Abonnement subject
     this.dataService.subjectActDuerFront.subscribe((param: DuerFront[]) => {
@@ -116,13 +123,11 @@ export class GduDuerComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit() { // Pagination du tableau de présentation
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
-
-
   }
 /* fonction qui n'affiche que les bouttons de
 modifications dans le cas d'un administrateur */
@@ -136,6 +141,10 @@ modifications dans le cas d'un administrateur */
     return a * b;
   }
 
+  /* Raffraichit les données des listes
+  Unité de travail
+  Lieu
+  Criticité */
   rafraichirSelection() {
 
     this.dataService.afficherListeDuerFront();
@@ -154,7 +163,8 @@ modifications dans le cas d'un administrateur */
     }
     );
   }
-
+/* Affiche le Duer sélectionné par une valeur de criticité */
+// crit = valeur de critère de sélection
   afficheListeDuerParCriticite(crit: number) {
 
 
@@ -171,6 +181,8 @@ modifications dans le cas d'un administrateur */
       this.entetePdf = ' par Criticité :  ' + crit;
     });
   }
+  /* Affiche le Duer sélectionné par une valeur d'Unité de Travail */
+  // ut = valeur ut de sélection
   afficheListeDuerParUt(ut: number) {
 
     this.listeDuerFrontParUt$ = this.dataService.afficherListeDuerFrontParUt(ut);
@@ -187,7 +199,8 @@ modifications dans le cas d'un administrateur */
       this.entetePdf = ' par Unité de Travail :  ' + this.listeDuerFrontParUt[0].ut;
     });
   }
-
+/* Affiche le Duer sélectionné par une valeur de Lieu*/
+// lieu = valeur de lieu de sélection
   afficheListeDuerParLieu(lieu: number) {
 
     this.listeDuerFrontParLieu$ = this.dataService.afficherListeDuerFrontParLieu(lieu);
@@ -204,6 +217,8 @@ modifications dans le cas d'un administrateur */
       this.entetePdf = ' par Lieu :  ' + this.listeDuerFrontParLieu[0].lieu;
     });
   }
+
+  /* Affiche le Duer sélectionné par un Pareto */
   affichePareto() {
 
     this.dataService.afficherListeDuerFront();
@@ -239,12 +254,14 @@ modifications dans le cas d'un administrateur */
     this.mdbTablePagination.calculateLastItemIndex();
     this.entetePdf = ' par Pareto :  ';
     this.cdRef.detectChanges();
-
   }
+
   critValeur(valeur1: number, valeur2: number): number {
     return valeur1 * valeur2;
   }
-
+// Calcule la valeur de criticite
+// valeur1 = rang de la liste de sélection de Gravité
+// valeur2 = rang de la liste de sélection des Fréquences
   critIndice(valeur1: number, valeur2: number): number {
 
     console.log('Valeur de la Gravité  :' + this.listeGravite[valeur1 - 1].valeur);
@@ -254,11 +271,21 @@ modifications dans le cas d'un administrateur */
     return this.criticite;
   }
 
+  // Modifie le contenu des Evrp
+  // id = numéro d'id du Duer à modifier
+  // gr = valeur de gravité à modifer dans l'Evrp pour la prévention existante
+  // fr = valeur de fréquence à modifier dans l'Evrp
+  // prev = nouvelle prévention pour l'EVrp
+  // gro = valeur de gravité à modifer dans l'Evrp pour la prévention à mettre en oeuvre
+  // fr = valeur de fréquence à modifier dans l'Evrp pour la prévention à mettre en oeuvre
+   // prevMo = nouvelle prévention à mettre en oeuvre pour l'EVrp
   modifierDuer1(id: number, gr: number, fr: number, prev: string, grMo: number, frMo: number, prevMo: string) {
 
     this.dataService.modifDuer(id, gr, fr, prev, grMo, frMo, prevMo);
   }
-
+// Détruit une ligne d'Evrp
+// id = numéro d'identification de l'Evrp dans le DUER
+// idPas = numéro d'identification du Plan d'Acrion Spécifique pour l' id de l'Evrp dans le DUER
   detruireEvrp1(id: number, idPas: number) {
     console.log('id a détruire : ' + id);
     console.log('idPas : ' + idPas);
@@ -268,9 +295,9 @@ modifications dans le cas d'un administrateur */
       }
 
   }
-
+// Imprime le haut et bas de Page du Duer
+// entete = valeur définissant le type de Duer à afficher selon les sélections
   impression(entete: string) {
-    // tslint:disable-next-line: no-unused-expression
 
     this.page = 1;
     this.nbPage = (this.elements.length / 17);
@@ -309,7 +336,10 @@ modifications dans le cas d'un administrateur */
     doc.save('duer.pdf');
     this.entetePdf = '';
   }
-
+// Imprime le contenu du Duer
+// index = indice du tableau de données
+// doc1 = fichier PDF qui reçoit les données
+// pas = saut de ligne
   imprimerLigne(index: number, doc1: jsPDF, pas: number) {
     doc1.text(this.elements[index].id.toString(), 10, 30 + (10 * (pas % 17)));
     doc1.text(this.elements[index].ut, 15, 30 + (10 * (pas % 17)));
@@ -348,6 +378,9 @@ modifications dans le cas d'un administrateur */
     }
 
   }
+
+  // Imprime les titres du tableau du Duer
+  // doc2 = fichier PDF qui reçoit les données
   imprimerLigneEntete(doc2: jsPDF) {
     doc2.text(this.headElementsPDF[0], 10, 20);
     doc2.text(this.headElementsPDF[1], 15, 20);
@@ -366,6 +399,7 @@ modifications dans le cas d'un administrateur */
 
   };
 
+  // Crée un Plan d'action Spécifique
   creerPas1(
     idDuer: number,
     action: string,

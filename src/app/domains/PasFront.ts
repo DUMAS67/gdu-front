@@ -1,3 +1,8 @@
+/* Description d'une classe PasFront
+qui affiche les données Plan d'Action Spécifique
+(format visualisation utilisateur)
+de la base de données gdu-bd*/
+
 export class PasFront {
 
   constructor(

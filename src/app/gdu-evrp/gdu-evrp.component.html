@@ -5,12 +5,10 @@
     <div class="row">
       <p></p>
     </div>
-    <!-- Default form contact -->
+
     <form #userForm='ngForm' class="">
 
-      <!-- Name -->
-
-      <!-- Unité de Travail -->
+       <!-- Unité de Travail -->
       <div class="row">
         <div class="col-2">Unité de Travail</div>
 
@@ -583,10 +581,7 @@
         </div>
         <div *ngIf="creaEvrp1Ok" class="alert danger-color" role="alert">
           {{messageValid}}</div>
-        <!--div *ngIf="creaEvrp1Ok">
-          <button size="sm" mdbBtn color="info" class="align-center" type="button"
-            (click)="reinitialiser()">Réinitialiser</button>
-        </!--div>-->
+
 
       </div>
 
@@ -717,9 +712,10 @@
         <div class="col-md-4"></div>
       </div>
     </form>
-    <!-- Default form contact -->
+
   </div>
 </div>
+<!-- Affichage message quand on est en mode utilisateur -->
 <div *ngIf="!afficherModif()">
   <div class="container">
     <div class=row>

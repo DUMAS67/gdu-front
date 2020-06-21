@@ -14,7 +14,8 @@ import { UtVm } from '../domains/UtVm';
 import { PasVm } from '../domains/PasVm';
 import { PasFront } from '../domains/PasFront';
 import * as jsPDF from 'jspdf';
-
+/* Composant décrivant la visualisation et modification
+des données de plans spécifiques d'action */
 
 @Component({
   selector: 'app-gdu-pas',
@@ -62,7 +63,7 @@ export class GduPasComponent implements OnInit, AfterViewInit {
   listeUt: UtVm[];
 
   ngOnInit() {
-
+//création de la liste exhaustive des Plans d'actions Spécifiques pour affichage
     this.dataService.subjectActPas.subscribe((param: PasFront[]) => {
       this.elements = param.map(c => new PasFront(
         c.id, c.idDuer, c.danger, c.risque, c.action, c.budget, c.qui, c.delai, c.etat))
@@ -73,22 +74,22 @@ export class GduPasComponent implements OnInit, AfterViewInit {
       this.previous = this.mdbTable.getDataSource();
     }
     );
-
+// Chargement de la liste des Risques contenu dans la liste des P.A.S
     this.listeRisques$.subscribe((param: RisquesVm[]) => {
       this.listeRisques = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
     }
     );
-
+// Chargement de la liste des Dangers contenu dans la liste des P.A.S
     this.listeDanger$.subscribe((param: DangersVm[]) => {
       this.listeDanger = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
     }
     );
-
+// Chargement de la liste des UT contenu dans la liste des P.A.S
     this.listeUt$.subscribe((param: UtVm[]) => {
       this.listeUt = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
     }
     );
-
+// Chargement de la liste des Qui? contenu dans la liste des P.A.S
     this.listeQui$.subscribe((param: string[]) => {
       this.listeQui = param.sort((a, b) => (a.charCodeAt(0) - b.charCodeAt(0)));
     }
@@ -97,18 +98,27 @@ export class GduPasComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    //initialisation des données de bas de pages du tableau de présentation
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.MaxVisibleItemsNumber);
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
     console.log('AAAAAA4' + this.listeRisques$);
   }
-
+// Autorise les modification de gdu-db si Administrateur
   afficherModif(): boolean {
 
     this.collaborateurConnecte = JSON.parse(this._cookieService.get('col'));
     return (this.collaborateurConnecte.roles[0] === this.collaborateurConnecte.ADMIN);
   }
+// Modifie les P.A.S
+// id = identifiant du P.A.S à modifier
+// idDuer = identifiant Du Duer pour lequel le P.A.S est rattaché
+// action = définie l'action à entreprendre
+// budget = définie le budget
+// qui = définie la personne en charge du P.A.S
+// delai = date à laquelle le P.A.S doit être fait
+// etat= décrit si le P.A.S est terminé
 
   modifierPas1(id: number,
                idDuer: number,
@@ -120,7 +130,7 @@ export class GduPasComponent implements OnInit, AfterViewInit {
     this.dataService.modifierPas(new PasVm(id, idDuer, action, budget, qui, new Date(delai), etat));
   }
 
-
+// Affiche la liste des P.A.S sélectionné par type de Danger (indice de la table Danger)
   afficheListePasParDanger(danger: number) {
 
     this.listePasParDanger$ = this.dataService.afficherListePasFrontParDanger(danger);
@@ -137,6 +147,7 @@ export class GduPasComponent implements OnInit, AfterViewInit {
       this.cdRef.detectChanges();
     });
   }
+// Affiche la liste des P.A.S sélectionné par type de Risque (indice de la table Risue)
 
   afficheListePasParRisque(risque: number) {
 
@@ -155,6 +166,7 @@ export class GduPasComponent implements OnInit, AfterViewInit {
     });
   }
 
+  // Affiche la liste des P.A.S sélectionné par type Qui?
   afficheListePasParQui(qui: string) {
 
     this.listePasParQui$ = this.dataService.afficherListePasFrontParQui(qui);
@@ -172,6 +184,7 @@ export class GduPasComponent implements OnInit, AfterViewInit {
     });
   }
 
+  //Rafraichie les listes des P.A.S et des  Risques, Danger, Qui?
   raffraichirPas() {
    this.dataService.afficherListePas();
    this.listeRisques$.subscribe((param: RisquesVm[]) => {
@@ -188,14 +201,19 @@ export class GduPasComponent implements OnInit, AfterViewInit {
   }
   );
   }
+// Détruit une ligne du P.A.S
+// id = identifiant du P.A.S à détruire
+// iduer = identifiant du Duer contenant le P.A.S
 
   detruirePas1(id: number, iduer: number) {
 
     this.dataService.detruirePas(id, iduer);
   }
 
+  // Impression du Haut et Bas de Page du document
+  // entete = valeur définissant le type de Duer à afficher selon les sélections
   impression(entete: string) {
-    // tslint:disable-next-line: no-unused-expression
+
     console.log(entete);
     this.page = 1;
     this.nbPage = (this.elements.length / 17);
@@ -234,7 +252,10 @@ export class GduPasComponent implements OnInit, AfterViewInit {
     doc.save('duer.pdf');
     this.entetePdf = '';
   }
-
+// Imprime une ligne de donnée du P.A.S
+// index = indice du tableau de données
+// doc1 = fichier PDF qui reçoit les données
+// pas = saut de ligne
   imprimerLigne(index: number, doc1: jsPDF, pas: number) {
     console.log('imprimerLigne');
     doc1.text(this.elements[index].id.toString(), 10, 30 + (10 * (pas % 17)));
@@ -262,7 +283,8 @@ export class GduPasComponent implements OnInit, AfterViewInit {
     }
 
   }
-
+// Imprime les titres du tableau d'impression
+  // doc2 = fichier PDF qui reçoit les données
   imprimerLigneEntete(doc2: jsPDF) {
     doc2.text(this.headElementsPDF[0], 10, 20);
     doc2.text(this.headElementsPDF[1], 15, 20);
