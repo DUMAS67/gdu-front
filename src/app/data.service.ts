@@ -103,7 +103,6 @@ export class DataService {
 // Crée la liste de tous les dangers
   afficherListeDanger(): Observable<DangersVm[]> {
 
-    console.log('AfficherListe Dangers : avant requete http');
     this.http.get<DangersVm[]>(this.url_gdu + 'dangers')
       .subscribe(
         list3 => {
@@ -115,7 +114,6 @@ export class DataService {
   }
 // Crée la liste de tous les Unités de lieu
   afficherListeUt(): Observable<UtVm[]> {
-    console.log('AfficherListe Ut : avant requete http');
     this.http.get<UtVm[]>(this.url_gdu + 'uts').subscribe(
       list => {
         this.subjectActUt.next(list); // implémente la liste de la base dans le subject -> subject est réinitialisé
@@ -126,7 +124,6 @@ export class DataService {
   }
 // Crée la liste de tous les lieus
   afficherListeLieu(): Observable<LieuVm[]> {
-    console.log('AfficherListe Lieu : avant requete http');
     this.http.get<LieuVm[]>(this.url_gdu + 'lieus').subscribe(
       list1 => {
         this.subjectActLieu.next(list1); // implémente la liste de la base dans le subject -> subject est réinitialisé
@@ -136,7 +133,6 @@ export class DataService {
   }
 // Crée la liste de toutes les activites
   afficherListeActivite(): Observable<ActivitesVm[]> {
-    console.log('AfficherListe Activité : avant requete http');
     this.http.get<ActivitesVm[]>(this.url_gdu + 'activites').subscribe(
       list4 => {
         this.subjectActActivite.next(list4); // implémente la liste de la base dans le subject -> subject est réinitialisé
@@ -195,13 +191,11 @@ export class DataService {
 // Crée la liste des Evrp sélectionnée par la criticité de la prévention existante
 
   afficherListeDuerFrontParCriticite(crit: number): Observable<DuerFront[]> {
-    console.log(crit);
     this.listeDuerFrontParCrititicite = this.http.get<DuerFront[]>(this.url_gdu + 'duercc?crit=' + crit);
     return this.listeDuerFrontParCrititicite;
   }
   // Crée la liste des Evrp sélectionnée par la criticité de la prévention à mettre en oeuvre
   afficherListeDuerFrontParCriticiteMo(crit: number): Observable<DuerFront[]> {
-    console.log(crit);
     this.listeDuerFrontParCrititiciteMo = this.http.get<DuerFront[]>(this.url_gdu + 'duercmo?crit=' + crit);
     return this.listeDuerFrontParCrititiciteMo;
   }
@@ -209,16 +203,13 @@ export class DataService {
 // Crée la liste des Evrp sélectionnée par l'Unité de travail
 // ut = indice de liste des UT
   afficherListeDuerFrontParUt(ut: number): Observable<DuerFront[]> {
-    console.log(ut);
     this.listeDuerFrontParUt = this.http.get<DuerFront[]>(this.url_gdu + 'duerut?ut=' + ut);
     return this.listeDuerFrontParUt;
   }
 // Crée la liste des Evrp sélectionnée par le lieu
 // indice de liste des Lieu
   afficherListeDuerFrontParLieu(lieu: number): Observable<DuerFront[]> {
-    console.log(lieu);
     this.listeDuerFrontParLieu = this.http.get<DuerFront[]>(this.url_gdu + 'duerlieu?lieu=' + lieu);
-    console.log(this.listeDuerFrontParLieu);
     return this.listeDuerFrontParLieu;
   }
 
@@ -266,26 +257,20 @@ export class DataService {
   /* Crée la liste des pas par Danger */
   // danger = valeur de l'indice dans la table de Danger
   afficherListePasFrontParDanger(danger: number): Observable<PasFront[]> {
-    console.log(danger);
     this.listePasFrontParDanger = this.http.get<PasFront[]>(this.url_gdu + 'passfdg?id=' + danger);
-    console.log(this.listePasFrontParDanger);
     return this.listePasFrontParDanger;
   }
 
   /* Crée la liste des pas par Risque */
    // rq = valeur de l'indice dans la table des Risques
   afficherListePasFrontParRisque(rq: number): Observable<PasFront[]> {
-    console.log(rq);
     this.listePasFrontParRisque = this.http.get<PasFront[]>(this.url_gdu + 'passfrq?id=' + rq);
-    console.log(this.listePasFrontParRisque);
     return this.listePasFrontParRisque;
   }
 
   /*  Crée la liste des pas par Qui?*/
   afficherListePasFrontParQui(qui: string): Observable<PasFront[]> {
-    console.log(qui);
     this.listePasFrontParQui = this.http.get<PasFront[]>(this.url_gdu + 'passfqui?nom=' + qui);
-    console.log(this.listePasFrontParQui);
     return this.listePasFrontParQui;
   }
 
@@ -299,8 +284,6 @@ export class DataService {
 
   /*  Crée la liste des créations du Duer */
   afficherListeCrea(): Observable<CreationVm[]> {
-    console.log('url_gdu = ' + this.url_gdu);
-    console.log ('environment.baseUrl = ' + environment.baseUrl);
     return this.http.get<CreationVm[]>(this.url_gdu + 'creas');
   }
 
@@ -313,7 +296,6 @@ export class DataService {
 
       subscribe(
         (data: string) => {
-          console.log(' Retour Http Création' + data);
           this.afficherListeUt(); // rafraichi la liste après création de l'UT
           return data;
         },
@@ -335,7 +317,7 @@ export class DataService {
     this.http.post(urlPostUt, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
-          console.log(data);
+
           this.afficherListeUt(); // rafraichi la liste après création de l'UT
           return data;
         },
@@ -348,12 +330,9 @@ export class DataService {
 // Crée un Lieu
   creerLieu(newLieu: string): string {
     const urlPostLieu = this.url_gdu + 'lieu?nom=' + newLieu;
-    console.log(urlPostLieu);
-    console.log('nouveau Lieu ' + newLieu);
     this.http.post(urlPostLieu, {}, { responseType: 'text' }).
       subscribe(
         (data: string) => {
-          console.log(data);
           this.afficherListeLieu();
           return data;
         },
@@ -373,7 +352,6 @@ export class DataService {
     this.http.post(urlPostLieu, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
-          console.log(data);
           this.afficherListeLieu();
           return data;
         },
@@ -391,7 +369,7 @@ export class DataService {
     this.http.post(urlPostActivite, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
-          console.log(data);
+
           this.afficherListeActivite();
           return data;
         },
@@ -411,7 +389,7 @@ export class DataService {
     this.http.post(urlPostActivite, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
-          console.log(data);
+
           this.afficherListeActivite();
           return data;
         },
@@ -430,7 +408,7 @@ export class DataService {
     this.http.post(urlPostDg, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
-          console.log(data);
+
           this.afficherListeDanger();
           return data;
         },
@@ -451,7 +429,7 @@ export class DataService {
     this.http.post(urlPostDg, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
-          console.log(data);
+
           this.afficherListeDanger();
           return data;
         },
@@ -539,7 +517,7 @@ export class DataService {
     this.http.post(urlPostPas, newPas, { responseType: 'text' }).
       subscribe(
         (data: any) => {
-          console.log(data.id);
+
           this.afficherListeDuerFront();
           return data;
         },
@@ -558,7 +536,6 @@ export class DataService {
     this.http.post(urlPostPas, newPas, { responseType: 'text' }).
       subscribe(
         (data: any) => {
-          console.log(data.id);
           this.afficherListePas();
           this.afficherListeDuerFront();
           return data;
@@ -588,7 +565,7 @@ export class DataService {
     this.http.post(urlPostDuer, duerCrea, { responseType: 'text' }).
       subscribe(
         (data: any) => {
-          console.log(data.id);
+
           this.afficherListeDuerFront();
           return data;
         },
@@ -607,7 +584,7 @@ export class DataService {
       this.http.post(urlPostDuer, duerCrea, { responseType: 'text' }).
         subscribe(
           (data: any) => {
-            console.log(data.id);
+
             this.afficherListeDuerFront();
             return data;
           },
@@ -637,7 +614,7 @@ export class DataService {
     this.http.post(urlPostDuerM, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
-          console.log(data);
+
           this.afficherListeDuerFront();
           return data;
         },
@@ -656,7 +633,7 @@ export class DataService {
     this.http.post(urlPostDuerM, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
-          console.log(data);
+
           this.afficherListeDuerFront();
           return data;
         },
@@ -673,12 +650,12 @@ export class DataService {
   detruireEvrp(id: number, idPas: number): string {
 
     const urlGetDEvrp = this.url_gdu + 'duerd?id=' + id + '&idpas=' + idPas;
-    console.log(urlGetDEvrp);
+
     if (id != null) {
       this.http.post(urlGetDEvrp, {}, { responseType: 'text' }).
         subscribe(
           (data: any) => {
-            console.log(data);
+
             this.afficherListeDuerFront();
             return data;
           },
@@ -697,12 +674,12 @@ export class DataService {
 
     const urlGetDetPas = this.url_gdu + 'pasdet?id=' + id + '&iduer=' + iduer;
 
-    console.log(urlGetDetPas);
+
     if ((id != null) && (iduer != null)) {
       this.http.post(urlGetDetPas, {}, { responseType: 'text' }).
         subscribe(
           (data: any) => {
-            console.log(data);
+
             this.afficherListePas();
             this.afficherListeDuerFront();
             return data;
@@ -725,7 +702,7 @@ export class DataService {
     this.http.post(urlGetModifDateDuer2, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
-          console.log(data);
+         ;
           return data;
         },
         (error: HttpErrorResponse) => {
@@ -744,7 +721,7 @@ export class DataService {
     this.http.post(urlGetModifDateDuer3, {}, { responseType: 'text' }).
       subscribe(
         (data: any) => {
-          console.log(data);
+
           return data;
         },
         (error: HttpErrorResponse) => {
@@ -766,11 +743,11 @@ export class DataService {
    this.trouverDateAnterieure()
     .subscribe((a: CreationVm) => {
     this.dateR = a.date;
-    console.log('ffff ' +this.dateR)
+
     this.modifDateDuer2(this.dateR);
     this.modifDateDuer3(date3);
     });
-   console.log('rrr' + this.dateR);
+
 
   }
 

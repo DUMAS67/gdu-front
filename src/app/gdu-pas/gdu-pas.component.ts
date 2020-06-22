@@ -69,7 +69,6 @@ export class GduPasComponent implements OnInit, AfterViewInit {
         c.id, c.idDuer, c.danger, c.risque, c.action, c.budget, c.qui, c.delai, c.etat))
         .sort((a, b) => (a.action.charCodeAt(0) - b.action.charCodeAt(0)));
       this.mdbTable.setDataSource(this.elements);
-      console.log(this.elements[0]);
       this.elements = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
     }
@@ -103,7 +102,6 @@ export class GduPasComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     this.cdRef.detectChanges();
-    console.log('AAAAAA4' + this.listeRisques$);
   }
 // Autorise les modification de gdu-db si Administrateur
   afficherModif(): boolean {
@@ -137,7 +135,6 @@ export class GduPasComponent implements OnInit, AfterViewInit {
     this.listePasParDanger$.subscribe((param: PasFront[]) => {
       this.listePasParDanger = param.map(a => a).sort((a, b) => (a.id - b.id));
       this.mdbTable.setDataSource(this.listePasParDanger);
-      console.log(this.listePasParDanger[0].id);
       this.elements = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
       this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.MaxVisibleItemsNumber);
@@ -155,7 +152,6 @@ export class GduPasComponent implements OnInit, AfterViewInit {
     this.listePasParRisque$.subscribe((param: PasFront[]) => {
       this.listePasParRisque = param.map(a => a).sort((a, b) => (a.id - b.id));
       this.mdbTable.setDataSource(this.listePasParRisque);
-      console.log(this.listePasParRisque[0].id);
       this.elements = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
       this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.MaxVisibleItemsNumber);
@@ -173,7 +169,6 @@ export class GduPasComponent implements OnInit, AfterViewInit {
     this.listePasParQui$.subscribe((param: PasFront[]) => {
       this.listePasParQui = param.map(a => a).sort((a, b) => (a.danger.charCodeAt(0) - b.danger.charCodeAt(0)));
       this.mdbTable.setDataSource(this.listePasParQui);
-      console.log(this.listePasParQui[0].qui);
       this.elements = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
       this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.MaxVisibleItemsNumber);
@@ -184,7 +179,7 @@ export class GduPasComponent implements OnInit, AfterViewInit {
     });
   }
 
-  //Rafraichie les listes des P.A.S et des  Risques, Danger, Qui?
+  // Rafraichie les listes des P.A.S et des  Risques, Danger, Qui?
   raffraichirPas() {
    this.dataService.afficherListePas();
    this.listeRisques$.subscribe((param: RisquesVm[]) => {
@@ -214,7 +209,6 @@ export class GduPasComponent implements OnInit, AfterViewInit {
   // entete = valeur définissant le type de Duer à afficher selon les sélections
   impression(entete: string) {
 
-    console.log(entete);
     this.page = 1;
     this.nbPage = (this.elements.length / 17);
     this.date = new Date();
@@ -225,8 +219,6 @@ export class GduPasComponent implements OnInit, AfterViewInit {
     doc.setFontSize(6);
     this.imprimerLigneEntete(doc);
     doc.text('_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________', 10, 25);
-
-    console.log(this.elements.length);
 
     for (let i = 0, k = 0; i < this.elements.length; i++, k++) {
 
@@ -257,7 +249,6 @@ export class GduPasComponent implements OnInit, AfterViewInit {
 // doc1 = fichier PDF qui reçoit les données
 // pas = saut de ligne
   imprimerLigne(index: number, doc1: jsPDF, pas: number) {
-    console.log('imprimerLigne');
     doc1.text(this.elements[index].id.toString(), 10, 30 + (10 * (pas % 17)));
     doc1.text(this.elements[index].idDuer.toString(), 15, 30 + (10 * (pas % 17)));
     doc1.text(this.elements[index].danger.substring(0, 22), 35, 30 + (10 * (pas % 17)));
@@ -272,7 +263,6 @@ export class GduPasComponent implements OnInit, AfterViewInit {
     if (this.elements[index].etat.toString() === 'true') {
       doc1.text('  X', 270, 30 + (10 * (pas % 17)));
     }
-    console.log('imprimerLigneFin');
     if (this.elements[index].action.length < 90) {
       doc1.text(this.elements[index].action.substring(0, 99), 100, 30 + (10 * (pas % 17)));
     }

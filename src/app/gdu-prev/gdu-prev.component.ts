@@ -162,14 +162,11 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
         // reste sur l'objet seulement pour la fonction Pareto (mutation temporaire de l'objet)
         .reduce((a, b) => a + b);
       sumCrit = 0.8 * sumCrit;
-      console.log('sumCrit : ' + sumCrit);
       let sommeCumul = 0;
       this.elements1 = param.sort((duer1, duer2) =>
         duer2['criticite_Mo'] - duer1['criticite_Mo'])
         .filter(duer => {
           sommeCumul += duer['criticite_Mo'];
-          console.log(duer['criticite_Mo']);
-          console.log('sommeCumul : ' + sommeCumul);
           return sommeCumul <= sumCrit;
         });
     });
@@ -225,7 +222,6 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
     this.listeDuerFrontParLieu$.subscribe((param: DuerFront[]) => {
       this.listeDuerFrontParLieu = param.map(a => a).sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
       this.mdbTable.setDataSource(this.listeDuerFrontParLieu);
-      console.log(this.listeDuerFrontParLieu[0].id);
       this.elements1 = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
       this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
@@ -252,13 +248,6 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
     delai: string,
   ) {
 
-    console.log('idDuer : ' + idDuer);
-    console.log('action :' + action);
-    console.log('budget :' + budget);
-    console.log('qui : ' + qui);
-    console.log('delai : ' + delai);
-
-
     this.dataService.creerPas(new PasVm(null, idDuer,
       action,
       budget,
@@ -274,10 +263,7 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
 // valeur2 = rang de la liste de sélection des Fréquences
   critIndice(valeur1: number, valeur2: number): number {
 
-    console.log('Valeur de la Gravité  :' + this.listeGravite[valeur1 - 1].valeur);
-    console.log('Valeur de la Fréquence  :' + this.listeFrequence[valeur2 - 1].valeur);
     this.criticite = this.listeGravite[valeur1 - 1].valeur * this.listeFrequence[valeur2 - 1].valeur;
-    console.log('valeurx = ' + this.criticite);
     return this.criticite;
   }
 // Modifie la prévention à mettre en oeuvre sur une EVRP
@@ -295,8 +281,6 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
   // id = identifiant de l'Evrp
   // idPas = identifiant du P.A.S associé
   detruireEvrp1(id: number, idPas: number) {
-    console.log('id a détruire : ' + id);
-    console.log('idPas : ' + idPas);
     if (idPas != null) { this.dataService.detruireEvrp(id, idPas); } else
     { this.dataService.detruireEvrp(id, -1); }
   }
@@ -316,8 +300,6 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
     doc.setFontSize(6);
     this.imprimerLigneEntete(doc);
     doc.text('_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________', 10, 25);
-
-    console.log(this.elements1.length);
 
     for (let i = 0, k = 0; i < this.elements1.length; i++, k++) {
 
@@ -358,8 +340,6 @@ export class GduPrevComponent implements OnInit, AfterViewInit {
 
     doc1.text(this.elements1[index].frequence_Mo.toString(), 155, 30 + (10 * (pas % 17)));
     doc1.text((this.elements1[index].frequence_Mo * this.elements1[index].gravite_Mo).toString(), 160, 30 + (10 * (pas % 17)));
-    console.log('Id : ' + this.elements1[index].id.toString() + '  *  ' + this.elements1[index].prevExistante.length);
-    console.log('Round  ' + pas + Math.round((this.elements1[index].prevExistante.length / 46) + 0.5));
 
     if (this.elements1[index].prevExistante.length < 100) {
       doc1.text(this.elements1[index].prevMiseEnOeuvre.substring(0, 99), 165, 30 + (10 * (pas % 17)));

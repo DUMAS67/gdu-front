@@ -79,9 +79,6 @@ export class AuthService {
         'Content-Type': 'application/x-www-form-urlencoded'
       })
     };
-    console.log('*' + email + '*');
-    console.log('*' + mdp + '*');
-    console.log(`${environment.baseUrl}${environment.apiLogin}`);
     return this._http.post(`${environment.baseUrl}${environment.apiLogin}`,
     new HttpParams().set('username', email).set('password', mdp), config)
       .pipe(
@@ -118,7 +115,6 @@ export class AuthService {
       })
     };
 
-    console.log(`${environment.baseUrl}${environment.apiLogout}`);
     this._http.post(`${environment.baseUrl}${environment.apiLogout}`, {}, config).
     subscribe(
      () => {this.cookieService.deleteAll();
@@ -126,25 +122,5 @@ export class AuthService {
     );
 
     }
-
-
-
-
-/*
-    const config = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded'
-      })
-    };
-    console.log('####seDeconnecter');
-    console.log(`${environment.baseUrl}${environment.apiLogout}`);
-    return this._http.post<Collaborateur>('http://localhost:8080/logout', {} , config)
-      .pipe(
-        tap(col => {this.collaborateurConnecteSub.next(COLLABORATEUR_ANONYME);
-                    this.cookieService.deleteAll();
-                   // console.log(this.cookieService.get('col'));
-                  })
-      );
-  }*/
 
 }

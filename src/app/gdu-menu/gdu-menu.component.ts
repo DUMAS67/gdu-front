@@ -62,7 +62,6 @@ export class GduMenuComponent implements OnInit {
   // appelle la fonction de connexion à la base de données en fonction des identifiants
   connecter() {
 
-    console.log('loginFormModalEmail.value = ' + this.loginFormModalEmail.value + '');
 
     this._authSrv.connecter(this.loginFormModalEmail.value + '', this.loginFormModalPassword.value + '')
       .subscribe(
@@ -72,12 +71,6 @@ export class GduMenuComponent implements OnInit {
         this.statutConnexion = false;
         this.connexionBaseAdmin = this.collaborateur.estAdministrateur(this.collaborateurConnexion.roles);
         this.connexionBaseUser = this.collaborateur.estCollaborateur(this.collaborateurConnexion.roles);
-        console.log('this.statutConnexion ' + this.statutConnexion);
-          //console.log('profil : ' + this.profil);
-        console.log('collaborateurConnexion : ' + this.collaborateurConnexion);
-        console.log('collaborateurConnexion.roles : ' + this.collaborateurConnexion.roles);
-        console.log('connexionBaseAdmin : ' + this.connexionBaseAdmin);
-        console.log('connexionBaseUser : ' + this.connexionBaseUser);
         this._router.navigate(['/gdu']);
         // appelle la liste de création des DUER
         this.listeCrea$.subscribe((param: CreationVm[]) => {
@@ -92,16 +85,6 @@ export class GduMenuComponent implements OnInit {
         err => { this.err = true; }
       );
 
-
-
-    console.log('this.statutConnexion ' + this.statutConnexion);
-    //console.log('profil : ' + this.profil);
-    console.log('collaborateurConnexion : ' + this.collaborateurConnexion);
-    console.log('collaborateurConnexion.roles : ' + this.collaborateurConnexion.roles);
-    console.log('connexionBaseAdmin : ' + this.connexionBaseAdmin);
-    console.log('connexionBaseUser : ' + this.connexionBaseUser);
-
-
   }
 
   // Deconnecte à la Base de donnée gdu-db avant toute connection, efface les cookies
@@ -113,18 +96,14 @@ deconectCol() {
 // Se déconnecte de la base de donnée et initialise tous les états de connexion
   seDeconnecter() {
 
-    console.log('111' + this.collaborateurConnexion.nom);
     this._authSrv.seDeconnecter();
-    console.log('222' + this.collaborateurConnexion.nom);
     this.statutConnexion = true;
-    console.log('*Deconnexion&');
     this.collaborateurConnexion = null;
     this._router.navigate(['/gdu/deconnexion']);
     this.connexionBaseAdmin = false;
     this.connexionBaseUser = false;
     this.loginFormModalEmail.setValue('');
     this.loginFormModalPassword.setValue('');
-    console.log('Deconnect loginFormModalEmail.value = ' + this.loginFormModalEmail.value + '');
     this.err = false;
   }
 }
