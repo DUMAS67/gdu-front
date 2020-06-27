@@ -28,7 +28,7 @@ export class GduMenuComponent implements OnInit {
 
 
   constructor(private _authSrv: AuthService, private dataService: DataService,
-    private _router: Router, private _cookieService: CookieService) { }
+              private _router: Router, private _cookieService: CookieService) { }
 
   ngOnInit() {
     // Initialise les états de connexions
@@ -62,8 +62,7 @@ export class GduMenuComponent implements OnInit {
   // appelle la fonction de connexion à la base de données en fonction des identifiants
   connecter() {
 
-
-    this._authSrv.connecter(this.loginFormModalEmail.value + '', this.loginFormModalPassword.value + '')
+       this._authSrv.connecter(this.loginFormModalEmail.value + '', this.loginFormModalPassword.value + '')
       .subscribe(
         // en cas de succès, redirection vers la page /gdu
         col => {
@@ -71,7 +70,7 @@ export class GduMenuComponent implements OnInit {
         this.statutConnexion = false;
         this.connexionBaseAdmin = this.collaborateur.estAdministrateur(this.collaborateurConnexion.roles);
         this.connexionBaseUser = this.collaborateur.estCollaborateur(this.collaborateurConnexion.roles);
-        this._router.navigate(['/gdu']);
+
         // appelle la liste de création des DUER
         this.listeCrea$.subscribe((param: CreationVm[]) => {
           this.listeCrea = param.map(a => a);
@@ -80,9 +79,13 @@ export class GduMenuComponent implements OnInit {
         // modifie les dates de création du Duer
         this.dateDuer = new Date();
         this.dataService.modifDateDuer1(this.dateDuer.toLocaleString());
+        this._router.navigate(['/gdu']);
         },
         // en cas d'erreur, affichage d'un message d'erreur
-        err => { this.err = true; }
+        err => { this.err = true;
+                 this.loginFormModalEmail.setValue('');
+                 this.loginFormModalPassword.setValue('');
+          }
       );
 
   }
@@ -102,6 +105,12 @@ deconectCol() {
     this._router.navigate(['/gdu/deconnexion']);
     this.connexionBaseAdmin = false;
     this.connexionBaseUser = false;
+    this.loginFormModalEmail.setValue('');
+    this.loginFormModalPassword.setValue('');
+    this.err = false;
+  }
+  //raffraichie la valeur Err, et les champs de saisie de la connexion
+  modifErr() {
     this.loginFormModalEmail.setValue('');
     this.loginFormModalPassword.setValue('');
     this.err = false;

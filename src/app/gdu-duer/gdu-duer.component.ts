@@ -405,6 +405,12 @@ modifications dans le cas d'un administrateur */
 
   }
 
+  consolider(donnee: string): string
+  {
+
+    return donnee + '';
+  }
+
 }
 
 

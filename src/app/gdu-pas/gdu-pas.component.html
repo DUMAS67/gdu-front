@@ -33,7 +33,8 @@
     </div>
 
     <div class="col-2">
-      <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect (click)="impression('Plan d Actions Spécifiques du Le Parchemin')">Impression</button>
+      <button mdbBtn type="button" color="default" outline="true" size="sm" mdbWavesEffect
+        (click)="impression('Plan d Actions Spécifiques du Le Parchemin')">Impression</button>
     </div>
   </div>
   <div class="row">
@@ -84,7 +85,7 @@
               {{el.delai | date :"dd/MM/yyyy"}}</td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
 
-                <i *ngIf="el.etat" class="fas fa-check"></i>
+              <i *ngIf="el.etat" class="fas fa-check"></i>
 
             </td>
 
@@ -95,7 +96,7 @@
                 class="m-0 relative waves-light" (click)="basicModalpas.show()">Modifier</button>
 
 
-              <!-- Partie modale PAS -->
+              <!-- Partie modale Modification PAS -->
               <form>
                 <div mdbModal #basicModalpas="mdbModal" class="modal fade" tabindex="-1" role="dialog"
                   aria-labelledby="myBasicModalLabel" aria-hidden="true">
@@ -111,9 +112,11 @@
                       <div class="modal-body ">
                         <div class="row">
 
-                          <div *ngIf="el.etat==false" class="col-7"><h5>Souhaitez vous finaliser cette action ?</h5>
+                          <div *ngIf="el.etat==false" class="col-7">
+                            <h5>Souhaitez vous finaliser cette action ?</h5>
                           </div>
-                          <div *ngIf="el.etat==true" class="col-7"><h5>Souhaitez vous reinitialiser cette action ?</h5>
+                          <div *ngIf="el.etat==true" class="col-7">
+                            <h5>Souhaitez vous reinitialiser cette action ?</h5>
                           </div>
                           <div class="col-1">
                             <mdb-checkbox ngModel id="pasModiFait" [checked]="false" name="pasModiFait"
@@ -130,10 +133,10 @@
                         </div>
                         <hr color="">
                         <div class="row">
-                          <div class="col-2">id DUER :</div>
+                          <div class="col-2"><b>id DUER :</b></div>
                           <div class="col-2">{{el.idDuer}}</div>
                           <div class="col-1"></div>
-                          <div class="col-2">Danger :</div>
+                          <div class="col-2"><b>Danger :</b></div>
                           <div class="col-1"></div>
                           <div class="col-3">{{el.danger}}</div>
                           <div class="col-1"></div>
@@ -142,7 +145,7 @@
                           <p></p>
                         </div>
                         <div class="row">
-                          <div class="col-2">Risque :</div>
+                          <div class="col-2"><b>Risque :</b></div>
                           <div class="col-6">{{el.risque}}</div>
                           <div class="row">
                             <p></p>
@@ -152,7 +155,14 @@
                           <p></p>
                         </div>
                         <div class="row">
-                          <div class="col">Prévention à mettre en oeuvre : </div>
+                          <div class="col"><b>Action spécifique à mettre en oeuvre : </b></div>
+                        </div>
+                        <div class="row">
+                          <p></p>
+                        </div>
+                        <div class="row">
+                          <div class="col"><i>{{el.action}}</i>
+                          </div>
                         </div>
                         <div class="row">
                           <p></p>
@@ -160,17 +170,17 @@
                         <div class="row"></div>
                         <div class="col">
                           <input type="text" ngModel id="pasModifAction" name="pasModifAction" #pasModifAction="ngModel"
-                            mdbInput class="form-control mb-4" placeholder="{{el.action}}">
+                            mdbInput class="form-control mb-4" placeholder="Vos modifications d'action spécifique ...">
                         </div>
                         <div class="row">
-                          <div class="col-2">
-                            Budget :
+                          <div class="col-2"><b>
+                              Budget :</b>
                           </div>
                           <div class="col-4">
                             <input type="number" ngModel id="pasModifBudget" name="pasModifBudget"
                               #pasModifBudget="ngModel" mdbInput class="form-control mb-4" placeholder="{{el.budget}}">
                           </div>
-                          <div class="col-1">Qui :
+                          <div class="col-1"><b>Qui :</b>
                           </div>
                           <div class="col-4">
                             <input type="text" ngModel id="pasModifQui" name="pasModifQui" #pasModifQui="ngModel"
@@ -178,15 +188,15 @@
                           </div>
                         </div>
                         <div class="row">
-                          <div class="col-2">
-                            Délai prévu :
+                          <div class="col-2"><b>
+                              Délai prévu :</b>
                           </div>
                           <div class="col-2">
                             {{el.delai|date : "dd/MM/yyyy"}}
                             <!-- {{el.delai | date : "yyyy-MM-dd"}}   -->
                           </div>
-                          <div class="col-3">
-                            Délai à modifier :
+                          <div class="col-3"><b>
+                              Délai à modifier :</b>
                           </div>
                           <div class="col-4">
                             <input type="date" ngModel id="pasModifDelai1" name="pasModifDelai1"

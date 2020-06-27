@@ -120,10 +120,10 @@
                     <div class="modal-body ">
 
                       <div class="row">
-                        <div class="col-2">id DUER : </div>
+                        <div class="col-2"><b>id DUER : </b></div>
                         <div class="col-2">{{el.id}}</div>
                         <div class="col-1"></div>
-                        <div class="col-2">Danger : </div>
+                        <div class="col-2"><b>Danger : </b></div>
                         <div class="col-3">{{el.danger}}</div>
                         <div class="col-1"></div>
                       </div>
@@ -132,7 +132,7 @@
                       </div>
                       <div class="row">
 
-                        <div class="col-2">Risque : </div>
+                        <div class="col-2"><b>Risque : </b></div>
                         <div class="col-6">{{el.risque}}</div>
 
                       </div>
@@ -140,7 +140,7 @@
                         <p></p>
                       </div>
                       <div class="row">
-                        <div class="col">Prévention à mettre en oeuvre : </div>
+                        <div class="col"><b>Prévention à mettre en oeuvre : </b></div>
                       </div>
                       <div class="row">
                         <p></p>
@@ -154,15 +154,15 @@
                       </div>
 
                       <div class="row">
-                        <div class="col-2">
-                          Budget :
+                        <div class="col-2"><b>
+                          Budget :</b>
                         </div>
                         <div class="col-4">
                           <input type="number" ngModel id="pasBudget" name="pasBudget" #pasBudget="ngModel" mdbInput
                             class="form-control mb-4" placeholder="">
                         </div>
 
-                        <div class="col-2">Qui ? :
+                        <div class="col-2"><b>Qui ? :</b>
                         </div>
                         <div class="col-3">
                           <input type="text" ngModel id="pasQui" name="pasQui" #pasQui="ngModel" mdbInput
@@ -171,8 +171,8 @@
                       </div>
 
                       <div class="row">
-                        <div class="col-2">
-                          Délai :
+                        <div class="col-2"><b>
+                          Délai :</b>
                         </div>
                         <div class="col-4">
                           <input type="date" ngModel id="pasDelai" name="pasDelai" #pasDelai="ngModel" mdbInput
@@ -216,25 +216,25 @@
                     </div>
                     <div class="modal-body ">
                       <div class="row">
-                        <div class="col-4">id DUER : {{el.id}}</div>
-                        <div class="col-4">Unité de Travail : {{el.ut}}</div>
-                        <div class="col-3">Lieu : {{el.lieu}}</div>
+                        <div class="col-4"><b>id DUER : </b>{{el.id}}</div>
+                        <div class="col-4"><b>Unité de Travail :</b> {{el.ut}}</div>
+                        <div class="col-3"><b>Lieu :</b> {{el.lieu}}</div>
                       </div>
                       <div class="row">
-                        <div class="col-4">Activité : {{el.activite}}</div>
-                        <div class="col-4">Danger : {{el.danger}}</div>
-                      </div>
-                      <div class="row">
-                        <p></p>
-                      </div>
-                      <div class="row">
-                        <div class="col">Risque : {{el.risque}}</div>
+                        <div class="col-4"><b>Activité :</b> {{el.activite}}</div>
+                        <div class="col-4"><b>Danger :</b> {{el.danger}}</div>
                       </div>
                       <div class="row">
                         <p></p>
                       </div>
                       <div class="row">
-                        <div class="col-3">Cotation actuelle </div>
+                        <div class="col"><b>Risque :</b> {{el.risque}}</div>
+                      </div>
+                      <div class="row">
+                        <p></p>
+                      </div>
+                      <div class="row">
+                        <div class="col-3"><b>Cotation actuelle</b> </div>
                         <div class="col-2">
                           Gravite : {{el.gravite_Ex}}
                         </div>
@@ -249,7 +249,7 @@
                       </div>
 
                       <div class="row">
-                        <div class="col-3">Cotation réévaluée</div>
+                        <div class="col-3"><b>Cotation réévaluée</b></div>
                         <div class="col-2">
                           <select ngModel id="newGr" name="newGr" #newGr="ngModel"
                             class="browser-default custom-select mb-4">
@@ -266,29 +266,45 @@
                           </select>
                         </div>
                         <div class="col-1">Criticité</div>
-                        <div class="col-2"><input *ngIf="newFr.dirty && newGr.dirty" type="text" id="nvDetailsRq1"
-                            class="form-control mb-4" placeholder="{{critIndice(newGr.value,newFr.value)}}">
+                        <div class="col-2">
+
+                          <input *ngIf="newFr.dirty && newGr.dirty" type="text" id="nvDetailsRq1"
+                            class="form-control mb-4"
+                            placeholder="{{critIndice(newGr.value,newFr.value)}}">
                         </div>
                       </div>
                       <div class=" row">
-                        <div class="col-4">Prévention existante</div>
+                        <div class="col-4"><b>Prévention existante :</b></div>
+                      </div>
+                      <div class="row">
+                        <p></p>
+                      </div>
+                      <div class=" row">
+                        <div class="col"><i>{{el.prevExistante}}</i></div>
                       </div>
                       <div class="row">
                         <p></p>
                       </div>
                       <div class="col">
-                        <input type="text" ngModel id="newPrev" #newPrev="ngModel" name="newPrev" mdbInput
-                          class="form-control mb-4" placeholder={{el.prevExistante}}>
+                         <input type="text"  ngModel  id="newPrev" #newPrev="ngModel" name="newPrev" mdbInput
+                          class="form-control mb-4" placeholder="Vos modifications de prévention existante ..." >
                       </div>
                       <div class="row">
 
-                        <div class="col-4">Prévention à mettre en oeuvre</div>
+                        <div class="col-4"><b>Prévention à mettre en oeuvre :</b></div>
                       </div>
                       <div class="row">
                         <p></p>
                       </div>
                       <div class="row">
-                        <div class="col-3">Cotation actuelle </div>
+
+                        <div class="col"><i>{{el.prevMiseEnOeuvre}}</i></div>
+                      </div>
+                      <div class="row">
+                        <p></p>
+                      </div>
+                      <div class="row">
+                        <div class="col-3"><b>Cotation actuelle</b> </div>
                         <div class="col-2">
                           Gravite : {{el.gravite_Mo}}
                         </div>
@@ -302,7 +318,7 @@
                         <p></p>
                       </div>
                       <div class="row">
-                        <div class="col-3">Cotation</div>
+                        <div class="col-3"><b>Cotation réévaluée</b></div>
                         <div class="col-2">
                           <select ngModel id="newGrMo" name="newGrMo" #newGrMo="ngModel"
                             class="browser-default custom-select mb-4">
@@ -327,7 +343,7 @@
                       </div>
                       <div class="col">
                         <input type="text" ngModel id="newPrevMo" name="newPrevMo" mdbInput class="form-control mb-4"
-                          #newPrevMo="ngModel" placeholder={{el.prevMiseEnOeuvre}}>
+                          #newPrevMo="ngModel" placeholder="Vos modifications de prévention à mettre en oeuvre ...">
                       </div>
                     </div>
 

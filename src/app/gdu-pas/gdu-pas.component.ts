@@ -28,9 +28,9 @@ export class GduPasComponent implements OnInit, AfterViewInit {
 
   elements: any = [];
   previous: any = [];
-  headElements = ['Id', 'ID Duer', 'Danger', 'Risque', 'Prévention', 'Budget', 'Qui ?', 'Délai', 'Fait'];
+  headElements = ['Id', 'ID Duer', 'Danger', 'Risque', 'Prévention', 'Budget', 'Qui', 'Délai', 'Fait'];
   headElements1 = ['Modification'];
-  headElementsPDF = ['Id', 'ID Duer', 'Danger', 'Risque', 'Prévention', 'Budget', 'Qui ?', 'Délai', 'Fait'];
+  headElementsPDF = ['Id', 'ID Duer', 'Danger', 'Risque', 'Prévention', 'Budget', 'Qui', 'Délai', 'Fait'];
   collaborateurConnecte: Collaborateur;
   collaborateurConnexion1: any;
   listePas$ = this.dataService.afficherListePas();

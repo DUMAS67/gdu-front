@@ -70,7 +70,7 @@
       <li *ngIf="statutConnexion">
         <div class="nav-item">
           <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
-            mdbWavesEffect (click)="frame.show(); deconectCol()" size="sm">Connexion</button>
+            mdbWavesEffect (click)="frame.show(); deconectCol(); modifErr()" size="sm">Connexion</button>
         </div>
       </li>
       <!-- Modal depour l'identification -->
@@ -81,8 +81,8 @@
           <div class="modal-content">
             <div class="modal-header text-center">
               <h4 class="modal-title w-100 font-weight-bold">Connexion</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
-                <span aria-hidden="true">&times;</span>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide(); modifErr()">
+                <span aria-hidden="true">x</span>
               </button>
             </div>
             <div class="modal-body mx-3">
@@ -93,11 +93,11 @@
                 <label for="defaultForm-email">Email</label>
                 <mdb-error
                   *ngIf="loginFormModalEmail.invalid && (loginFormModalEmail.dirty || loginFormModalEmail.touched)">
-                  Données invalides
+
                 </mdb-error>
                 <mdb-success
                   *ngIf="loginFormModalEmail.valid && (loginFormModalEmail.dirty || loginFormModalEmail.touched)">
-                  Données invalides
+
                 </mdb-success>
               </div>
 
@@ -108,11 +108,11 @@
                 <label for="defaultForm-pass">Mot de Passe</label>
                 <mdb-error
                   *ngIf="loginFormModalPassword.invalid && (loginFormModalPassword.dirty || loginFormModalPassword.touched)">
-                  Données invalides
+
                 </mdb-error>
                 <mdb-success *ngIf="loginFormModalPassword.valid && (loginFormModalPassword.dirty ||
                   loginFormModalPassword.touched)">
-                  Données invalides
+
                 </mdb-success>
               </div>
 
@@ -121,6 +121,7 @@
               <button type="submit" mdbBtn color="default" class="waves-light" mdbWavesEffect
                 (click)="connecter()">Valider</button>
             </div>
+
             <div *ngIf="err" class="alert alert-danger" role="alert">
               <div class="col">
                 <h6> Votre mot de passe ou email n'est pas valide !</h6>
@@ -140,7 +141,7 @@
           <div class="texteenblanc">{{collaborateurConnexion.nom | uppercase}}</div>
         </div>
       </li>
-      <!--{{collaborateurConnexion.nom | uppercase}} {{collaborateurConnexion.prenom | titlecase}}-->
+
       <!--Navbar-->
       <li *ngIf="!statutConnexion">
         <div class="nav-item">
