@@ -189,7 +189,6 @@ modifications dans le cas d'un administrateur */
     this.listeDuerFrontParUt$.subscribe((param: DuerFront[]) => {
       this.listeDuerFrontParUt = param.sort((a, b) => (a.lieu.charCodeAt(0) - b.lieu.charCodeAt(0)));
       this.mdbTable.setDataSource(this.listeDuerFrontParUt);
-      console.log(this.listeDuerFrontParUt[0].id);
       this.elements = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
       this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
@@ -207,7 +206,6 @@ modifications dans le cas d'un administrateur */
     this.listeDuerFrontParLieu$.subscribe((param: DuerFront[]) => {
       this.listeDuerFrontParLieu = param.sort((a, b) => (a.ut.charCodeAt(0) - b.ut.charCodeAt(0)));
       this.mdbTable.setDataSource(this.listeDuerFrontParLieu);
-      console.log(this.listeDuerFrontParLieu[0].id);
       this.elements = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
       this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
@@ -234,14 +232,13 @@ modifications dans le cas d'un administrateur */
         // reste sur l'objet seulement pour la fonction Pareto (mutation temporaire de l'objet)
         .reduce((a, b) => a + b);
       sumCrit = 0.8 * sumCrit;
-      console.log('sumCrit : ' + sumCrit);
+
       let sommeCumul = 0;
       this.elements = param.sort((duer1, duer2) =>
         duer2['criticite_Ex'] - duer1['criticite_Ex'])
         .filter(duer => {
           sommeCumul += duer['criticite_Ex'];
-          console.log(duer['criticite_Ex']);
-          console.log('sommeCumul : ' + sommeCumul);
+
           return sommeCumul <= sumCrit;
         });
     });
@@ -250,7 +247,6 @@ modifications dans le cas d'un administrateur */
     this.previous = this.mdbTable.getDataSource();
     this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
     this.mdbTablePagination.calculateFirstItemIndex();
-    console.log('MaxVisible :' + this.maxVisibleItems);
     this.mdbTablePagination.calculateLastItemIndex();
     this.entetePdf = ' par Pareto :  ';
     this.cdRef.detectChanges();
@@ -264,10 +260,7 @@ modifications dans le cas d'un administrateur */
 // valeur2 = rang de la liste de sélection des Fréquences
   critIndice(valeur1: number, valeur2: number): number {
 
-    console.log('Valeur de la Gravité  :' + this.listeGravite[valeur1 - 1].valeur);
-    console.log('Valeur de la Fréquence  :' + this.listeFrequence[valeur2 - 1].valeur);
     this.criticite = this.listeGravite[valeur1 - 1].valeur * this.listeFrequence[valeur2 - 1].valeur;
-    console.log('valeurx = ' + this.criticite);
     return this.criticite;
   }
 
@@ -287,8 +280,6 @@ modifications dans le cas d'un administrateur */
 // id = numéro d'identification de l'Evrp dans le DUER
 // idPas = numéro d'identification du Plan d'Acrion Spécifique pour l' id de l'Evrp dans le DUER
   detruireEvrp1(id: number, idPas: number) {
-    console.log('id a détruire : ' + id);
-    console.log('idPas : ' + idPas);
     if (idPas != null) { this.dataService.detruireEvrp(id, idPas);
                           } else
     { this.dataService.detruireEvrp(id, -1);
@@ -309,8 +300,6 @@ modifications dans le cas d'un administrateur */
     doc.setFontSize(6);
     this.imprimerLigneEntete(doc);
     doc.text('_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________', 10, 25);
-
-    console.log(this.elements.length);
 
     for (let i = 0, k = 0; i < this.elements.length; i++, k++) {
 
@@ -354,8 +343,6 @@ modifications dans le cas d'un administrateur */
     doc1.text(this.elements[index].gravite_Mo.toString(), 216, 30 + (10 * (pas % 17)));
     doc1.text(this.elements[index].frequence_Mo.toString(), 221, 30 + (10 * (pas % 17)));
     doc1.text((this.elements[index].frequence_Mo * this.elements[index].gravite_Mo).toString(), 226, 30 + (10 * (pas % 17)));
-    console.log('Id : ' + this.elements[index].id.toString() + '  *  ' + this.elements[index].prevExistante.length);
-    console.log('Round  ' + pas + Math.round((this.elements[index].prevExistante.length / 46) + 0.5));
 
     if ((this.elements[index].prevExistante.length < 46)
       && (this.elements[index].prevMiseEnOeuvre.length < 46)) {
@@ -408,11 +395,7 @@ modifications dans le cas d'un administrateur */
     delai: string,
   ) {
 
-    console.log('idDuer : ' + idDuer);
-    console.log('action :' + action);
-    console.log('budget :' + budget);
-    console.log('qui : ' + qui);
-    console.log('delai : ' + delai);
+
 
 
     this.dataService.creerPas(new PasVm(null, idDuer,
@@ -420,6 +403,12 @@ modifications dans le cas d'un administrateur */
       budget,
       qui, new Date(delai), false));
 
+  }
+
+  consolider(donnee: string): string
+  {
+
+    return donnee + '';
   }
 
 }

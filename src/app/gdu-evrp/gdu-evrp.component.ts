@@ -140,11 +140,9 @@ export class GduEvrpComponent implements OnInit {
 
     // Abonnement Ut
 
-    console.log('Trace Avant Subject');
     // !la listeUt reçoit les dernières données du Subject
     // Connexion de listeUt sur subject par souscription
     this.dataService.subjectActUt.subscribe((param: UtVm[]) => {
-      console.log('Trace Déclenchement de l\' observateur');
       this.listeUt = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
 
     }
@@ -152,49 +150,36 @@ export class GduEvrpComponent implements OnInit {
 
 
     // Abonnement Lieu
-    console.log('Trace Avant Subject');
     // !la listeLieu reçoit les dernières données du Subject
     // Connexion de listeLieu sur subject par souscription
     this.dataService.subjectActLieu.subscribe((param: LieuVm[]) => {
-      console.log('Trace Déclenchement de l\' observateur');
       this.listeLieu = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
 
     }
     );
 
     // Abonnement Activite
-    console.log('Trace Avant Subject');
     // !la liste Danger reçoit les dernières données du Subject
     // Connexion de listeLieu sur subject par souscription
     this.dataService.subjectActActivite.subscribe((param: ActivitesVm[]) => {
-      console.log('Trace Déclenchement de l\' observateur Activite');
       this.listeActivite = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
 
     }
     );
 
     // Abonnement Danger
-    console.log('Trace Avant Subject');
     // !la liste Danger reçoit les dernières données du Subject
     // Connexion de listeLieu sur subject par souscription
     this.dataService.subjectActDanger.subscribe((param: DangersVm[]) => {
-      console.log('Trace Déclenchement de l\' observateur Danger');
       this.listeDanger = param.sort((a, b) => (a.nom.charCodeAt(0) - b.nom.charCodeAt(0)));
 
     }
     );
 
     this.dataService.afficherListeUt(); // Initialise le subject à la liste Ut de la Base
-    console.log('Trace afficherListeUt dans NgOnit');
-
     this.dataService.afficherListeLieu(); // Initialise le subject à la liste Lieu de la Base
-    console.log('Trace afficherListeLieu dans NgOnit');
-
     this.dataService.afficherListeActivite(); // Initialise le subject à la liste Lieu de la Base
-    console.log('Trace afficherListe Activite dans NgOnit');
-
     this.dataService.afficherListeDanger(); // Initialise le subject à la liste Lieu de la Base
-    console.log('Trace afficherListe Danger dans NgOnit');
 
   }// Fin NgOnInit
 
@@ -211,8 +196,6 @@ export class GduEvrpComponent implements OnInit {
     this.recupNom = valeur;
     this.recupId = id;
     this.recupNomAModifier = valeur;
-    console.log(this.recupId);
-    console.log(this.recupNom);
   }
 
   // Donne l'autorisation  pour être en mode affichage Administrateur ou Utilisateur
@@ -243,7 +226,6 @@ export class GduEvrpComponent implements OnInit {
 
   // Crée une Activité
   creerActivite1(nouveauNomActivite: string) {
-    console.log(nouveauNomActivite);
     this.dataService.creerActivite(nouveauNomActivite);
   }
   // Modifie une Activité
@@ -386,20 +368,6 @@ export class GduEvrpComponent implements OnInit {
     if (this.creaEvrp1Ok) {
       this.dataService.creerDuer1(this.creaEvrp1);
     }
-    console.log(JSON.stringify(this.creaEvrp1));
-    console.log('***************Risque1***************');
-    console.log('UT : ' + this.creaEvrp1.id_ut);
-    console.log('Lieu : ' + this.creaEvrp1.id_lieu);
-    console.log('Activite :' + this.creaEvrp1.id_activite);
-    console.log('Danger :' + this.creaEvrp1.id_danger);
-    console.log('Risque 1 :' + this.creaEvrp1.id_risque);
-    console.log('Gravité 1 Existante : ' + this.creaEvrp1.id_gravEx);
-    console.log('Fréquence 1 Existante : ' + this.creaEvrp1.id_FreqEx);
-    console.log('Prévention 1 Existante : ' + this.creaEvrp1.prevEx);
-    console.log('Gravité 1 MO : ' + this.creaEvrp1.id_gravMo);
-    console.log('Fréquence 1 MO : ' + this.creaEvrp1.id_FreqMo);
-    console.log('Prévention 1 MO: ' + this.creaEvrp1.prevMo);
-    console.log(this.messageValid);
   }
 
   // Crée un evrp de risque 2
@@ -448,7 +416,6 @@ export class GduEvrpComponent implements OnInit {
     if (this.creaEvrp2Ok) {
       this.dataService.creerDuer1(this.creaEvrp2);
     }
-    console.log(JSON.stringify(this.creaEvrp2));
 
   }
   // Indique que les données de Evrp pour risque 1 sont valides
@@ -470,10 +437,7 @@ export class GduEvrpComponent implements OnInit {
   // valeur2 = rang de la liste de sélection des Fréquences
   crit(valeur1: number, valeur2: number): number {
 
-    console.log('Valeur de la Gravité  :' + this.listeGravite[valeur1 - 1].valeur);
-    console.log('Valeur de la Fréquence  :' + this.listeFrequence[valeur2 - 1].valeur);
     this.criticite = this.listeGravite[valeur1 - 1].valeur * this.listeFrequence[valeur2 - 1].valeur;
-    console.log('valeurx = ' + this.criticite);
     return this.criticite;
   }
 

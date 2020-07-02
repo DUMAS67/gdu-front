@@ -37,10 +37,7 @@ export class GduCotComponent implements OnInit {
 // Valeur 2 = indice du tableau des fréquences
   crit(valeur1: number, valeur2: number): number {
 
-    console.log('Valeur de la Gravité  :' + this.listeGravite[valeur1 - 1].valeur);
-    console.log('Valeur de la Fréquence  :' + this.listeFrequence[valeur2 - 1].valeur);
     this.criticite = this.listeGravite[valeur1 - 1].valeur * this.listeFrequence[valeur2 - 1].valeur;
-    console.log('valeurx = ' + this.criticite);
     return this.criticite;
   }
 
